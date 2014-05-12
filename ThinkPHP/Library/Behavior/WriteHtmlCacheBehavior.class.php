@@ -11,14 +11,14 @@
 namespace Behavior;
 use Think\Storage;
 /**
- * ç³»ç»Ÿè¡Œä¸ºæ‰©å±•ï¼šé™æ€ç¼“å­˜å†™å…¥
+ * ÏµÍ³ĞĞÎªÀ©Õ¹£º¾²Ì¬»º´æĞ´Èë
  */
 class WriteHtmlCacheBehavior {
 
-    // è¡Œä¸ºæ‰©å±•çš„æ‰§è¡Œå…¥å£å¿…é¡»æ˜¯run
+    // ĞĞÎªÀ©Õ¹µÄÖ´ĞĞÈë¿Ú±ØĞëÊÇrun
     public function run(&$content){
         if(C('HTML_CACHE_ON') && defined('HTML_FILE_NAME'))  {
-            //é™æ€æ–‡ä»¶å†™å…¥
+            //¾²Ì¬ÎÄ¼şĞ´Èë
             Storage::put(HTML_FILE_NAME , $content,'html');
         }
     }

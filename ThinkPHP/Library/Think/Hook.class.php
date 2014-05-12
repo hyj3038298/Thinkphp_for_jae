@@ -10,16 +10,16 @@
 // +----------------------------------------------------------------------
 namespace Think;
 /**
- * ThinkPHPç³»ç»Ÿé’©å­å®ç°
+ * ThinkPHPÏµÍ³¹³×ÓÊµÏÖ
  */
 class Hook {
 
     static private  $tags       =   array();
 
     /**
-     * åŠ¨æ€æ·»åŠ æ’ä»¶åˆ°æŸä¸ªæ ‡ç­¾
-     * @param string $tag æ ‡ç­¾åç§°
-     * @param mixed $name æ’ä»¶åç§°
+     * ¶¯Ì¬Ìí¼Ó²å¼şµ½Ä³¸ö±êÇ©
+     * @param string $tag ±êÇ©Ãû³Æ
+     * @param mixed $name ²å¼şÃû³Æ
      * @return void
      */
     static public function add($tag,$name) {
@@ -34,24 +34,24 @@ class Hook {
     }
 
     /**
-     * æ‰¹é‡å¯¼å…¥æ’ä»¶
-     * @param array $data æ’ä»¶ä¿¡æ¯
-     * @param boolean $recursive æ˜¯å¦é€’å½’åˆå¹¶
+     * ÅúÁ¿µ¼Èë²å¼ş
+     * @param array $data ²å¼şĞÅÏ¢
+     * @param boolean $recursive ÊÇ·ñµİ¹éºÏ²¢
      * @return void
      */
     static public function import($data,$recursive=true) {
-        if(!$recursive){ // è¦†ç›–å¯¼å…¥
+        if(!$recursive){ // ¸²¸Çµ¼Èë
             self::$tags   =   array_merge(self::$tags,$data);
-        }else{ // åˆå¹¶å¯¼å…¥
+        }else{ // ºÏ²¢µ¼Èë
             foreach ($data as $tag=>$val){
                 if(!isset(self::$tags[$tag]))
                     self::$tags[$tag]   =   array();            
                 if(!empty($val['_overlay'])){
-                    // å¯ä»¥é’ˆå¯¹æŸä¸ªæ ‡ç­¾æŒ‡å®šè¦†ç›–æ¨¡å¼
+                    // ¿ÉÒÔÕë¶ÔÄ³¸ö±êÇ©Ö¸¶¨¸²¸ÇÄ£Ê½
                     unset($val['_overlay']);
                     self::$tags[$tag]   =   $val;
                 }else{
-                    // åˆå¹¶æ¨¡å¼
+                    // ºÏ²¢Ä£Ê½
                     self::$tags[$tag]   =   array_merge(self::$tags[$tag],$val);
                 }
             }            
@@ -59,13 +59,13 @@ class Hook {
     }
 
     /**
-     * è·å–æ’ä»¶ä¿¡æ¯
-     * @param string $tag æ’ä»¶ä½ç½® ç•™ç©ºè·å–å…¨éƒ¨
+     * »ñÈ¡²å¼şĞÅÏ¢
+     * @param string $tag ²å¼şÎ»ÖÃ Áô¿Õ»ñÈ¡È«²¿
      * @return array
      */
     static public function get($tag='') {
         if(empty($tag)){
-            // è·å–å…¨éƒ¨çš„æ’ä»¶ä¿¡æ¯
+            // »ñÈ¡È«²¿µÄ²å¼şĞÅÏ¢
             return self::$tags;
         }else{
             return self::$tags[$tag];
@@ -73,9 +73,9 @@ class Hook {
     }
 
     /**
-     * ç›‘å¬æ ‡ç­¾çš„æ’ä»¶
-     * @param string $tag æ ‡ç­¾åç§°
-     * @param mixed $params ä¼ å…¥å‚æ•°
+     * ¼àÌı±êÇ©µÄ²å¼ş
+     * @param string $tag ±êÇ©Ãû³Æ
+     * @param mixed $params ´«Èë²ÎÊı
      * @return void
      */
     static public function listen($tag, &$params=NULL) {
@@ -92,11 +92,11 @@ class Hook {
                     trace('Run '.$name.' [ RunTime:'.G($name.'_start',$name.'_end',6).'s ]','','INFO');
                 }
                 if(false === $result) {
-                    // å¦‚æœè¿”å›false åˆ™ä¸­æ–­æ’ä»¶æ‰§è¡Œ
+                    // Èç¹û·µ»Øfalse ÔòÖĞ¶Ï²å¼şÖ´ĞĞ
                     return ;
                 }
             }
-            if(APP_DEBUG) { // è®°å½•è¡Œä¸ºçš„æ‰§è¡Œæ—¥å¿—
+            if(APP_DEBUG) { // ¼ÇÂ¼ĞĞÎªµÄÖ´ĞĞÈÕÖ¾
                 trace('[ '.$tag.' ] --END-- [ RunTime:'.G($tag.'Start',$tag.'End',6).'s ]','','INFO');
             }
         }
@@ -104,15 +104,15 @@ class Hook {
     }
 
     /**
-     * æ‰§è¡ŒæŸä¸ªæ’ä»¶
-     * @param string $name æ’ä»¶åç§°
-     * @param string $tag æ–¹æ³•åï¼ˆæ ‡ç­¾åï¼‰     
-     * @param Mixed $params ä¼ å…¥çš„å‚æ•°
+     * Ö´ĞĞÄ³¸ö²å¼ş
+     * @param string $name ²å¼şÃû³Æ
+     * @param string $tag ·½·¨Ãû£¨±êÇ©Ãû£©     
+     * @param Mixed $params ´«ÈëµÄ²ÎÊı
      * @return void
      */
     static public function exec($name, $tag,&$params=NULL) {
         if('Behavior' == substr($name,-8) ){
-            // è¡Œä¸ºæ‰©å±•å¿…é¡»ç”¨runå…¥å£æ–¹æ³•
+            // ĞĞÎªÀ©Õ¹±ØĞëÓÃrunÈë¿Ú·½·¨
             $tag    =   'run';
         }
         $addon   = new $name();

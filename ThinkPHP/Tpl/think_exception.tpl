@@ -6,11 +6,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-<title>ç³»ç»Ÿå‘ç”Ÿé”™è¯¯</title>
+<title>ÏµÍ³·¢Éú´íÎó</title>
 <style type="text/css">
 *{ padding: 0; margin: 0; }
 html{ overflow-y: scroll; }
-body{ background: #fff; font-family: 'å¾®è½¯é›…é»‘'; color: #333; font-size: 16px; }
+body{ background: #fff; font-family: 'Î¢ÈíÑÅºÚ'; color: #333; font-size: 16px; }
 img{ border: 0; }
 .error{ padding: 24px 48px; }
 .face{ font-size: 100px; font-weight: normal; line-height: 120px; margin-bottom: 12px; }
@@ -32,7 +32,7 @@ h1{ font-size: 32px; line-height: 48px; }
 <?php if(isset($e['file'])) {?>
 	<div class="info">
 		<div class="title">
-			<h3>é”™è¯¯ä½ç½®</h3>
+			<h3>´íÎóÎ»ÖÃ</h3>
 		</div>
 		<div class="text">
 			<p>FILE: <?php echo $e['file'] ;?> &#12288;LINE: <?php echo $e['line'];?></p>
@@ -52,7 +52,7 @@ h1{ font-size: 32px; line-height: 48px; }
 </div>
 </div>
 <div class="copyright">
-<p><a title="å®˜æ–¹ç½‘ç«™" href="http://www.thinkphp.cn">ThinkPHP</a><sup><?php echo THINK_VERSION ?></sup> { Fast & Simple OOP PHP Framework } -- [ WE CAN DO IT JUST THINK ]</p>
+<p><a title="¹Ù·½ÍøÕ¾" href="http://www.thinkphp.cn">ThinkPHP</a><sup><?php echo THINK_VERSION ?></sup> { Fast & Simple OOP PHP Framework } -- [ WE CAN DO IT JUST THINK ]</p>
 </div>
 </body>
 </html>

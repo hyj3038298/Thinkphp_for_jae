@@ -10,24 +10,24 @@
 // +----------------------------------------------------------------------
 
 /**
- * SAEæ¨¡å¼æƒ¯ä¾‹é…ç½®æ–‡ä»¶
- * è¯¥æ–‡ä»¶è¯·ä¸è¦ä¿®æ”¹ï¼Œå¦‚æœè¦è¦†ç›–æƒ¯ä¾‹é…ç½®çš„å€¼ï¼Œå¯åœ¨åº”ç”¨é…ç½®æ–‡ä»¶ä¸­è®¾å®šå’Œæƒ¯ä¾‹ä¸ç¬¦çš„é…ç½®é¡¹
- * é…ç½®åç§°å¤§å°å†™ä»»æ„ï¼Œç³»ç»Ÿä¼šç»Ÿä¸€è½¬æ¢æˆå°å†™
- * æ‰€æœ‰é…ç½®å‚æ•°éƒ½å¯ä»¥åœ¨ç”Ÿæ•ˆå‰åŠ¨æ€æ”¹å˜
+ * SAEÄ£Ê½¹ßÀıÅäÖÃÎÄ¼ş
+ * ¸ÃÎÄ¼şÇë²»ÒªĞŞ¸Ä£¬Èç¹ûÒª¸²¸Ç¹ßÀıÅäÖÃµÄÖµ£¬¿ÉÔÚÓ¦ÓÃÅäÖÃÎÄ¼şÖĞÉè¶¨ºÍ¹ßÀı²»·ûµÄÅäÖÃÏî
+ * ÅäÖÃÃû³Æ´óĞ¡Ğ´ÈÎÒâ£¬ÏµÍ³»áÍ³Ò»×ª»»³ÉĞ¡Ğ´
+ * ËùÓĞÅäÖÃ²ÎÊı¶¼¿ÉÒÔÔÚÉúĞ§Ç°¶¯Ì¬¸Ä±ä
  */
 defined('THINK_PATH') or exit();
 $st =   new SaeStorage();
 return array(
-    //SAEä¸‹å›ºå®šmysqlé…ç½®
-    'DB_TYPE'           =>  'mysql',     // æ•°æ®åº“ç±»å‹
+    //SAEÏÂ¹Ì¶¨mysqlÅäÖÃ
+    'DB_TYPE'           =>  'mysql',     // Êı¾İ¿âÀàĞÍ
     'DB_DEPLOY_TYPE'    =>  1,
     'DB_RW_SEPARATE'    =>  true,
-    'DB_HOST'           =>  SAE_MYSQL_HOST_M.','.SAE_MYSQL_HOST_S, // æœåŠ¡å™¨åœ°å€
-    'DB_NAME'           =>  SAE_MYSQL_DB,        // æ•°æ®åº“å
-    'DB_USER'           =>  SAE_MYSQL_USER,    // ç”¨æˆ·å
-    'DB_PWD'            =>  SAE_MYSQL_PASS,         // å¯†ç 
-    'DB_PORT'           =>  SAE_MYSQL_PORT,        // ç«¯å£
-    //æ›´æ”¹æ¨¡æ¿æ›¿æ¢å˜é‡ï¼Œè®©æ™®é€šèƒ½åœ¨æ‰€æœ‰å¹³å°ä¸‹æ˜¾ç¤º
+    'DB_HOST'           =>  SAE_MYSQL_HOST_M.','.SAE_MYSQL_HOST_S, // ·şÎñÆ÷µØÖ·
+    'DB_NAME'           =>  SAE_MYSQL_DB,        // Êı¾İ¿âÃû
+    'DB_USER'           =>  SAE_MYSQL_USER,    // ÓÃ»§Ãû
+    'DB_PWD'            =>  SAE_MYSQL_PASS,         // ÃÜÂë
+    'DB_PORT'           =>  SAE_MYSQL_PORT,        // ¶Ë¿Ú
+    //¸ü¸ÄÄ£°åÌæ»»±äÁ¿£¬ÈÃÆÕÍ¨ÄÜÔÚËùÓĞÆ½Ì¨ÏÂÏÔÊ¾
     'TMPL_PARSE_STRING' =>  array(
         // __PUBLIC__/upload  -->  /Public/upload -->http://appname-public.stor.sinaapp.com/upload
         '/Public/upload'    =>  $st->getUrl('public','upload')

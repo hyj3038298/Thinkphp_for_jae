@@ -10,22 +10,22 @@
 // +----------------------------------------------------------------------
 namespace Think\Storage\Driver;
 use Think\Storage;
-// æœ¬åœ°æ–‡ä»¶å†™å…¥å­˜å‚¨ç±»
+// ±¾µØÎÄ¼şĞ´Èë´æ´¢Àà
 class File extends Storage{
 
     private $contents=array();
 
     /**
-     * æ¶æ„å‡½æ•°
+     * ¼Ü¹¹º¯Êı
      * @access public
      */
     public function __construct() {
     }
 
     /**
-     * æ–‡ä»¶å†…å®¹è¯»å–
+     * ÎÄ¼şÄÚÈİ¶ÁÈ¡
      * @access public
-     * @param string $filename  æ–‡ä»¶å
+     * @param string $filename  ÎÄ¼şÃû
      * @return string     
      */
     public function read($filename,$type=''){
@@ -33,10 +33,10 @@ class File extends Storage{
     }
 
     /**
-     * æ–‡ä»¶å†™å…¥
+     * ÎÄ¼şĞ´Èë
      * @access public
-     * @param string $filename  æ–‡ä»¶å
-     * @param string $content  æ–‡ä»¶å†…å®¹
+     * @param string $filename  ÎÄ¼şÃû
+     * @param string $content  ÎÄ¼şÄÚÈİ
      * @return boolean         
      */
     public function put($filename,$content,$type=''){
@@ -52,10 +52,10 @@ class File extends Storage{
     }
 
     /**
-     * æ–‡ä»¶è¿½åŠ å†™å…¥
+     * ÎÄ¼ş×·¼ÓĞ´Èë
      * @access public
-     * @param string $filename  æ–‡ä»¶å
-     * @param string $content  è¿½åŠ çš„æ–‡ä»¶å†…å®¹
+     * @param string $filename  ÎÄ¼şÃû
+     * @param string $content  ×·¼ÓµÄÎÄ¼şÄÚÈİ
      * @return boolean        
      */
     public function append($filename,$content,$type=''){
@@ -66,10 +66,10 @@ class File extends Storage{
     }
 
     /**
-     * åŠ è½½æ–‡ä»¶
+     * ¼ÓÔØÎÄ¼ş
      * @access public
-     * @param string $filename  æ–‡ä»¶å
-     * @param array $vars  ä¼ å…¥å˜é‡
+     * @param string $filename  ÎÄ¼şÃû
+     * @param array $vars  ´«Èë±äÁ¿
      * @return void        
      */
     public function load($filename,$vars=null){
@@ -79,9 +79,9 @@ class File extends Storage{
     }
 
     /**
-     * æ–‡ä»¶æ˜¯å¦å­˜åœ¨
+     * ÎÄ¼şÊÇ·ñ´æÔÚ
      * @access public
-     * @param string $filename  æ–‡ä»¶å
+     * @param string $filename  ÎÄ¼şÃû
      * @return boolean     
      */
     public function has($filename,$type=''){
@@ -89,9 +89,9 @@ class File extends Storage{
     }
 
     /**
-     * æ–‡ä»¶åˆ é™¤
+     * ÎÄ¼şÉ¾³ı
      * @access public
-     * @param string $filename  æ–‡ä»¶å
+     * @param string $filename  ÎÄ¼şÃû
      * @return boolean     
      */
     public function unlink($filename,$type=''){
@@ -100,10 +100,10 @@ class File extends Storage{
     }
 
     /**
-     * è¯»å–æ–‡ä»¶ä¿¡æ¯
+     * ¶ÁÈ¡ÎÄ¼şĞÅÏ¢
      * @access public
-     * @param string $filename  æ–‡ä»¶å
-     * @param string $name  ä¿¡æ¯å mtimeæˆ–è€…content
+     * @param string $filename  ÎÄ¼şÃû
+     * @param string $name  ĞÅÏ¢Ãû mtime»òÕßcontent
      * @return boolean     
      */
     public function get($filename,$name,$type=''){

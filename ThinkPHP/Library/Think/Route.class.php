@@ -10,65 +10,65 @@
 // +----------------------------------------------------------------------
 namespace Think;
 /**
- * ThinkPHPè·¯ç”±è§£æç±»
+ * ThinkPHPÂ·ÓÉ½âÎöÀà
  */
 class Route {
     
-    // è·¯ç”±æ£€æµ‹
+    // Â·ÓÉ¼ì²â
     public static function check(){
         $depr   =   C('URL_PATHINFO_DEPR');
         $regx   =   preg_replace('/\.'.__EXT__.'$/i','',trim($_SERVER['PATH_INFO'],$depr));
-        // åˆ†éš”ç¬¦æ›¿æ¢ ç¡®ä¿è·¯ç”±å®šä¹‰ä½¿ç”¨ç»Ÿä¸€çš„åˆ†éš”ç¬¦
+        // ·Ö¸ô·ûÌæ»» È·±£Â·ÓÉ¶¨ÒåÊ¹ÓÃÍ³Ò»µÄ·Ö¸ô·û
         if('/' != $depr){
             $regx = str_replace($depr,'/',$regx);
         }
-        // URLæ˜ å°„å®šä¹‰ï¼ˆé™æ€è·¯ç”±ï¼‰
+        // URLÓ³Éä¶¨Òå£¨¾²Ì¬Â·ÓÉ£©
         $maps   =   C('URL_MAP_RULES');
         if(isset($maps[$regx])) {
             $var    =   self::parseUrl($maps[$regx]);
             $_GET   =   array_merge($var, $_GET);
             return true;                
         }        
-        // åŠ¨æ€è·¯ç”±å¤„ç†
+        // ¶¯Ì¬Â·ÓÉ´¦Àí
         $routes =   C('URL_ROUTE_RULES');
         if(!empty($routes)) {
             foreach ($routes as $rule=>$route){
                 if(is_numeric($rule)){
-                    // æ”¯æŒ array('rule','adddress',...) å®šä¹‰è·¯ç”±
+                    // Ö§³Ö array('rule','adddress',...) ¶¨ÒåÂ·ÓÉ
                     $rule   =   array_shift($route);
                 }
                 if(is_array($route) && isset($route[2])){
-                    // è·¯ç”±å‚æ•°
+                    // Â·ÓÉ²ÎÊı
                     $options    =   $route[2];
                     if(isset($options['ext']) && __EXT__ != $options['ext']){
-                        // URLåç¼€æ£€æµ‹
+                        // URLºó×º¼ì²â
                         continue;
                     }
                     if(isset($options['method']) && REQUEST_METHOD != $options['method']){
-                        // è¯·æ±‚ç±»å‹æ£€æµ‹
+                        // ÇëÇóÀàĞÍ¼ì²â
                         continue;
                     }
-                    // è‡ªå®šä¹‰æ£€æµ‹
+                    // ×Ô¶¨Òå¼ì²â
                     if(!empty($options['callback']) && is_callable($options['callback'])) {
                         if(false === call_user_func($options['callback'])) {
                             continue;
                         }
                     }                    
                 }
-                if(0===strpos($rule,'/') && preg_match($rule,$regx,$matches)) { // æ­£åˆ™è·¯ç”±
+                if(0===strpos($rule,'/') && preg_match($rule,$regx,$matches)) { // ÕıÔòÂ·ÓÉ
                     if($route instanceof \Closure) {
-                        // æ‰§è¡Œé—­åŒ…
+                        // Ö´ĞĞ±Õ°ü
                         $result = self::invokeRegx($route, $matches);
-                        // å¦‚æœè¿”å›å¸ƒå°”å€¼ åˆ™ç»§ç»­æ‰§è¡Œ
+                        // Èç¹û·µ»Ø²¼¶ûÖµ Ôò¼ÌĞøÖ´ĞĞ
                         return is_bool($result) ? $result : exit;
                     }else{
                         return self::parseRegex($matches,$route,$regx);
                     }
-                }else{ // è§„åˆ™è·¯ç”±
+                }else{ // ¹æÔòÂ·ÓÉ
                     $len1   =   substr_count($regx,'/');
                     $len2   =   substr_count($rule,'/');
                     if($len1>=$len2 || strpos($rule,'[')) {
-                        if('$' == substr($rule,-1,1)) {// å®Œæ•´åŒ¹é…
+                        if('$' == substr($rule,-1,1)) {// ÍêÕûÆ¥Åä
                             if($len1 != $len2) {
                                 continue;
                             }else{
@@ -78,9 +78,9 @@ class Route {
                         $match  =  self::checkUrlMatch($regx,$rule);
                         if(false !== $match)  {
                             if($route instanceof \Closure) {
-                                // æ‰§è¡Œé—­åŒ…
+                                // Ö´ĞĞ±Õ°ü
                                 $result = self::invokeRule($route, $match);
-                                // å¦‚æœè¿”å›å¸ƒå°”å€¼ åˆ™ç»§ç»­æ‰§è¡Œ
+                                // Èç¹û·µ»Ø²¼¶ûÖµ Ôò¼ÌĞøÖ´ĞĞ
                                 return is_bool($result) ? $result : exit;
                             }else{
                                 return self::parseRule($rule,$route,$regx);
@@ -93,7 +93,7 @@ class Route {
         return false;
     }
 
-    // æ£€æµ‹URLå’Œè§„åˆ™è·¯ç”±æ˜¯å¦åŒ¹é…
+    // ¼ì²âURLºÍ¹æÔòÂ·ÓÉÊÇ·ñÆ¥Åä
     private static function checkUrlMatch($regx,$rule) {
         $m1 = explode('/',$regx);
         $m2 = explode('/',$rule);
@@ -103,9 +103,9 @@ class Route {
                 $val    =   substr($val,1,-1);
             }
                 
-            if(':' == substr($val,0,1)) {// åŠ¨æ€å˜é‡
+            if(':' == substr($val,0,1)) {// ¶¯Ì¬±äÁ¿
                 if($pos = strpos($val,'|')){
-                    // ä½¿ç”¨å‡½æ•°è¿‡æ»¤
+                    // Ê¹ÓÃº¯Êı¹ıÂË
                     $val   =   substr($val,1,$pos-1);
                 }
                 if(strpos($val,'\\')) {
@@ -129,21 +129,21 @@ class Route {
                 return false;
             }
         }
-        // æˆåŠŸåŒ¹é…åè¿”å›URLä¸­çš„åŠ¨æ€å˜é‡æ•°ç»„
+        // ³É¹¦Æ¥Åäºó·µ»ØURLÖĞµÄ¶¯Ì¬±äÁ¿Êı×é
         return $var;
     }
 
-    // è§£æè§„èŒƒçš„è·¯ç”±åœ°å€
-    // åœ°å€æ ¼å¼ [æ§åˆ¶å™¨/æ“ä½œ?]å‚æ•°1=å€¼1&å‚æ•°2=å€¼2...
+    // ½âÎö¹æ·¶µÄÂ·ÓÉµØÖ·
+    // µØÖ·¸ñÊ½ [¿ØÖÆÆ÷/²Ù×÷?]²ÎÊı1=Öµ1&²ÎÊı2=Öµ2...
     private static function parseUrl($url) {
         $var  =  array();
-        if(false !== strpos($url,'?')) { // [æ§åˆ¶å™¨/æ“ä½œ?]å‚æ•°1=å€¼1&å‚æ•°2=å€¼2...
+        if(false !== strpos($url,'?')) { // [¿ØÖÆÆ÷/²Ù×÷?]²ÎÊı1=Öµ1&²ÎÊı2=Öµ2...
             $info   =  parse_url($url);
             $path   = explode('/',$info['path']);
             parse_str($info['query'],$var);
-        }elseif(strpos($url,'/')){ // [æ§åˆ¶å™¨/æ“ä½œ]
+        }elseif(strpos($url,'/')){ // [¿ØÖÆÆ÷/²Ù×÷]
             $path = explode('/',$url);
-        }else{ // å‚æ•°1=å€¼1&å‚æ•°2=å€¼2...
+        }else{ // ²ÎÊı1=Öµ1&²ÎÊı2=Öµ2...
             parse_str($url,$var);
         }
         if(isset($path)) {
@@ -158,21 +158,21 @@ class Route {
         return $var;
     }
 
-    // è§£æè§„åˆ™è·¯ç”±
-    // 'è·¯ç”±è§„åˆ™'=>'[æ§åˆ¶å™¨/æ“ä½œ]?é¢å¤–å‚æ•°1=å€¼1&é¢å¤–å‚æ•°2=å€¼2...'
-    // 'è·¯ç”±è§„åˆ™'=>array('[æ§åˆ¶å™¨/æ“ä½œ]','é¢å¤–å‚æ•°1=å€¼1&é¢å¤–å‚æ•°2=å€¼2...')
-    // 'è·¯ç”±è§„åˆ™'=>'å¤–éƒ¨åœ°å€'
-    // 'è·¯ç”±è§„åˆ™'=>array('å¤–éƒ¨åœ°å€','é‡å®šå‘ä»£ç ')
-    // è·¯ç”±è§„åˆ™ä¸­ :å¼€å¤´ è¡¨ç¤ºåŠ¨æ€å˜é‡
-    // å¤–éƒ¨åœ°å€ä¸­å¯ä»¥ç”¨åŠ¨æ€å˜é‡ é‡‡ç”¨ :1 :2 çš„æ–¹å¼
+    // ½âÎö¹æÔòÂ·ÓÉ
+    // 'Â·ÓÉ¹æÔò'=>'[¿ØÖÆÆ÷/²Ù×÷]?¶îÍâ²ÎÊı1=Öµ1&¶îÍâ²ÎÊı2=Öµ2...'
+    // 'Â·ÓÉ¹æÔò'=>array('[¿ØÖÆÆ÷/²Ù×÷]','¶îÍâ²ÎÊı1=Öµ1&¶îÍâ²ÎÊı2=Öµ2...')
+    // 'Â·ÓÉ¹æÔò'=>'Íâ²¿µØÖ·'
+    // 'Â·ÓÉ¹æÔò'=>array('Íâ²¿µØÖ·','ÖØ¶¨Ïò´úÂë')
+    // Â·ÓÉ¹æÔòÖĞ :¿ªÍ· ±íÊ¾¶¯Ì¬±äÁ¿
+    // Íâ²¿µØÖ·ÖĞ¿ÉÒÔÓÃ¶¯Ì¬±äÁ¿ ²ÉÓÃ :1 :2 µÄ·½Ê½
     // 'news/:month/:day/:id'=>array('News/read?cate=1','status=1'),
-    // 'new/:id'=>array('/new.php?id=:1',301), é‡å®šå‘
+    // 'new/:id'=>array('/new.php?id=:1',301), ÖØ¶¨Ïò
     private static function parseRule($rule,$route,$regx) {
-        // è·å–è·¯ç”±åœ°å€è§„åˆ™
+        // »ñÈ¡Â·ÓÉµØÖ·¹æÔò
         $url   =  is_array($route)?$route[0]:$route;
-        // è·å–URLåœ°å€ä¸­çš„å‚æ•°
+        // »ñÈ¡URLµØÖ·ÖĞµÄ²ÎÊı
         $paths = explode('/',$regx);
-        // è§£æè·¯ç”±è§„åˆ™
+        // ½âÎöÂ·ÓÉ¹æÔò
         $matches  =  array();
         $rule =  explode('/',$rule);
         foreach ($rule as $item){
@@ -180,9 +180,9 @@ class Route {
             if(0 === strpos($item,'[:')){
                 $item   =   substr($item,1,-1);
             }
-            if(0===strpos($item,':')) { // åŠ¨æ€å˜é‡è·å–
+            if(0===strpos($item,':')) { // ¶¯Ì¬±äÁ¿»ñÈ¡
                 if($pos = strpos($item,'|')){ 
-                    // æ”¯æŒå‡½æ•°è¿‡æ»¤
+                    // Ö§³Öº¯Êı¹ıÂË
                     $fun  =  substr($item,$pos+1);
                     $item =  substr($item,0,$pos);                    
                 }
@@ -194,22 +194,22 @@ class Route {
                     $var  =  substr($item,1);
                 }
                 $matches[$var] = !empty($fun)? $fun(array_shift($paths)) : array_shift($paths);
-            }else{ // è¿‡æ»¤URLä¸­çš„é™æ€å˜é‡
+            }else{ // ¹ıÂËURLÖĞµÄ¾²Ì¬±äÁ¿
                 array_shift($paths);
             }
         }
 
-        if(0=== strpos($url,'/') || 0===strpos($url,'http')) { // è·¯ç”±é‡å®šå‘è·³è½¬
-            if(strpos($url,':')) { // ä¼ é€’åŠ¨æ€å‚æ•°
+        if(0=== strpos($url,'/') || 0===strpos($url,'http')) { // Â·ÓÉÖØ¶¨ÏòÌø×ª
+            if(strpos($url,':')) { // ´«µİ¶¯Ì¬²ÎÊı
                 $values = array_values($matches);
                 $url = preg_replace_callback('/:(\d+)/', function($match) use($values){ return $values[$match[1] - 1]; }, $url);
             }
             header("Location: $url", true,(is_array($route) && isset($route[1]))?$route[1]:301);
             exit;
         }else{
-            // è§£æè·¯ç”±åœ°å€
+            // ½âÎöÂ·ÓÉµØÖ·
             $var  =  self::parseUrl($url);
-            // è§£æè·¯ç”±åœ°å€é‡Œé¢çš„åŠ¨æ€å‚æ•°
+            // ½âÎöÂ·ÓÉµØÖ·ÀïÃæµÄ¶¯Ì¬²ÎÊı
             $values  =  array_values($matches);
             foreach ($var as $key=>$val){
                 if(0===strpos($val,':')) {
@@ -217,11 +217,11 @@ class Route {
                 }
             }
             $var   =   array_merge($matches,$var);
-            // è§£æå‰©ä½™çš„URLå‚æ•°
+            // ½âÎöÊ£ÓàµÄURL²ÎÊı
             if(!empty($paths)) {
                 preg_replace_callback('/(\w+)\/([^\/]+)/', function($match) use(&$var){ $var[strtolower($match[1])]=strip_tags($match[2]);}, implode('/',$paths));
             }
-            // è§£æè·¯ç”±è‡ªåŠ¨ä¼ å…¥å‚æ•°
+            // ½âÎöÂ·ÓÉ×Ô¶¯´«Èë²ÎÊı
             if(is_array($route) && isset($route[1])) {
                 if(is_array($route[1])){
                     $params     =   $route[1];
@@ -235,39 +235,39 @@ class Route {
         return true;
     }
 
-    // è§£ææ­£åˆ™è·¯ç”±
-    // 'è·¯ç”±æ­£åˆ™'=>'[æ§åˆ¶å™¨/æ“ä½œ]?å‚æ•°1=å€¼1&å‚æ•°2=å€¼2...'
-    // 'è·¯ç”±æ­£åˆ™'=>array('[æ§åˆ¶å™¨/æ“ä½œ]?å‚æ•°1=å€¼1&å‚æ•°2=å€¼2...','é¢å¤–å‚æ•°1=å€¼1&é¢å¤–å‚æ•°2=å€¼2...')
-    // 'è·¯ç”±æ­£åˆ™'=>'å¤–éƒ¨åœ°å€'
-    // 'è·¯ç”±æ­£åˆ™'=>array('å¤–éƒ¨åœ°å€','é‡å®šå‘ä»£ç ')
-    // å‚æ•°å€¼å’Œå¤–éƒ¨åœ°å€ä¸­å¯ä»¥ç”¨åŠ¨æ€å˜é‡ é‡‡ç”¨ :1 :2 çš„æ–¹å¼
+    // ½âÎöÕıÔòÂ·ÓÉ
+    // 'Â·ÓÉÕıÔò'=>'[¿ØÖÆÆ÷/²Ù×÷]?²ÎÊı1=Öµ1&²ÎÊı2=Öµ2...'
+    // 'Â·ÓÉÕıÔò'=>array('[¿ØÖÆÆ÷/²Ù×÷]?²ÎÊı1=Öµ1&²ÎÊı2=Öµ2...','¶îÍâ²ÎÊı1=Öµ1&¶îÍâ²ÎÊı2=Öµ2...')
+    // 'Â·ÓÉÕıÔò'=>'Íâ²¿µØÖ·'
+    // 'Â·ÓÉÕıÔò'=>array('Íâ²¿µØÖ·','ÖØ¶¨Ïò´úÂë')
+    // ²ÎÊıÖµºÍÍâ²¿µØÖ·ÖĞ¿ÉÒÔÓÃ¶¯Ì¬±äÁ¿ ²ÉÓÃ :1 :2 µÄ·½Ê½
     // '/new\/(\d+)\/(\d+)/'=>array('News/read?id=:1&page=:2&cate=1','status=1'),
-    // '/new\/(\d+)/'=>array('/new.php?id=:1&page=:2&status=1','301'), é‡å®šå‘
+    // '/new\/(\d+)/'=>array('/new.php?id=:1&page=:2&status=1','301'), ÖØ¶¨Ïò
     private static function parseRegex($matches,$route,$regx) {
-        // è·å–è·¯ç”±åœ°å€è§„åˆ™
+        // »ñÈ¡Â·ÓÉµØÖ·¹æÔò
         $url   =  is_array($route)?$route[0]:$route;
         $url   =  preg_replace_callback('/:(\d+)/', function($match) use($matches){return $matches[$match[1]];}, $url); 
-        if(0=== strpos($url,'/') || 0===strpos($url,'http')) { // è·¯ç”±é‡å®šå‘è·³è½¬
+        if(0=== strpos($url,'/') || 0===strpos($url,'http')) { // Â·ÓÉÖØ¶¨ÏòÌø×ª
             header("Location: $url", true,(is_array($route) && isset($route[1]))?$route[1]:301);
             exit;
         }else{
-            // è§£æè·¯ç”±åœ°å€
+            // ½âÎöÂ·ÓÉµØÖ·
             $var  =  self::parseUrl($url);
-            // å¤„ç†å‡½æ•°
+            // ´¦Àíº¯Êı
             foreach($var as $key=>$val){
                 if(strpos($val,'|')){
                     list($val,$fun) = explode('|',$val);
                     $var[$key]    =   $fun($val);
                 }
             }
-            // è§£æå‰©ä½™çš„URLå‚æ•°
+            // ½âÎöÊ£ÓàµÄURL²ÎÊı
             $regx =  substr_replace($regx,'',0,strlen($matches[0]));
             if($regx) {
                 preg_replace_callback('/(\w+)\/([^\/]+)/', function($match) use(&$var){
                     $var[strtolower($match[1])] = strip_tags($match[2]);
                 }, $regx);
             }
-            // è§£æè·¯ç”±è‡ªåŠ¨ä¼ å…¥å‚æ•°
+            // ½âÎöÂ·ÓÉ×Ô¶¯´«Èë²ÎÊı
             if(is_array($route) && isset($route[1])) {
                 if(is_array($route[1])){
                     $params     =   $route[1];
@@ -281,7 +281,7 @@ class Route {
         return true;
     }
 
-    // æ‰§è¡Œæ­£åˆ™åŒ¹é…ä¸‹çš„é—­åŒ…æ–¹æ³• æ”¯æŒå‚æ•°è°ƒç”¨
+    // Ö´ĞĞÕıÔòÆ¥ÅäÏÂµÄ±Õ°ü·½·¨ Ö§³Ö²ÎÊıµ÷ÓÃ
     static private function invokeRegx($closure, $var = array()) {
         $reflect = new \ReflectionFunction($closure);
         $params  = $reflect->getParameters();
@@ -297,7 +297,7 @@ class Route {
         return $reflect->invokeArgs($args);
     }
 
-    // æ‰§è¡Œè§„åˆ™åŒ¹é…ä¸‹çš„é—­åŒ…æ–¹æ³• æ”¯æŒå‚æ•°è°ƒç”¨
+    // Ö´ĞĞ¹æÔòÆ¥ÅäÏÂµÄ±Õ°ü·½·¨ Ö§³Ö²ÎÊıµ÷ÓÃ
     static private function invokeRule($closure, $var = array()) {
         $reflect = new \ReflectionFunction($closure);
         $params  = $reflect->getParameters();

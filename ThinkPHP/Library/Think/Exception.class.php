@@ -10,7 +10,7 @@
 // +----------------------------------------------------------------------
 namespace Think;
 /**
- * ThinkPHP绯荤粺寮傚父鍩虹被
+ * ThinkPHP系统异常基类
  */
 class Exception extends \Exception {
 }

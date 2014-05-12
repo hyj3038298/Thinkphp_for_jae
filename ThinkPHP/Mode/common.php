@@ -10,16 +10,16 @@
 // +----------------------------------------------------------------------
       
 /**
- * ThinkPHP æ™®é€šæ¨¡å¼å®šä¹‰
+ * ThinkPHP ÆÕÍ¨Ä£Ê½¶¨Òå
  */
 return array(
-    // é…ç½®æ–‡ä»¶
+    // ÅäÖÃÎÄ¼ş
     'config'    =>  array(
-        THINK_PATH.'Conf/convention.php',   // ç³»ç»Ÿæƒ¯ä¾‹é…ç½®
-        CONF_PATH.'config'.CONF_EXT,      // åº”ç”¨å…¬å…±é…ç½®
+        THINK_PATH.'Conf/convention.php',   // ÏµÍ³¹ßÀıÅäÖÃ
+        CONF_PATH.'config'.CONF_EXT,      // Ó¦ÓÃ¹«¹²ÅäÖÃ
     ),
 
-    // åˆ«åå®šä¹‰
+    // ±ğÃû¶¨Òå
     'alias'     =>  array(
         'Think\Log'               => CORE_PATH . 'Log'.EXT,
         'Think\Log\Driver\File'   => CORE_PATH . 'Log/Driver/File'.EXT,
@@ -32,7 +32,7 @@ return array(
         'Think\Storage'           => CORE_PATH . 'Storage'.EXT,
     ),
 
-    // å‡½æ•°å’Œç±»æ–‡ä»¶
+    // º¯ÊıºÍÀàÎÄ¼ş
     'core'      =>  array(
         THINK_PATH.'Common/functions.php',
         COMMON_PATH.'Common/function.php',
@@ -47,25 +47,25 @@ return array(
         BEHAVIOR_PATH . 'ParseTemplateBehavior'.EXT,
         BEHAVIOR_PATH . 'ContentReplaceBehavior'.EXT,
     ),
-    // è¡Œä¸ºæ‰©å±•å®šä¹‰
+    // ĞĞÎªÀ©Õ¹¶¨Òå
     'tags'  =>  array(
         'app_init'     =>  array(
-            'Behavior\BuildLiteBehavior', // ç”Ÿæˆè¿è¡ŒLiteæ–‡ä»¶
+            'Behavior\BuildLiteBehavior', // Éú³ÉÔËĞĞLiteÎÄ¼ş
         ),        
         'app_begin'     =>  array(
-            'Behavior\ReadHtmlCacheBehavior', // è¯»å–é™æ€ç¼“å­˜
+            'Behavior\ReadHtmlCacheBehavior', // ¶ÁÈ¡¾²Ì¬»º´æ
         ),
         'app_end'       =>  array(
-            'Behavior\ShowPageTraceBehavior', // é¡µé¢Traceæ˜¾ç¤º
+            'Behavior\ShowPageTraceBehavior', // Ò³ÃæTraceÏÔÊ¾
         ),
         'view_parse'    =>  array(
-            'Behavior\ParseTemplateBehavior', // æ¨¡æ¿è§£æ æ”¯æŒPHPã€å†…ç½®æ¨¡æ¿å¼•æ“å’Œç¬¬ä¸‰æ–¹æ¨¡æ¿å¼•æ“
+            'Behavior\ParseTemplateBehavior', // Ä£°å½âÎö Ö§³ÖPHP¡¢ÄÚÖÃÄ£°åÒıÇæºÍµÚÈı·½Ä£°åÒıÇæ
         ),
         'template_filter'=> array(
-            'Behavior\ContentReplaceBehavior', // æ¨¡æ¿è¾“å‡ºæ›¿æ¢
+            'Behavior\ContentReplaceBehavior', // Ä£°åÊä³öÌæ»»
         ),
         'view_filter'   =>  array(
-            'Behavior\WriteHtmlCacheBehavior', // å†™å…¥é™æ€ç¼“å­˜
+            'Behavior\WriteHtmlCacheBehavior', // Ğ´Èë¾²Ì¬»º´æ
         ),
     ),
 );

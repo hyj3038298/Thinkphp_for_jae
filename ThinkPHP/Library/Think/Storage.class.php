@@ -9,21 +9,21 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 namespace Think;
-// åˆ†å¸ƒå¼æ–‡ä»¶å­˜å‚¨ç±»
+// ·Ö²¼Ê½ÎÄ¼ş´æ´¢Àà
 class Storage {
 
     /**
-     * æ“ä½œå¥æŸ„
+     * ²Ù×÷¾ä±ú
      * @var string
      * @access protected
      */
     static protected $handler    ;
 
     /**
-     * è¿æ¥åˆ†å¸ƒå¼æ–‡ä»¶ç³»ç»Ÿ
+     * Á¬½Ó·Ö²¼Ê½ÎÄ¼şÏµÍ³
      * @access public
-     * @param string $type æ–‡ä»¶ç±»å‹
-     * @param array $options  é…ç½®æ•°ç»„
+     * @param string $type ÎÄ¼şÀàĞÍ
+     * @param array $options  ÅäÖÃÊı×é
      * @return void
      */
     static public function connect($type='File',$options=array()) {
@@ -32,7 +32,7 @@ class Storage {
     }
 
     static public function __callStatic($method,$args){
-        //è°ƒç”¨ç¼“å­˜é©±åŠ¨çš„æ–¹æ³•
+        //µ÷ÓÃ»º´æÇı¶¯µÄ·½·¨
         if(method_exists(self::$handler, $method)){
            return call_user_func_array(array(self::$handler,$method), $args);
         }

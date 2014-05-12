@@ -10,29 +10,29 @@
 // +----------------------------------------------------------------------
 namespace Think;
 /**
- * ç¼“å­˜ç®¡ç†ç±»
+ * »º´æ¹ÜÀíÀà
  */
 class Cache {
 
     /**
-     * æ“ä½œå¥æŸ„
+     * ²Ù×÷¾ä±ú
      * @var string
      * @access protected
      */
     protected $handler    ;
 
     /**
-     * ç¼“å­˜è¿žæŽ¥å‚æ•°
+     * »º´æÁ¬½Ó²ÎÊý
      * @var integer
      * @access protected
      */
     protected $options = array();
 
     /**
-     * è¿žæŽ¥ç¼“å­˜
+     * Á¬½Ó»º´æ
      * @access public
-     * @param string $type ç¼“å­˜ç±»åž‹
-     * @param array $options  é…ç½®æ•°ç»„
+     * @param string $type »º´æÀàÐÍ
+     * @param array $options  ÅäÖÃÊý×é
      * @return object
      */
     public function connect($type='',$options=array()) {
@@ -46,7 +46,7 @@ class Cache {
     }
 
     /**
-     * å–å¾—ç¼“å­˜ç±»å®žä¾‹
+     * È¡µÃ»º´æÀàÊµÀý
      * @static
      * @access public
      * @return mixed
@@ -81,9 +81,9 @@ class Cache {
     }
 
     /**
-     * é˜Ÿåˆ—ç¼“å­˜
+     * ¶ÓÁÐ»º´æ
      * @access protected
-     * @param string $key é˜Ÿåˆ—å
+     * @param string $key ¶ÓÁÐÃû
      * @return mixed
      */
     // 
@@ -100,15 +100,15 @@ class Cache {
         if(!$value) {
             $value  =   array();
         }
-        // è¿›åˆ—
+        // ½øÁÐ
         if(false===array_search($key, $value))  array_push($value,$key);
         if(count($value) > $this->options['length']) {
-            // å‡ºåˆ—
+            // ³öÁÐ
             $key =  array_shift($value);
-            // åˆ é™¤ç¼“å­˜
+            // É¾³ý»º´æ
             $this->rm($key);
              if(APP_DEUBG){
-                //è°ƒè¯•æ¨¡å¼ä¸‹ï¼Œè®°å½•å‡ºåˆ—æ¬¡æ•°
+                //µ÷ÊÔÄ£Ê½ÏÂ£¬¼ÇÂ¼³öÁÐ´ÎÊý
                 N($queue_name.'_out_times',1,true);
             }
         }
@@ -116,7 +116,7 @@ class Cache {
     }
     
     public function __call($method,$args){
-        //è°ƒç”¨ç¼“å­˜ç±»åž‹è‡ªå·±çš„æ–¹æ³•
+        //µ÷ÓÃ»º´æÀàÐÍ×Ô¼ºµÄ·½·¨
         if(method_exists($this->handler, $method)){
            return call_user_func_array(array($this->handler,$method), $args);
         }else{

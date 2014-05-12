@@ -9,18 +9,18 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-// 应用入口文件
+// Ӧ������ļ�
 
-// 检测PHP环境
+// ���PHP����
 if(version_compare(PHP_VERSION,'5.3.0','<'))  die('require PHP > 5.3.0 !');
 
-// 开启调试模式 建议开发阶段开启 部署阶段注释或者设为false
+// ��������ģʽ ���鿪���׶ο��� ����׶�ע�ͻ�����Ϊfalse
 define('APP_DEBUG',True);
 
-// 定义应用目录
+// ����Ӧ��Ŀ¼
 define('APP_PATH','./Application/');
 
-// 引入ThinkPHP入口文件
+// ����ThinkPHP����ļ�
 require './ThinkPHP/ThinkPHP.php';
 
-// 亲^_^ 后面不需要任何代码了 就是如此简单
+// ��^_^ ���治��Ҫ�κδ����� ������˼�

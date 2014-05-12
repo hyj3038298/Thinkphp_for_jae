@@ -10,11 +10,11 @@
 // +----------------------------------------------------------------------
 namespace Behavior;
 /**
- * ç³»ç»Ÿè¡Œä¸ºæ‰©å±•ï¼šè¿è¡Œæ—¶é—´ä¿¡æ¯æ˜¾ç¤º
+ * ÏµÍ³ĞĞÎªÀ©Õ¹£ºÔËĞĞÊ±¼äĞÅÏ¢ÏÔÊ¾
  */
 class ShowRuntimeBehavior {
 
-    // è¡Œä¸ºæ‰©å±•çš„æ‰§è¡Œå…¥å£å¿…é¡»æ˜¯run
+    // ĞĞÎªÀ©Õ¹µÄÖ´ĞĞÈë¿Ú±ØĞëÊÇrun
     public function run(&$content){
         if(C('SHOW_RUN_TIME')){
             if(false !== strpos($content,'{__NORUNTIME__}')) {
@@ -32,29 +32,29 @@ class ShowRuntimeBehavior {
     }
 
     /**
-     * æ˜¾ç¤ºè¿è¡Œæ—¶é—´ã€æ•°æ®åº“æ“ä½œã€ç¼“å­˜æ¬¡æ•°ã€å†…å­˜ä½¿ç”¨ä¿¡æ¯
+     * ÏÔÊ¾ÔËĞĞÊ±¼ä¡¢Êı¾İ¿â²Ù×÷¡¢»º´æ´ÎÊı¡¢ÄÚ´æÊ¹ÓÃĞÅÏ¢
      * @access private
      * @return string
      */
     private function showTime() {
-        // æ˜¾ç¤ºè¿è¡Œæ—¶é—´
+        // ÏÔÊ¾ÔËĞĞÊ±¼ä
         G('beginTime',$GLOBALS['_beginTime']);
         G('viewEndTime');
         $showTime   =   'Process: '.G('beginTime','viewEndTime').'s ';
         if(C('SHOW_ADV_TIME')) {
-            // æ˜¾ç¤ºè¯¦ç»†è¿è¡Œæ—¶é—´
+            // ÏÔÊ¾ÏêÏ¸ÔËĞĞÊ±¼ä
             $showTime .= '( Load:'.G('beginTime','loadTime').'s Init:'.G('loadTime','initTime').'s Exec:'.G('initTime','viewStartTime').'s Template:'.G('viewStartTime','viewEndTime').'s )';
         }
         if(C('SHOW_DB_TIMES') && class_exists('Db',false) ) {
-            // æ˜¾ç¤ºæ•°æ®åº“æ“ä½œæ¬¡æ•°
+            // ÏÔÊ¾Êı¾İ¿â²Ù×÷´ÎÊı
             $showTime .= ' | DB :'.N('db_query').' queries '.N('db_write').' writes ';
         }
         if(C('SHOW_CACHE_TIMES') && class_exists('Cache',false)) {
-            // æ˜¾ç¤ºç¼“å­˜è¯»å†™æ¬¡æ•°
+            // ÏÔÊ¾»º´æ¶ÁĞ´´ÎÊı
             $showTime .= ' | Cache :'.N('cache_read').' gets '.N('cache_write').' writes ';
         }
         if(MEMORY_LIMIT_ON && C('SHOW_USE_MEM')) {
-            // æ˜¾ç¤ºå†…å­˜å¼€é”€
+            // ÏÔÊ¾ÄÚ´æ¿ªÏú
             $showTime .= ' | UseMem:'. number_format((memory_get_usage() - $GLOBALS['_startUseMems'])/1024).' kb';
         }
         if(C('SHOW_LOAD_FILE')) {

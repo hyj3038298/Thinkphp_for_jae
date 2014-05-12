@@ -19,23 +19,23 @@ class File {
         'log_path'          =>  '',
     );
 
-    // å®žä¾‹åŒ–å¹¶ä¼ å…¥å‚æ•°
+    // ÊµÀý»¯²¢´«Èë²ÎÊý
     public function __construct($config=array()){
         $this->config   =   array_merge($this->config,$config);
     }
 
     /**
-     * æ—¥å¿—å†™å…¥æŽ¥å£
+     * ÈÕÖ¾Ð´Èë½Ó¿Ú
      * @access public
-     * @param string $log æ—¥å¿—ä¿¡æ¯
-     * @param string $destination  å†™å…¥ç›®æ ‡
+     * @param string $log ÈÕÖ¾ÐÅÏ¢
+     * @param string $destination  Ð´ÈëÄ¿±ê
      * @return void
      */
     public function write($log,$destination='') {
         $now = date($this->config['log_time_format']);
         if(empty($destination))
             $destination = $this->config['log_path'].date('y_m_d').'.log';
-        //æ£€æµ‹æ—¥å¿—æ–‡ä»¶å¤§å°ï¼Œè¶…è¿‡é…ç½®å¤§å°åˆ™å¤‡ä»½æ—¥å¿—æ–‡ä»¶é‡æ–°ç”Ÿæˆ
+        //¼ì²âÈÕÖ¾ÎÄ¼þ´óÐ¡£¬³¬¹ýÅäÖÃ´óÐ¡Ôò±¸·ÝÈÕÖ¾ÎÄ¼þÖØÐÂÉú³É
         if(is_file($destination) && floor($this->config['log_file_size']) <= filesize($destination) )
               rename($destination,dirname($destination).'/'.time().'-'.basename($destination));
         error_log("[{$now}] ".$_SERVER['REMOTE_ADDR'].' '.$_SERVER['REQUEST_URI']."\r\n{$log}\r\n", 3,$destination);

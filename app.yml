@@ -1,0 +1,104 @@
+!!com.taobao.tae.config.domain.Config
+
+#应用元信息
+title: uz-demo-app
+#网页标题的设置
+description: tae uz app demo 
+language: php
+author: JasonYang
+thumbnail: /logo.jpg
+
+#type: 1 tae 模块 2 独立站点
+type: 2
+fileEncoding: GBK
+
+#全局css的配置
+#css: /assets/stylesheets/bootstrap.css
+
+#js: /assets/javascripts/imgservice.js
+
+#首页 通过域名直接访问的页面如test.uz.taobao.com访问时的页面
+
+index: /index.php
+
+# 关闭首页缓存
+#disableIndexCache:  true
+
+
+
+#http请求配置
+urls:
+#前端页面
+#url配置的是短域名，配置后可以访问/view/front/view.php 相当于是 /d/index 
+#主页 其中包含了css和js的demo
+- {handler: /index.php, url: /index}
+
+#测试各个服务的使用包括cache，context等
+- {handler: /services/mysql/dbconnection.php, url: /dbconnection}
+- {handler: /services/mysql/tableoperation.php, url: /tableoperation}
+
+#测试top api的调用
+- {handler: /view/front/test.php, url: /test}
+#测试top api的调用
+- {handler: /view/front/top.php, url: /top}
+
+#form的示例
+- {handler: /view/front/form.php, url: /form}
+
+#ajax的示例
+- {handler: /view/front/io.php, url: /io}
+- {handler: /view/front/json.php, url: /json}
+
+#图片轮播的示例
+- {handler: /view/front/swtich.php, url: /swtich}
+- {handler: /view/front/swtich2.php, url: /swtich2}
+
+#瀑布流的示例
+- {handler: /view/front/waterfall.php, url: /waterfall}
+
+#filestore的demo，在应用中如何上传和下载文件
+- {handler: /tfs/tfs.php, url: /tfs}
+- {handler: /tfs/formfiledownload.php, url: /down}
+- {handler: /tfs/formfileupload.php, url: /upload}
+
+#权限控制demo，只能站点所有者才能访问
+- {handler: /view/owner/owner.php, url: /owner}
+
+#权限控制demo，只能登录用户才能访问
+- {handler: /view/custmor/custmor.php, url: /custmor}
+
+#service demo ,演示如何实现mvc
+- {handler: /view/front/view.php, url: /view}
+- {handler: /view/front/report.php, url: /report}
+- {handler: /view/front/report_jsonp.php, url: /reportJsonp}
+- {handler: /view/front/vote_action.php, url: /voteAction}
+- {handler: /view/front/dnamicFunction.php, url: /dfi}
+
+# 性能 测试
+- {handler: /perf/index.php, url: /perf}
+
+#远程服务请求配置
+services:
+- {serviceName: hsfservice ,handler: /services/hsf/hsfservice.php }
+- {serviceName: appservice ,handler: /services/hsf/appservice.php }
+
+
+#安全和权限配置，默认是所有人都可以访问
+#这个是前缀规则, url代表请求相对路径的前缀。
+
+#role代表安全级别
+#anonymous是任何用户都可以访问
+#developer是站点所有者才能访问,
+#shopcustomer 是表示登录用户可以访问
+
+security:
+#front下面页面都是所有人可以访问  （配置两个相同长度的URL，测试后面那个起作用）
+- {url: /security/visitlimit/anonymous,role: developer }
+- {url: /security/visitlimit/anonymous,role: anonymous }
+
+#owner下面页面只有自己可以访问
+- {url: /security/visitlimit/developer,role: developer }
+
+#custmor下面页面只有登录可以访问
+- {url: /security/visitlimit/shopcustomer,role: shopcustomer  }
+

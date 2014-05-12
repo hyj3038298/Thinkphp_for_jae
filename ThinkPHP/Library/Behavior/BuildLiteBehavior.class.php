@@ -9,9 +9,9 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 namespace Behavior;
-// 鍒涘缓Lite杩愯鏂囦欢
-// 鍙互鏇挎崲妗嗘灦鍏ュ彛鏂囦欢杩愯
-// 寤鸿缁戝畾浣嶇疆app_init
+// 创建Lite运行文件
+// 可以替换框架入口文件运行
+// 建议绑定位置app_init
 class BuildLiteBehavior {
     public function run(&$params) {
         if(!defined('BUILD_LITE_FILE')) return ;
@@ -24,11 +24,11 @@ class BuildLiteBehavior {
             $content .= '$GLOBALS[\'_startUseMems\'] = memory_get_usage();';
         }
 
-        // 鐢熸垚鏁扮粍瀹氫箟
+        // 生成数组定义
         unset($defs['user']['BUILD_LITE_FILE']);
         $content   .=   $this->buildArrayDefine($defs['user']).'}';
 
-        // 璇诲彇缂栬瘧鍒楄〃鏂囦欢
+        // 读取编译列表文件
         $filelist   =   is_file(CONF_PATH.'lite.php')?
             include CONF_PATH.'lite.php':
             array(
@@ -50,23 +50,23 @@ class BuildLiteBehavior {
                 BEHAVIOR_PATH . 'ContentReplaceBehavior'.EXT,
             );
 
-        // 缂栬瘧鏂囦欢
+        // 编译文件
         foreach ($filelist as $file){
           if(is_file($file)) {
             $content   .= compile($file);
           }
         }
 
-        // 澶勭悊Think绫荤殑start鏂规硶
+        // 处理Think类的start方法
         $content  =  preg_replace('/\$runtimefile = RUNTIME_PATH(.+?)(if\(APP_STATUS)/','\2',$content,1);
         $content  .=  "\nnamespace { Think\Think::addMap(".var_export(\Think\Think::getMap(),true).");";
         $content  .=  "\nL(".var_export(L(),true).");\nC(".var_export(C(),true).');Think\Hook::import('.var_export(\Think\Hook::get(),true).');Think\Think::start();}';
 
-        // 鐢熸垚杩愯Lite鏂囦欢
+        // 生成运行Lite文件
         file_put_contents($litefile,strip_whitespace('<?php '.$content));
     }
 
-    // 鏍规嵁鏁扮粍鐢熸垚甯搁噺瀹氫箟
+    // 根据数组生成常量定义
     private function buildArrayDefine($array) {
         $content = "\n";
         foreach ($array as $key => $val) {

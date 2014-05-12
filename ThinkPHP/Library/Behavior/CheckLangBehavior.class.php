@@ -10,66 +10,66 @@
 // +----------------------------------------------------------------------
 namespace Behavior;
 /**
- * è¯­è¨€æ£€æµ‹ å¹¶è‡ªåŠ¨åŠ è½½è¯­è¨€åŒ…
+ * ÓïÑÔ¼ì²â ²¢×Ô¶¯¼ÓÔØÓïÑÔ°ü
  */
 class CheckLangBehavior {
 
-    // è¡Œä¸ºæ‰©å±•çš„æ‰§è¡Œå…¥å£å¿…é¡»æ˜¯run
+    // ĞĞÎªÀ©Õ¹µÄÖ´ĞĞÈë¿Ú±ØĞëÊÇrun
     public function run(&$params){
-        // æ£€æµ‹è¯­è¨€
+        // ¼ì²âÓïÑÔ
         $this->checkLanguage();
     }
 
     /**
-     * è¯­è¨€æ£€æŸ¥
-     * æ£€æŸ¥æµè§ˆå™¨æ”¯æŒè¯­è¨€ï¼Œå¹¶è‡ªåŠ¨åŠ è½½è¯­è¨€åŒ…
+     * ÓïÑÔ¼ì²é
+     * ¼ì²éä¯ÀÀÆ÷Ö§³ÖÓïÑÔ£¬²¢×Ô¶¯¼ÓÔØÓïÑÔ°ü
      * @access private
      * @return void
      */
     private function checkLanguage() {
-        // ä¸å¼€å¯è¯­è¨€åŒ…åŠŸèƒ½ï¼Œä»…ä»…åŠ è½½æ¡†æ¶è¯­è¨€æ–‡ä»¶ç›´æ¥è¿”å›
+        // ²»¿ªÆôÓïÑÔ°ü¹¦ÄÜ£¬½ö½ö¼ÓÔØ¿ò¼ÜÓïÑÔÎÄ¼şÖ±½Ó·µ»Ø
         if (!C('LANG_SWITCH_ON',null,false)){
             return;
         }
         $langSet = C('DEFAULT_LANG');
         $varLang =  C('VAR_LANGUAGE',null,'l');
         $langList = C('LANG_LIST',null,'zh-cn');
-        // å¯ç”¨äº†è¯­è¨€åŒ…åŠŸèƒ½
-        // æ ¹æ®æ˜¯å¦å¯ç”¨è‡ªåŠ¨ä¾¦æµ‹è®¾ç½®è·å–è¯­è¨€é€‰æ‹©
+        // ÆôÓÃÁËÓïÑÔ°ü¹¦ÄÜ
+        // ¸ù¾İÊÇ·ñÆôÓÃ×Ô¶¯Õì²âÉèÖÃ»ñÈ¡ÓïÑÔÑ¡Ôñ
         if (C('LANG_AUTO_DETECT',null,true)){
             if(isset($_GET[$varLang])){
-                $langSet = $_GET[$varLang];// urlä¸­è®¾ç½®äº†è¯­è¨€å˜é‡
+                $langSet = $_GET[$varLang];// urlÖĞÉèÖÃÁËÓïÑÔ±äÁ¿
                 cookie('think_language',$langSet,3600);
-            }elseif(cookie('think_language')){// è·å–ä¸Šæ¬¡ç”¨æˆ·çš„é€‰æ‹©
+            }elseif(cookie('think_language')){// »ñÈ¡ÉÏ´ÎÓÃ»§µÄÑ¡Ôñ
                 $langSet = cookie('think_language');
-            }elseif(isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])){// è‡ªåŠ¨ä¾¦æµ‹æµè§ˆå™¨è¯­è¨€
+            }elseif(isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])){// ×Ô¶¯Õì²âä¯ÀÀÆ÷ÓïÑÔ
                 preg_match('/^([a-z\d\-]+)/i', $_SERVER['HTTP_ACCEPT_LANGUAGE'], $matches);
                 $langSet = $matches[1];
                 cookie('think_language',$langSet,3600);
             }
-            if(false === stripos($langList,$langSet)) { // éæ³•è¯­è¨€å‚æ•°
+            if(false === stripos($langList,$langSet)) { // ·Ç·¨ÓïÑÔ²ÎÊı
                 $langSet = C('DEFAULT_LANG');
             }
         }
-        // å®šä¹‰å½“å‰è¯­è¨€
+        // ¶¨Òåµ±Ç°ÓïÑÔ
         define('LANG_SET',strtolower($langSet));
 
-        // è¯»å–æ¡†æ¶è¯­è¨€åŒ…
+        // ¶ÁÈ¡¿ò¼ÜÓïÑÔ°ü
         $file   =   THINK_PATH.'Lang/'.LANG_SET.'.php';
         if(LANG_SET != C('DEFAULT_LANG') && is_file($file))
             L(include $file);
 
-        // è¯»å–åº”ç”¨å…¬å…±è¯­è¨€åŒ…
+        // ¶ÁÈ¡Ó¦ÓÃ¹«¹²ÓïÑÔ°ü
         $file   =  LANG_PATH.LANG_SET.'.php';
         if(is_file($file))
             L(include $file);
         
-        // è¯»å–æ¨¡å—è¯­è¨€åŒ…
+        // ¶ÁÈ¡Ä£¿éÓïÑÔ°ü
         $file   =   MODULE_PATH.'Lang/'.LANG_SET.'.php';
         if(is_file($file))
             L(include $file);
 
-        // è¯»å–å½“å‰æ§åˆ¶å™¨è¯­è¨€åŒ…
+        // ¶ÁÈ¡µ±Ç°¿ØÖÆÆ÷ÓïÑÔ°ü
         $file   =   MODULE_PATH.'Lang/'.LANG_SET.'/'.strtolower(CONTROLLER_NAME).'.php';
         if (is_file($file))
             L(include $file);

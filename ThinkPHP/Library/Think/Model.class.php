@@ -10,69 +10,69 @@
 // +----------------------------------------------------------------------
 namespace Think;
 /**
- * ThinkPHP Modelæ¨¡å‹ç±»
- * å®ç°äº†ORMå’ŒActiveRecordsæ¨¡å¼
+ * ThinkPHP ModelÄ£ĞÍÀà
+ * ÊµÏÖÁËORMºÍActiveRecordsÄ£Ê½
  */
 class Model {
-    // æ“ä½œçŠ¶æ€
-    const MODEL_INSERT          =   1;      //  æ’å…¥æ¨¡å‹æ•°æ®
-    const MODEL_UPDATE          =   2;      //  æ›´æ–°æ¨¡å‹æ•°æ®
-    const MODEL_BOTH            =   3;      //  åŒ…å«ä¸Šé¢ä¸¤ç§æ–¹å¼
-    const MUST_VALIDATE         =   1;      // å¿…é¡»éªŒè¯
-    const EXISTS_VALIDATE       =   0;      // è¡¨å•å­˜åœ¨å­—æ®µåˆ™éªŒè¯
-    const VALUE_VALIDATE        =   2;      // è¡¨å•å€¼ä¸ä¸ºç©ºåˆ™éªŒè¯
+    // ²Ù×÷×´Ì¬
+    const MODEL_INSERT          =   1;      //  ²åÈëÄ£ĞÍÊı¾İ
+    const MODEL_UPDATE          =   2;      //  ¸üĞÂÄ£ĞÍÊı¾İ
+    const MODEL_BOTH            =   3;      //  °üº¬ÉÏÃæÁ½ÖÖ·½Ê½
+    const MUST_VALIDATE         =   1;      // ±ØĞëÑéÖ¤
+    const EXISTS_VALIDATE       =   0;      // ±íµ¥´æÔÚ×Ö¶ÎÔòÑéÖ¤
+    const VALUE_VALIDATE        =   2;      // ±íµ¥Öµ²»Îª¿ÕÔòÑéÖ¤
 
-    // å½“å‰æ•°æ®åº“æ“ä½œå¯¹è±¡
+    // µ±Ç°Êı¾İ¿â²Ù×÷¶ÔÏó
     protected $db               =   null;
-    // ä¸»é”®åç§°
+    // Ö÷¼üÃû³Æ
     protected $pk               =   'id';
-    // ä¸»é”®æ˜¯å¦è‡ªåŠ¨å¢é•¿
+    // Ö÷¼üÊÇ·ñ×Ô¶¯Ôö³¤
     protected $autoinc          =   false;    
-    // æ•°æ®è¡¨å‰ç¼€
+    // Êı¾İ±íÇ°×º
     protected $tablePrefix      =   null;
-    // æ¨¡å‹åç§°
+    // Ä£ĞÍÃû³Æ
     protected $name             =   '';
-    // æ•°æ®åº“åç§°
+    // Êı¾İ¿âÃû³Æ
     protected $dbName           =   '';
-    //æ•°æ®åº“é…ç½®
+    //Êı¾İ¿âÅäÖÃ
     protected $connection       =   '';
-    // æ•°æ®è¡¨åï¼ˆä¸åŒ…å«è¡¨å‰ç¼€ï¼‰
+    // Êı¾İ±íÃû£¨²»°üº¬±íÇ°×º£©
     protected $tableName        =   '';
-    // å®é™…æ•°æ®è¡¨åï¼ˆåŒ…å«è¡¨å‰ç¼€ï¼‰
+    // Êµ¼ÊÊı¾İ±íÃû£¨°üº¬±íÇ°×º£©
     protected $trueTableName    =   '';
-    // æœ€è¿‘é”™è¯¯ä¿¡æ¯
+    // ×î½ü´íÎóĞÅÏ¢
     protected $error            =   '';
-    // å­—æ®µä¿¡æ¯
+    // ×Ö¶ÎĞÅÏ¢
     protected $fields           =   array();
-    // æ•°æ®ä¿¡æ¯
+    // Êı¾İĞÅÏ¢
     protected $data             =   array();
-    // æŸ¥è¯¢è¡¨è¾¾å¼å‚æ•°
+    // ²éÑ¯±í´ïÊ½²ÎÊı
     protected $options          =   array();
-    protected $_validate        =   array();  // è‡ªåŠ¨éªŒè¯å®šä¹‰
-    protected $_auto            =   array();  // è‡ªåŠ¨å®Œæˆå®šä¹‰
-    protected $_map             =   array();  // å­—æ®µæ˜ å°„å®šä¹‰
-    protected $_scope           =   array();  // å‘½åèŒƒå›´å®šä¹‰
-    // æ˜¯å¦è‡ªåŠ¨æ£€æµ‹æ•°æ®è¡¨å­—æ®µä¿¡æ¯
+    protected $_validate        =   array();  // ×Ô¶¯ÑéÖ¤¶¨Òå
+    protected $_auto            =   array();  // ×Ô¶¯Íê³É¶¨Òå
+    protected $_map             =   array();  // ×Ö¶ÎÓ³Éä¶¨Òå
+    protected $_scope           =   array();  // ÃüÃû·¶Î§¶¨Òå
+    // ÊÇ·ñ×Ô¶¯¼ì²âÊı¾İ±í×Ö¶ÎĞÅÏ¢
     protected $autoCheckFields  =   true;
-    // æ˜¯å¦æ‰¹å¤„ç†éªŒè¯
+    // ÊÇ·ñÅú´¦ÀíÑéÖ¤
     protected $patchValidate    =   false;
-    // é“¾æ“ä½œæ–¹æ³•åˆ—è¡¨
+    // Á´²Ù×÷·½·¨ÁĞ±í
     protected $methods          =   array('order','alias','having','group','lock','distinct','auto','filter','validate','result','token');
 
     /**
-     * æ¶æ„å‡½æ•°
-     * å–å¾—DBç±»çš„å®ä¾‹å¯¹è±¡ å­—æ®µæ£€æŸ¥
+     * ¼Ü¹¹º¯Êı
+     * È¡µÃDBÀàµÄÊµÀı¶ÔÏó ×Ö¶Î¼ì²é
      * @access public
-     * @param string $name æ¨¡å‹åç§°
-     * @param string $tablePrefix è¡¨å‰ç¼€
-     * @param mixed $connection æ•°æ®åº“è¿æ¥ä¿¡æ¯
+     * @param string $name Ä£ĞÍÃû³Æ
+     * @param string $tablePrefix ±íÇ°×º
+     * @param mixed $connection Êı¾İ¿âÁ¬½ÓĞÅÏ¢
      */
     public function __construct($name='',$tablePrefix='',$connection='') {
-        // æ¨¡å‹åˆå§‹åŒ–
+        // Ä£ĞÍ³õÊ¼»¯
         $this->_initialize();
-        // è·å–æ¨¡å‹åç§°
+        // »ñÈ¡Ä£ĞÍÃû³Æ
         if(!empty($name)) {
-            if(strpos($name,'.')) { // æ”¯æŒ æ•°æ®åº“å.æ¨¡å‹åçš„ å®šä¹‰
+            if(strpos($name,'.')) { // Ö§³Ö Êı¾İ¿âÃû.Ä£ĞÍÃûµÄ ¶¨Òå
                 list($this->dbName,$this->name) = explode('.',$name);
             }else{
                 $this->name   =  $name;
@@ -80,8 +80,8 @@ class Model {
         }elseif(empty($this->name)){
             $this->name =   $this->getModelName();
         }
-        // è®¾ç½®è¡¨å‰ç¼€
-        if(is_null($tablePrefix)) {// å‰ç¼€ä¸ºNullè¡¨ç¤ºæ²¡æœ‰å‰ç¼€
+        // ÉèÖÃ±íÇ°×º
+        if(is_null($tablePrefix)) {// Ç°×ºÎªNull±íÊ¾Ã»ÓĞÇ°×º
             $this->tablePrefix = '';
         }elseif('' != $tablePrefix) {
             $this->tablePrefix = $tablePrefix;
@@ -89,22 +89,22 @@ class Model {
             $this->tablePrefix = C('DB_PREFIX');
         }
 
-        // æ•°æ®åº“åˆå§‹åŒ–æ“ä½œ
-        // è·å–æ•°æ®åº“æ“ä½œå¯¹è±¡
-        // å½“å‰æ¨¡å‹æœ‰ç‹¬ç«‹çš„æ•°æ®åº“è¿æ¥ä¿¡æ¯
+        // Êı¾İ¿â³õÊ¼»¯²Ù×÷
+        // »ñÈ¡Êı¾İ¿â²Ù×÷¶ÔÏó
+        // µ±Ç°Ä£ĞÍÓĞ¶ÀÁ¢µÄÊı¾İ¿âÁ¬½ÓĞÅÏ¢
         $this->db(0,empty($this->connection)?$connection:$this->connection,true);
     }
 
     /**
-     * è‡ªåŠ¨æ£€æµ‹æ•°æ®è¡¨ä¿¡æ¯
+     * ×Ô¶¯¼ì²âÊı¾İ±íĞÅÏ¢
      * @access protected
      * @return void
      */
     protected function _checkTableInfo() {
-        // å¦‚æœä¸æ˜¯Modelç±» è‡ªåŠ¨è®°å½•æ•°æ®è¡¨ä¿¡æ¯
-        // åªåœ¨ç¬¬ä¸€æ¬¡æ‰§è¡Œè®°å½•
+        // Èç¹û²»ÊÇModelÀà ×Ô¶¯¼ÇÂ¼Êı¾İ±íĞÅÏ¢
+        // Ö»ÔÚµÚÒ»´ÎÖ´ĞĞ¼ÇÂ¼
         if(empty($this->fields)) {
-            // å¦‚æœæ•°æ®è¡¨å­—æ®µæ²¡æœ‰å®šä¹‰åˆ™è‡ªåŠ¨è·å–
+            // Èç¹ûÊı¾İ±í×Ö¶ÎÃ»ÓĞ¶¨ÒåÔò×Ô¶¯»ñÈ¡
             if(C('DB_FIELDS_CACHE')) {
                 $db   =  $this->dbName?:C('DB_NAME');
                 $fields = F('_fields/'.strtolower($db.'.'.$this->name));
@@ -114,26 +114,26 @@ class Model {
                     return ;
                 }
             }
-            // æ¯æ¬¡éƒ½ä¼šè¯»å–æ•°æ®è¡¨ä¿¡æ¯
+            // Ã¿´Î¶¼»á¶ÁÈ¡Êı¾İ±íĞÅÏ¢
             $this->flush();
         }
     }
 
     /**
-     * è·å–å­—æ®µä¿¡æ¯å¹¶ç¼“å­˜
+     * »ñÈ¡×Ö¶ÎĞÅÏ¢²¢»º´æ
      * @access public
      * @return void
      */
     public function flush() {
-        // ç¼“å­˜ä¸å­˜åœ¨åˆ™æŸ¥è¯¢æ•°æ®è¡¨ä¿¡æ¯
+        // »º´æ²»´æÔÚÔò²éÑ¯Êı¾İ±íĞÅÏ¢
         $this->db->setModel($this->name);
         $fields =   $this->db->getFields($this->getTableName());
-        if(!$fields) { // æ— æ³•è·å–å­—æ®µä¿¡æ¯
+        if(!$fields) { // ÎŞ·¨»ñÈ¡×Ö¶ÎĞÅÏ¢
             return false;
         }
         $this->fields   =   array_keys($fields);
         foreach ($fields as $key=>$val){
-            // è®°å½•å­—æ®µç±»å‹
+            // ¼ÇÂ¼×Ö¶ÎÀàĞÍ
             $type[$key]     =   $val['type'];
             if($val['primary']) {
                 $this->pk   =   $key;
@@ -141,33 +141,33 @@ class Model {
                 if($val['autoinc']) $this->autoinc   =   true;
             }
         }
-        // è®°å½•å­—æ®µç±»å‹ä¿¡æ¯
+        // ¼ÇÂ¼×Ö¶ÎÀàĞÍĞÅÏ¢
         $this->fields['_type'] =  $type;
 
-        // 2008-3-7 å¢åŠ ç¼“å­˜å¼€å…³æ§åˆ¶
+        // 2008-3-7 Ôö¼Ó»º´æ¿ª¹Ø¿ØÖÆ
         if(C('DB_FIELDS_CACHE')){
-            // æ°¸ä¹…ç¼“å­˜æ•°æ®è¡¨ä¿¡æ¯
+            // ÓÀ¾Ã»º´æÊı¾İ±íĞÅÏ¢
             $db   =  $this->dbName?:C('DB_NAME');
             F('_fields/'.strtolower($db.'.'.$this->name),$this->fields);
         }
     }
 
     /**
-     * è®¾ç½®æ•°æ®å¯¹è±¡çš„å€¼
+     * ÉèÖÃÊı¾İ¶ÔÏóµÄÖµ
      * @access public
-     * @param string $name åç§°
-     * @param mixed $value å€¼
+     * @param string $name Ãû³Æ
+     * @param mixed $value Öµ
      * @return void
      */
     public function __set($name,$value) {
-        // è®¾ç½®æ•°æ®å¯¹è±¡å±æ€§
+        // ÉèÖÃÊı¾İ¶ÔÏóÊôĞÔ
         $this->data[$name]  =   $value;
     }
 
     /**
-     * è·å–æ•°æ®å¯¹è±¡çš„å€¼
+     * »ñÈ¡Êı¾İ¶ÔÏóµÄÖµ
      * @access public
-     * @param string $name åç§°
+     * @param string $name Ãû³Æ
      * @return mixed
      */
     public function __get($name) {
@@ -175,9 +175,9 @@ class Model {
     }
 
     /**
-     * æ£€æµ‹æ•°æ®å¯¹è±¡çš„å€¼
+     * ¼ì²âÊı¾İ¶ÔÏóµÄÖµ
      * @access public
-     * @param string $name åç§°
+     * @param string $name Ãû³Æ
      * @return boolean
      */
     public function __isset($name) {
@@ -185,9 +185,9 @@ class Model {
     }
 
     /**
-     * é”€æ¯æ•°æ®å¯¹è±¡çš„å€¼
+     * Ïú»ÙÊı¾İ¶ÔÏóµÄÖµ
      * @access public
-     * @param string $name åç§°
+     * @param string $name Ãû³Æ
      * @return void
      */
     public function __unset($name) {
@@ -195,50 +195,50 @@ class Model {
     }
 
     /**
-     * åˆ©ç”¨__callæ–¹æ³•å®ç°ä¸€äº›ç‰¹æ®Šçš„Modelæ–¹æ³•
+     * ÀûÓÃ__call·½·¨ÊµÏÖÒ»Ğ©ÌØÊâµÄModel·½·¨
      * @access public
-     * @param string $method æ–¹æ³•åç§°
-     * @param array $args è°ƒç”¨å‚æ•°
+     * @param string $method ·½·¨Ãû³Æ
+     * @param array $args µ÷ÓÃ²ÎÊı
      * @return mixed
      */
     public function __call($method,$args) {
         if(in_array(strtolower($method),$this->methods,true)) {
-            // è¿è´¯æ“ä½œçš„å®ç°
+            // Á¬¹á²Ù×÷µÄÊµÏÖ
             $this->options[strtolower($method)] =   $args[0];
             return $this;
         }elseif(in_array(strtolower($method),array('count','sum','min','max','avg'),true)){
-            // ç»Ÿè®¡æŸ¥è¯¢çš„å®ç°
+            // Í³¼Æ²éÑ¯µÄÊµÏÖ
             $field =  isset($args[0])?$args[0]:'*';
             return $this->getField(strtoupper($method).'('.$field.') AS tp_'.$method);
         }elseif(strtolower(substr($method,0,5))=='getby') {
-            // æ ¹æ®æŸä¸ªå­—æ®µè·å–è®°å½•
+            // ¸ù¾İÄ³¸ö×Ö¶Î»ñÈ¡¼ÇÂ¼
             $field   =   parse_name(substr($method,5));
             $where[$field] =  $args[0];
             return $this->where($where)->find();
         }elseif(strtolower(substr($method,0,10))=='getfieldby') {
-            // æ ¹æ®æŸä¸ªå­—æ®µè·å–è®°å½•çš„æŸä¸ªå€¼
+            // ¸ù¾İÄ³¸ö×Ö¶Î»ñÈ¡¼ÇÂ¼µÄÄ³¸öÖµ
             $name   =   parse_name(substr($method,10));
             $where[$name] =$args[0];
             return $this->where($where)->getField($args[1]);
-        }elseif(isset($this->_scope[$method])){// å‘½åèŒƒå›´çš„å•ç‹¬è°ƒç”¨æ”¯æŒ
+        }elseif(isset($this->_scope[$method])){// ÃüÃû·¶Î§µÄµ¥¶Àµ÷ÓÃÖ§³Ö
             return $this->scope($method,$args[0]);
         }else{
             E(__CLASS__.':'.$method.L('_METHOD_NOT_EXIST_'));
             return;
         }
     }
-    // å›è°ƒæ–¹æ³• åˆå§‹åŒ–æ¨¡å‹
+    // »Øµ÷·½·¨ ³õÊ¼»¯Ä£ĞÍ
     protected function _initialize() {}
 
     /**
-     * å¯¹ä¿å­˜åˆ°æ•°æ®åº“çš„æ•°æ®è¿›è¡Œå¤„ç†
+     * ¶Ô±£´æµ½Êı¾İ¿âµÄÊı¾İ½øĞĞ´¦Àí
      * @access protected
-     * @param mixed $data è¦æ“ä½œçš„æ•°æ®
+     * @param mixed $data Òª²Ù×÷µÄÊı¾İ
      * @return boolean
      */
      protected function _facade($data) {
 
-        // æ£€æŸ¥æ•°æ®å­—æ®µåˆæ³•æ€§
+        // ¼ì²éÊı¾İ×Ö¶ÎºÏ·¨ĞÔ
         if(!empty($this->fields)) {
             if(!empty($this->options['field'])) {
                 $fields =   $this->options['field'];
@@ -256,13 +256,13 @@ class Model {
                     }                    
                     unset($data[$key]);
                 }elseif(is_scalar($val)) {
-                    // å­—æ®µç±»å‹æ£€æŸ¥ å’Œ å¼ºåˆ¶è½¬æ¢
+                    // ×Ö¶ÎÀàĞÍ¼ì²é ºÍ Ç¿ÖÆ×ª»»
                     $this->_parseType($data,$key);
                 }
             }
         }
        
-        // å®‰å…¨è¿‡æ»¤
+        // °²È«¹ıÂË
         if(!empty($this->options['filter'])) {
             $data = array_map($this->options['filter'],$data);
             unset($this->options['filter']);
@@ -271,42 +271,42 @@ class Model {
         return $data;
      }
 
-    // å†™å…¥æ•°æ®å‰çš„å›è°ƒæ–¹æ³• åŒ…æ‹¬æ–°å¢å’Œæ›´æ–°
+    // Ğ´ÈëÊı¾İÇ°µÄ»Øµ÷·½·¨ °üÀ¨ĞÂÔöºÍ¸üĞÂ
     protected function _before_write(&$data) {}
 
     /**
-     * æ–°å¢æ•°æ®
+     * ĞÂÔöÊı¾İ
      * @access public
-     * @param mixed $data æ•°æ®
-     * @param array $options è¡¨è¾¾å¼
-     * @param boolean $replace æ˜¯å¦replace
+     * @param mixed $data Êı¾İ
+     * @param array $options ±í´ïÊ½
+     * @param boolean $replace ÊÇ·ñreplace
      * @return mixed
      */
     public function add($data='',$options=array(),$replace=false) {
         if(empty($data)) {
-            // æ²¡æœ‰ä¼ é€’æ•°æ®ï¼Œè·å–å½“å‰æ•°æ®å¯¹è±¡çš„å€¼
+            // Ã»ÓĞ´«µİÊı¾İ£¬»ñÈ¡µ±Ç°Êı¾İ¶ÔÏóµÄÖµ
             if(!empty($this->data)) {
                 $data           =   $this->data;
-                // é‡ç½®æ•°æ®
+                // ÖØÖÃÊı¾İ
                 $this->data     = array();
             }else{
                 $this->error    = L('_DATA_TYPE_INVALID_');
                 return false;
             }
         }
-        // åˆ†æè¡¨è¾¾å¼
+        // ·ÖÎö±í´ïÊ½
         $options    =   $this->_parseOptions($options);
-        // æ•°æ®å¤„ç†
+        // Êı¾İ´¦Àí
         $data       =   $this->_facade($data);
         if(false === $this->_before_insert($data,$options)) {
             return false;
         }
-        // å†™å…¥æ•°æ®åˆ°æ•°æ®åº“
+        // Ğ´ÈëÊı¾İµ½Êı¾İ¿â
         $result = $this->db->insert($data,$options,$replace);
         if(false !== $result ) {
             $insertId   =   $this->getLastInsID();
             if($insertId) {
-                // è‡ªå¢ä¸»é”®è¿”å›æ’å…¥ID
+                // ×ÔÔöÖ÷¼ü·µ»Ø²åÈëID
                 $data[$this->getPk()]  = $insertId;
                 if(false === $this->_after_insert($data,$options)) {
                     return false;
@@ -319,9 +319,9 @@ class Model {
         }
         return $result;
     }
-    // æ’å…¥æ•°æ®å‰çš„å›è°ƒæ–¹æ³•
+    // ²åÈëÊı¾İÇ°µÄ»Øµ÷·½·¨
     protected function _before_insert(&$data,$options) {}
-    // æ’å…¥æˆåŠŸåçš„å›è°ƒæ–¹æ³•
+    // ²åÈë³É¹¦ºóµÄ»Øµ÷·½·¨
     protected function _after_insert($data,$options) {}
 
     public function addAll($dataList,$options=array(),$replace=false){
@@ -329,13 +329,13 @@ class Model {
             $this->error = L('_DATA_TYPE_INVALID_');
             return false;
         }
-        // åˆ†æè¡¨è¾¾å¼
+        // ·ÖÎö±í´ïÊ½
         $options =  $this->_parseOptions($options);
-        // æ•°æ®å¤„ç†
+        // Êı¾İ´¦Àí
         foreach ($dataList as $key=>$data){
             $dataList[$key] = $this->_facade($data);
         }
-        // å†™å…¥æ•°æ®åˆ°æ•°æ®åº“
+        // Ğ´ÈëÊı¾İµ½Êı¾İ¿â
         $result = $this->db->insertAll($dataList,$options,$replace);
         if(false !== $result ) {
             $insertId   =   $this->getLastInsID();
@@ -347,64 +347,64 @@ class Model {
     }
 
     /**
-     * é€šè¿‡Selectæ–¹å¼æ·»åŠ è®°å½•
+     * Í¨¹ıSelect·½Ê½Ìí¼Ó¼ÇÂ¼
      * @access public
-     * @param string $fields è¦æ’å…¥çš„æ•°æ®è¡¨å­—æ®µå
-     * @param string $table è¦æ’å…¥çš„æ•°æ®è¡¨å
-     * @param array $options è¡¨è¾¾å¼
+     * @param string $fields Òª²åÈëµÄÊı¾İ±í×Ö¶ÎÃû
+     * @param string $table Òª²åÈëµÄÊı¾İ±íÃû
+     * @param array $options ±í´ïÊ½
      * @return boolean
      */
     public function selectAdd($fields='',$table='',$options=array()) {
-        // åˆ†æè¡¨è¾¾å¼
+        // ·ÖÎö±í´ïÊ½
         $options =  $this->_parseOptions($options);
-        // å†™å…¥æ•°æ®åˆ°æ•°æ®åº“
+        // Ğ´ÈëÊı¾İµ½Êı¾İ¿â
         if(false === $result = $this->db->selectInsert($fields?:$options['field'],$table?:$this->getTableName(),$options)){
-            // æ•°æ®åº“æ’å…¥æ“ä½œå¤±è´¥
+            // Êı¾İ¿â²åÈë²Ù×÷Ê§°Ü
             $this->error = L('_OPERATION_WRONG_');
             return false;
         }else {
-            // æ’å…¥æˆåŠŸ
+            // ²åÈë³É¹¦
             return $result;
         }
     }
 
     /**
-     * ä¿å­˜æ•°æ®
+     * ±£´æÊı¾İ
      * @access public
-     * @param mixed $data æ•°æ®
-     * @param array $options è¡¨è¾¾å¼
+     * @param mixed $data Êı¾İ
+     * @param array $options ±í´ïÊ½
      * @return boolean
      */
     public function save($data='',$options=array()) {
         if(empty($data)) {
-            // æ²¡æœ‰ä¼ é€’æ•°æ®ï¼Œè·å–å½“å‰æ•°æ®å¯¹è±¡çš„å€¼
+            // Ã»ÓĞ´«µİÊı¾İ£¬»ñÈ¡µ±Ç°Êı¾İ¶ÔÏóµÄÖµ
             if(!empty($this->data)) {
                 $data           =   $this->data;
-                // é‡ç½®æ•°æ®
+                // ÖØÖÃÊı¾İ
                 $this->data     =   array();
             }else{
                 $this->error    =   L('_DATA_TYPE_INVALID_');
                 return false;
             }
         }
-        // æ•°æ®å¤„ç†
+        // Êı¾İ´¦Àí
         $data       =   $this->_facade($data);
         if(empty($data)){
-            // æ²¡æœ‰æ•°æ®åˆ™ä¸æ‰§è¡Œ
+            // Ã»ÓĞÊı¾İÔò²»Ö´ĞĞ
             $this->error    =   L('_DATA_TYPE_INVALID_');
             return false;
         }
-        // åˆ†æè¡¨è¾¾å¼
+        // ·ÖÎö±í´ïÊ½
         $options    =   $this->_parseOptions($options);
         $pk         =   $this->getPk();
         if(!isset($options['where']) ) {
-            // å¦‚æœå­˜åœ¨ä¸»é”®æ•°æ® åˆ™è‡ªåŠ¨ä½œä¸ºæ›´æ–°æ¡ä»¶
+            // Èç¹û´æÔÚÖ÷¼üÊı¾İ Ôò×Ô¶¯×÷Îª¸üĞÂÌõ¼ş
             if(isset($data[$pk])) {
                 $where[$pk]         =   $data[$pk];
                 $options['where']   =   $where;
                 unset($data[$pk]);
             }else{
-                // å¦‚æœæ²¡æœ‰ä»»ä½•æ›´æ–°æ¡ä»¶åˆ™ä¸æ‰§è¡Œ
+                // Èç¹ûÃ»ÓĞÈÎºÎ¸üĞÂÌõ¼şÔò²»Ö´ĞĞ
                 $this->error        =   L('_OPERATION_WRONG_');
                 return false;
             }
@@ -422,20 +422,20 @@ class Model {
         }
         return $result;
     }
-    // æ›´æ–°æ•°æ®å‰çš„å›è°ƒæ–¹æ³•
+    // ¸üĞÂÊı¾İÇ°µÄ»Øµ÷·½·¨
     protected function _before_update(&$data,$options) {}
-    // æ›´æ–°æˆåŠŸåçš„å›è°ƒæ–¹æ³•
+    // ¸üĞÂ³É¹¦ºóµÄ»Øµ÷·½·¨
     protected function _after_update($data,$options) {}
 
     /**
-     * åˆ é™¤æ•°æ®
+     * É¾³ıÊı¾İ
      * @access public
-     * @param mixed $options è¡¨è¾¾å¼
+     * @param mixed $options ±í´ïÊ½
      * @return mixed
      */
     public function delete($options=array()) {
         if(empty($options) && empty($this->options['where'])) {
-            // å¦‚æœåˆ é™¤æ¡ä»¶ä¸ºç©º åˆ™åˆ é™¤å½“å‰æ•°æ®å¯¹è±¡æ‰€å¯¹åº”çš„è®°å½•
+            // Èç¹ûÉ¾³ıÌõ¼şÎª¿Õ ÔòÉ¾³ıµ±Ç°Êı¾İ¶ÔÏóËù¶ÔÓ¦µÄ¼ÇÂ¼
             if(!empty($this->data) && isset($this->data[$this->getPk()]))
                 return $this->delete($this->data[$this->getPk()]);
             else
@@ -443,7 +443,7 @@ class Model {
         }
         $pk   =  $this->getPk();
         if(is_numeric($options)  || is_string($options)) {
-            // æ ¹æ®ä¸»é”®åˆ é™¤è®°å½•
+            // ¸ù¾İÖ÷¼üÉ¾³ı¼ÇÂ¼
             if(strpos($options,',')) {
                 $where[$pk]     =  array('IN', $options);
             }else{
@@ -452,10 +452,10 @@ class Model {
             $options            =  array();
             $options['where']   =  $where;
         }
-        // åˆ†æè¡¨è¾¾å¼
+        // ·ÖÎö±í´ïÊ½
         $options =  $this->_parseOptions($options);
         if(empty($options['where'])){
-            // å¦‚æœæ¡ä»¶ä¸ºç©º ä¸è¿›è¡Œåˆ é™¤æ“ä½œ é™¤éè®¾ç½® 1=1
+            // Èç¹ûÌõ¼şÎª¿Õ ²»½øĞĞÉ¾³ı²Ù×÷ ³ı·ÇÉèÖÃ 1=1
             return false;
         }        
         if(is_array($options['where']) && isset($options['where'][$pk])){
@@ -471,23 +471,23 @@ class Model {
             if(isset($pkValue)) $data[$pk]   =  $pkValue;
             $this->_after_delete($data,$options);
         }
-        // è¿”å›åˆ é™¤è®°å½•ä¸ªæ•°
+        // ·µ»ØÉ¾³ı¼ÇÂ¼¸öÊı
         return $result;
     }
-    // åˆ é™¤æ•°æ®å‰çš„å›è°ƒæ–¹æ³•
+    // É¾³ıÊı¾İÇ°µÄ»Øµ÷·½·¨
     protected function _before_delete($options) {}    
-    // åˆ é™¤æˆåŠŸåçš„å›è°ƒæ–¹æ³•
+    // É¾³ı³É¹¦ºóµÄ»Øµ÷·½·¨
     protected function _after_delete($data,$options) {}
 
     /**
-     * æŸ¥è¯¢æ•°æ®é›†
+     * ²éÑ¯Êı¾İ¼¯
      * @access public
-     * @param array $options è¡¨è¾¾å¼å‚æ•°
+     * @param array $options ±í´ïÊ½²ÎÊı
      * @return mixed
      */
     public function select($options=array()) {
         if(is_string($options) || is_numeric($options)) {
-            // æ ¹æ®ä¸»é”®æŸ¥è¯¢
+            // ¸ù¾İÖ÷¼ü²éÑ¯
             $pk   =  $this->getPk();
             if(strpos($options,',')) {
                 $where[$pk]     =  array('IN',$options);
@@ -496,15 +496,15 @@ class Model {
             }
             $options            =  array();
             $options['where']   =  $where;
-        }elseif(false === $options){ // ç”¨äºå­æŸ¥è¯¢ ä¸æŸ¥è¯¢åªè¿”å›SQL
+        }elseif(false === $options){ // ÓÃÓÚ×Ó²éÑ¯ ²»²éÑ¯Ö»·µ»ØSQL
             $options            =  array();
-            // åˆ†æè¡¨è¾¾å¼
+            // ·ÖÎö±í´ïÊ½
             $options            =  $this->_parseOptions($options);
             return  '( '.$this->db->buildSelectSql($options).' )';
         }
-        // åˆ†æè¡¨è¾¾å¼
+        // ·ÖÎö±í´ïÊ½
         $options    =  $this->_parseOptions($options);
-        // åˆ¤æ–­æŸ¥è¯¢ç¼“å­˜
+        // ÅĞ¶Ï²éÑ¯»º´æ
         if(isset($options['cache'])){
             $cache  =   $options['cache'];
             $key    =   is_string($cache['key'])?$cache['key']:md5(serialize($options));
@@ -517,7 +517,7 @@ class Model {
         if(false === $resultSet) {
             return false;
         }
-        if(empty($resultSet)) { // æŸ¥è¯¢ç»“æœä¸ºç©º
+        if(empty($resultSet)) { // ²éÑ¯½á¹ûÎª¿Õ
             return null;
         }
         $resultSet  =   array_map(array($this,'_read_data'),$resultSet);
@@ -527,25 +527,25 @@ class Model {
         }           
         return $resultSet;
     }
-    // æŸ¥è¯¢æˆåŠŸåçš„å›è°ƒæ–¹æ³•
+    // ²éÑ¯³É¹¦ºóµÄ»Øµ÷·½·¨
     protected function _after_select(&$resultSet,$options) {}
 
     /**
-     * ç”ŸæˆæŸ¥è¯¢SQL å¯ç”¨äºå­æŸ¥è¯¢
+     * Éú³É²éÑ¯SQL ¿ÉÓÃÓÚ×Ó²éÑ¯
      * @access public
-     * @param array $options è¡¨è¾¾å¼å‚æ•°
+     * @param array $options ±í´ïÊ½²ÎÊı
      * @return string
      */
     public function buildSql($options=array()) {
-        // åˆ†æè¡¨è¾¾å¼
+        // ·ÖÎö±í´ïÊ½
         $options =  $this->_parseOptions($options);
         return  '( '.$this->db->buildSelectSql($options).' )';
     }
 
     /**
-     * åˆ†æè¡¨è¾¾å¼
+     * ·ÖÎö±í´ïÊ½
      * @access protected
-     * @param array $options è¡¨è¾¾å¼å‚æ•°
+     * @param array $options ±í´ïÊ½²ÎÊı
      * @return array
      */
     protected function _parseOptions($options=array()) {
@@ -553,24 +553,24 @@ class Model {
             $options =  array_merge($this->options,$options);
 
         if(!isset($options['table'])){
-            // è‡ªåŠ¨è·å–è¡¨å
+            // ×Ô¶¯»ñÈ¡±íÃû
             $options['table']   =   $this->getTableName();
             $fields             =   $this->fields;
         }else{
-            // æŒ‡å®šæ•°æ®è¡¨ åˆ™é‡æ–°è·å–å­—æ®µåˆ—è¡¨ ä½†ä¸æ”¯æŒç±»å‹æ£€æµ‹
+            // Ö¸¶¨Êı¾İ±í ÔòÖØĞÂ»ñÈ¡×Ö¶ÎÁĞ±í µ«²»Ö§³ÖÀàĞÍ¼ì²â
             $fields             =   $this->getDbFields();
         }
 
-        // æ•°æ®è¡¨åˆ«å
+        // Êı¾İ±í±ğÃû
         if(!empty($options['alias'])) {
             $options['table']  .=   ' '.$options['alias'];
         }
-        // è®°å½•æ“ä½œçš„æ¨¡å‹åç§°
+        // ¼ÇÂ¼²Ù×÷µÄÄ£ĞÍÃû³Æ
         $options['model']       =   $this->name;
 
-        // å­—æ®µç±»å‹éªŒè¯
+        // ×Ö¶ÎÀàĞÍÑéÖ¤
         if(isset($options['where']) && is_array($options['where']) && !empty($fields) && !isset($options['join'])) {
-            // å¯¹æ•°ç»„æŸ¥è¯¢æ¡ä»¶è¿›è¡Œå­—æ®µç±»å‹æ£€æŸ¥
+            // ¶ÔÊı×é²éÑ¯Ìõ¼ş½øĞĞ×Ö¶ÎÀàĞÍ¼ì²é
             foreach ($options['where'] as $key=>$val){
                 $key            =   trim($key);
                 if(in_array($key,$fields,true)){
@@ -585,27 +585,27 @@ class Model {
                 }
             }
         }
-        // æŸ¥è¯¢è¿‡åæ¸…ç©ºsqlè¡¨è¾¾å¼ç»„è£… é¿å…å½±å“ä¸‹æ¬¡æŸ¥è¯¢
+        // ²éÑ¯¹ıºóÇå¿Õsql±í´ïÊ½×é×° ±ÜÃâÓ°ÏìÏÂ´Î²éÑ¯
         $this->options  =   array();
-        // è¡¨è¾¾å¼è¿‡æ»¤
+        // ±í´ïÊ½¹ıÂË
         $this->_options_filter($options);
         return $options;
     }
-    // è¡¨è¾¾å¼è¿‡æ»¤å›è°ƒæ–¹æ³•
+    // ±í´ïÊ½¹ıÂË»Øµ÷·½·¨
     protected function _options_filter(&$options) {}
 
     /**
-     * æ•°æ®ç±»å‹æ£€æµ‹
+     * Êı¾İÀàĞÍ¼ì²â
      * @access protected
-     * @param mixed $data æ•°æ®
-     * @param string $key å­—æ®µå
+     * @param mixed $data Êı¾İ
+     * @param string $key ×Ö¶ÎÃû
      * @return void
      */
     protected function _parseType(&$data,$key) {
         if(empty($this->options['bind'][':'.$key]) && isset($this->fields['_type'][$key])){
             $fieldType = strtolower($this->fields['_type'][$key]);
             if(false !== strpos($fieldType,'enum')){
-                // æ”¯æŒENUMç±»å‹ä¼˜å…ˆæ£€æµ‹
+                // Ö§³ÖENUMÀàĞÍÓÅÏÈ¼ì²â
             }elseif(false === strpos($fieldType,'bigint') && false !== strpos($fieldType,'int')) {
                 $data[$key]   =  intval($data[$key]);
             }elseif(false !== strpos($fieldType,'float') || false !== strpos($fieldType,'double')){
@@ -617,13 +617,13 @@ class Model {
     }
 
     /**
-     * æ•°æ®è¯»å–åçš„å¤„ç†
+     * Êı¾İ¶ÁÈ¡ºóµÄ´¦Àí
      * @access protected
-     * @param array $data å½“å‰æ•°æ®
+     * @param array $data µ±Ç°Êı¾İ
      * @return array
      */
     protected function _read_data($data) {
-        // æ£€æŸ¥å­—æ®µæ˜ å°„
+        // ¼ì²é×Ö¶ÎÓ³Éä
         if(!empty($this->_map) && C('READ_DATA_MAP')) {
             foreach ($this->_map as $key=>$val){
                 if(isset($data[$val])) {
@@ -636,9 +636,9 @@ class Model {
     }
 
     /**
-     * æŸ¥è¯¢æ•°æ®
+     * ²éÑ¯Êı¾İ
      * @access public
-     * @param mixed $options è¡¨è¾¾å¼å‚æ•°
+     * @param mixed $options ±í´ïÊ½²ÎÊı
      * @return mixed
      */
     public function find($options=array()) {
@@ -647,11 +647,11 @@ class Model {
             $options                =   array();
             $options['where']       =   $where;
         }
-        // æ€»æ˜¯æŸ¥æ‰¾ä¸€æ¡è®°å½•
+        // ×ÜÊÇ²éÕÒÒ»Ìõ¼ÇÂ¼
         $options['limit']   =   1;
-        // åˆ†æè¡¨è¾¾å¼
+        // ·ÖÎö±í´ïÊ½
         $options            =   $this->_parseOptions($options);
-        // åˆ¤æ–­æŸ¥è¯¢ç¼“å­˜
+        // ÅĞ¶Ï²éÑ¯»º´æ
         if(isset($options['cache'])){
             $cache  =   $options['cache'];
             $key    =   is_string($cache['key'])?$cache['key']:md5(serialize($options));
@@ -665,10 +665,10 @@ class Model {
         if(false === $resultSet) {
             return false;
         }
-        if(empty($resultSet)) {// æŸ¥è¯¢ç»“æœä¸ºç©º
+        if(empty($resultSet)) {// ²éÑ¯½á¹ûÎª¿Õ
             return null;
         }
-        // è¯»å–æ•°æ®åçš„å¤„ç†
+        // ¶ÁÈ¡Êı¾İºóµÄ´¦Àí
         $data   =   $this->_read_data($resultSet[0]);
         $this->_after_find($data,$options);
         if(!empty($this->options['result'])) {
@@ -680,7 +680,7 @@ class Model {
         }
         return $this->data;
     }
-    // æŸ¥è¯¢æˆåŠŸçš„å›è°ƒæ–¹æ³•
+    // ²éÑ¯³É¹¦µÄ»Øµ÷·½·¨
     protected function _after_find(&$result,$options) {}
 
     protected function returnResult($data,$type=''){
@@ -699,17 +699,17 @@ class Model {
     }
 
     /**
-     * å¤„ç†å­—æ®µæ˜ å°„
+     * ´¦Àí×Ö¶ÎÓ³Éä
      * @access public
-     * @param array $data å½“å‰æ•°æ®
-     * @param integer $type ç±»å‹ 0 å†™å…¥ 1 è¯»å–
+     * @param array $data µ±Ç°Êı¾İ
+     * @param integer $type ÀàĞÍ 0 Ğ´Èë 1 ¶ÁÈ¡
      * @return array
      */
     public function parseFieldsMap($data,$type=1) {
-        // æ£€æŸ¥å­—æ®µæ˜ å°„
+        // ¼ì²é×Ö¶ÎÓ³Éä
         if(!empty($this->_map)) {
             foreach ($this->_map as $key=>$val){
-                if($type==1) { // è¯»å–
+                if($type==1) { // ¶ÁÈ¡
                     if(isset($data[$val])) {
                         $data[$key] =   $data[$val];
                         unset($data[$val]);
@@ -726,11 +726,11 @@ class Model {
     }
 
     /**
-     * è®¾ç½®è®°å½•çš„æŸä¸ªå­—æ®µå€¼
-     * æ”¯æŒä½¿ç”¨æ•°æ®åº“å­—æ®µå’Œæ–¹æ³•
+     * ÉèÖÃ¼ÇÂ¼µÄÄ³¸ö×Ö¶ÎÖµ
+     * Ö§³ÖÊ¹ÓÃÊı¾İ¿â×Ö¶ÎºÍ·½·¨
      * @access public
-     * @param string|array $field  å­—æ®µå
-     * @param string $value  å­—æ®µå€¼
+     * @param string|array $field  ×Ö¶ÎÃû
+     * @param string $value  ×Ö¶ÎÖµ
      * @return boolean
      */
     public function setField($field,$value='') {
@@ -743,10 +743,10 @@ class Model {
     }
 
     /**
-     * å­—æ®µå€¼å¢é•¿
+     * ×Ö¶ÎÖµÔö³¤
      * @access public
-     * @param string $field  å­—æ®µå
-     * @param integer $step  å¢é•¿å€¼
+     * @param string $field  ×Ö¶ÎÃû
+     * @param integer $step  Ôö³¤Öµ
      * @return boolean
      */
     public function setInc($field,$step=1) {
@@ -754,10 +754,10 @@ class Model {
     }
 
     /**
-     * å­—æ®µå€¼å‡å°‘
+     * ×Ö¶ÎÖµ¼õÉÙ
      * @access public
-     * @param string $field  å­—æ®µå
-     * @param integer $step  å‡å°‘å€¼
+     * @param string $field  ×Ö¶ÎÃû
+     * @param integer $step  ¼õÉÙÖµ
      * @return boolean
      */
     public function setDec($field,$step=1) {
@@ -765,16 +765,16 @@ class Model {
     }
 
     /**
-     * è·å–ä¸€æ¡è®°å½•çš„æŸä¸ªå­—æ®µå€¼
+     * »ñÈ¡Ò»Ìõ¼ÇÂ¼µÄÄ³¸ö×Ö¶ÎÖµ
      * @access public
-     * @param string $field  å­—æ®µå
-     * @param string $spea  å­—æ®µæ•°æ®é—´éš”ç¬¦å· NULLè¿”å›æ•°ç»„
+     * @param string $field  ×Ö¶ÎÃû
+     * @param string $spea  ×Ö¶ÎÊı¾İ¼ä¸ô·ûºÅ NULL·µ»ØÊı×é
      * @return mixed
      */
     public function getField($field,$sepa=null) {
         $options['field']       =   $field;
         $options                =   $this->_parseOptions($options);
-        // åˆ¤æ–­æŸ¥è¯¢ç¼“å­˜
+        // ÅĞ¶Ï²éÑ¯»º´æ
         if(isset($options['cache'])){
             $cache  =   $options['cache'];
             $key    =   is_string($cache['key'])?$cache['key']:md5($sepa.serialize($options));
@@ -784,7 +784,7 @@ class Model {
             }
         }        
         $field                  =   trim($field);
-        if(strpos($field,',')) { // å¤šå­—æ®µ
+        if(strpos($field,',')) { // ¶à×Ö¶Î
             if(!isset($options['limit'])){
                 $options['limit']   =   is_numeric($sepa)?$sepa:'';
             }
@@ -809,9 +809,9 @@ class Model {
                 }
                 return $cols;
             }
-        }else{   // æŸ¥æ‰¾ä¸€æ¡è®°å½•
-            // è¿”å›æ•°æ®ä¸ªæ•°
-            if(true !== $sepa) {// å½“sepaæŒ‡å®šä¸ºtrueçš„æ—¶å€™ è¿”å›æ‰€æœ‰æ•°æ®
+        }else{   // ²éÕÒÒ»Ìõ¼ÇÂ¼
+            // ·µ»ØÊı¾İ¸öÊı
+            if(true !== $sepa) {// µ±sepaÖ¸¶¨ÎªtrueµÄÊ±ºò ·µ»ØËùÓĞÊı¾İ
                 $options['limit']   =   is_numeric($sepa)?$sepa:1;
             }
             $result = $this->db->select($options);
@@ -836,29 +836,29 @@ class Model {
     }
 
     /**
-     * åˆ›å»ºæ•°æ®å¯¹è±¡ ä½†ä¸ä¿å­˜åˆ°æ•°æ®åº“
+     * ´´½¨Êı¾İ¶ÔÏó µ«²»±£´æµ½Êı¾İ¿â
      * @access public
-     * @param mixed $data åˆ›å»ºæ•°æ®
-     * @param string $type çŠ¶æ€
+     * @param mixed $data ´´½¨Êı¾İ
+     * @param string $type ×´Ì¬
      * @return mixed
      */
      public function create($data='',$type='') {
-        // å¦‚æœæ²¡æœ‰ä¼ å€¼é»˜è®¤å–POSTæ•°æ®
+        // Èç¹ûÃ»ÓĞ´«ÖµÄ¬ÈÏÈ¡POSTÊı¾İ
         if(empty($data)) {
             $data   =   I('post.');
         }elseif(is_object($data)){
             $data   =   get_object_vars($data);
         }
-        // éªŒè¯æ•°æ®
+        // ÑéÖ¤Êı¾İ
         if(empty($data) || !is_array($data)) {
             $this->error = L('_DATA_TYPE_INVALID_');
             return false;
         }
 
-        // çŠ¶æ€
+        // ×´Ì¬
         $type = $type?:(!empty($data[$this->getPk()])?self::MODEL_UPDATE:self::MODEL_INSERT);
 
-        // æ£€æŸ¥å­—æ®µæ˜ å°„
+        // ¼ì²é×Ö¶ÎÓ³Éä
         if(!empty($this->_map)) {
             foreach ($this->_map as $key=>$val){
                 if(isset($data[$key])) {
@@ -868,7 +868,7 @@ class Model {
             }
         }
 
-        // æ£€æµ‹æäº¤å­—æ®µçš„åˆæ³•æ€§
+        // ¼ì²âÌá½»×Ö¶ÎµÄºÏ·¨ĞÔ
         if(isset($this->options['field'])) { // $this->field('field1,field2...')->create()
             $fields =   $this->options['field'];
             unset($this->options['field']);
@@ -881,7 +881,7 @@ class Model {
             if(is_string($fields)) {
                 $fields =   explode(',',$fields);
             }
-            // åˆ¤æ–­ä»¤ç‰ŒéªŒè¯å­—æ®µ
+            // ÅĞ¶ÏÁîÅÆÑéÖ¤×Ö¶Î
             if(C('TOKEN_ON'))   $fields[] = C('TOKEN_NAME');
             foreach ($data as $key=>$val){
                 if(!in_array($key,$fields)) {
@@ -890,17 +890,17 @@ class Model {
             }
         }
 
-        // æ•°æ®è‡ªåŠ¨éªŒè¯
+        // Êı¾İ×Ô¶¯ÑéÖ¤
         if(!$this->autoValidation($data,$type)) return false;
 
-        // è¡¨å•ä»¤ç‰ŒéªŒè¯
+        // ±íµ¥ÁîÅÆÑéÖ¤
         if(!$this->autoCheckToken($data)) {
             $this->error = L('_TOKEN_ERROR_');
             return false;
         }
 
-        // éªŒè¯å®Œæˆç”Ÿæˆæ•°æ®å¯¹è±¡
-        if($this->autoCheckFields) { // å¼€å¯å­—æ®µæ£€æµ‹ åˆ™è¿‡æ»¤éæ³•å­—æ®µæ•°æ®
+        // ÑéÖ¤Íê³ÉÉú³ÉÊı¾İ¶ÔÏó
+        if($this->autoCheckFields) { // ¿ªÆô×Ö¶Î¼ì²â Ôò¹ıÂË·Ç·¨×Ö¶ÎÊı¾İ
             $fields =   $this->getDbFields();
             foreach ($data as $key=>$val){
                 if(!in_array($key,$fields)) {
@@ -911,32 +911,32 @@ class Model {
             }
         }
 
-        // åˆ›å»ºå®Œæˆå¯¹æ•°æ®è¿›è¡Œè‡ªåŠ¨å¤„ç†
+        // ´´½¨Íê³É¶ÔÊı¾İ½øĞĞ×Ô¶¯´¦Àí
         $this->autoOperation($data,$type);
-        // èµ‹å€¼å½“å‰æ•°æ®å¯¹è±¡
+        // ¸³Öµµ±Ç°Êı¾İ¶ÔÏó
         $this->data =   $data;
-        // è¿”å›åˆ›å»ºçš„æ•°æ®ä»¥ä¾›å…¶ä»–è°ƒç”¨
+        // ·µ»Ø´´½¨µÄÊı¾İÒÔ¹©ÆäËûµ÷ÓÃ
         return $data;
      }
 
-    // è‡ªåŠ¨è¡¨å•ä»¤ç‰ŒéªŒè¯
-    // TODO  ajaxæ— åˆ·æ–°å¤šæ¬¡æäº¤æš‚ä¸èƒ½æ»¡è¶³
+    // ×Ô¶¯±íµ¥ÁîÅÆÑéÖ¤
+    // TODO  ajaxÎŞË¢ĞÂ¶à´ÎÌá½»Ôİ²»ÄÜÂú×ã
     public function autoCheckToken($data) {
-        // æ”¯æŒä½¿ç”¨token(false) å…³é—­ä»¤ç‰ŒéªŒè¯
+        // Ö§³ÖÊ¹ÓÃtoken(false) ¹Ø±ÕÁîÅÆÑéÖ¤
         if(isset($this->options['token']) && !$this->options['token']) return true;
         if(C('TOKEN_ON')){
             $name   = C('TOKEN_NAME', null, '__hash__');
-            if(!isset($data[$name]) || !isset($_SESSION[$name])) { // ä»¤ç‰Œæ•°æ®æ— æ•ˆ
+            if(!isset($data[$name]) || !isset($_SESSION[$name])) { // ÁîÅÆÊı¾İÎŞĞ§
                 return false;
             }
 
-            // ä»¤ç‰ŒéªŒè¯
+            // ÁîÅÆÑéÖ¤
             list($key,$value)  =  explode('_',$data[$name]);
-            if($value && $_SESSION[$name][$key] === $value) { // é˜²æ­¢é‡å¤æäº¤
-                unset($_SESSION[$name][$key]); // éªŒè¯å®Œæˆé”€æ¯session
+            if($value && $_SESSION[$name][$key] === $value) { // ·ÀÖ¹ÖØ¸´Ìá½»
+                unset($_SESSION[$name][$key]); // ÑéÖ¤Íê³ÉÏú»Ùsession
                 return true;
             }
-            // å¼€å¯TOKENé‡ç½®
+            // ¿ªÆôTOKENÖØÖÃ
             if(C('TOKEN_RESET')) unset($_SESSION[$name][$key]);
             return false;
         }
@@ -944,10 +944,10 @@ class Model {
     }
 
     /**
-     * ä½¿ç”¨æ­£åˆ™éªŒè¯æ•°æ®
+     * Ê¹ÓÃÕıÔòÑéÖ¤Êı¾İ
      * @access public
-     * @param string $value  è¦éªŒè¯çš„æ•°æ®
-     * @param string $rule éªŒè¯è§„åˆ™
+     * @param string $value  ÒªÑéÖ¤µÄÊı¾İ
+     * @param string $rule ÑéÖ¤¹æÔò
      * @return boolean
      */
     public function regex($value,$rule) {
@@ -962,17 +962,17 @@ class Model {
             'double'    =>  '/^[-\+]?\d+(\.\d+)?$/',
             'english'   =>  '/^[A-Za-z]+$/',
         );
-        // æ£€æŸ¥æ˜¯å¦æœ‰å†…ç½®çš„æ­£åˆ™è¡¨è¾¾å¼
+        // ¼ì²éÊÇ·ñÓĞÄÚÖÃµÄÕıÔò±í´ïÊ½
         if(isset($validate[strtolower($rule)]))
             $rule       =   $validate[strtolower($rule)];
         return preg_match($rule,$value)===1;
     }
 
     /**
-     * è‡ªåŠ¨è¡¨å•å¤„ç†
+     * ×Ô¶¯±íµ¥´¦Àí
      * @access public
-     * @param array $data åˆ›å»ºæ•°æ®
-     * @param string $type åˆ›å»ºç±»å‹
+     * @param array $data ´´½¨Êı¾İ
+     * @param string $type ´´½¨ÀàĞÍ
      * @return mixed
      */
     private function autoOperation(&$data,$type) {
@@ -982,17 +982,17 @@ class Model {
         }elseif(!empty($this->_auto)){
             $_auto   =   $this->_auto;
         }
-        // è‡ªåŠ¨å¡«å……
+        // ×Ô¶¯Ìî³ä
         if(isset($_auto)) {
             foreach ($_auto as $auto){
-                // å¡«å……å› å­å®šä¹‰æ ¼å¼
-                // array('field','å¡«å……å†…å®¹','å¡«å……æ¡ä»¶','é™„åŠ è§„åˆ™',[é¢å¤–å‚æ•°])
-                if(empty($auto[2])) $auto[2] =  self::MODEL_INSERT; // é»˜è®¤ä¸ºæ–°å¢çš„æ—¶å€™è‡ªåŠ¨å¡«å……
+                // Ìî³äÒò×Ó¶¨Òå¸ñÊ½
+                // array('field','Ìî³äÄÚÈİ','Ìî³äÌõ¼ş','¸½¼Ó¹æÔò',[¶îÍâ²ÎÊı])
+                if(empty($auto[2])) $auto[2] =  self::MODEL_INSERT; // Ä¬ÈÏÎªĞÂÔöµÄÊ±ºò×Ô¶¯Ìî³ä
                 if( $type == $auto[2] || $auto[2] == self::MODEL_BOTH) {
                     if(empty($auto[3])) $auto[3] =  'string';
                     switch(trim($auto[3])) {
-                        case 'function':    //  ä½¿ç”¨å‡½æ•°è¿›è¡Œå¡«å…… å­—æ®µçš„å€¼ä½œä¸ºå‚æ•°
-                        case 'callback': // ä½¿ç”¨å›è°ƒæ–¹æ³•
+                        case 'function':    //  Ê¹ÓÃº¯Êı½øĞĞÌî³ä ×Ö¶ÎµÄÖµ×÷Îª²ÎÊı
+                        case 'callback': // Ê¹ÓÃ»Øµ÷·½·¨
                             $args = isset($auto[4])?(array)$auto[4]:array();
                             if(isset($data[$auto[0]])) {
                                 array_unshift($args,$data[$auto[0]]);
@@ -1003,15 +1003,15 @@ class Model {
                                 $data[$auto[0]]  =  call_user_func_array(array(&$this,$auto[1]), $args);
                             }
                             break;
-                        case 'field':    // ç”¨å…¶å®ƒå­—æ®µçš„å€¼è¿›è¡Œå¡«å……
+                        case 'field':    // ÓÃÆäËü×Ö¶ÎµÄÖµ½øĞĞÌî³ä
                             $data[$auto[0]] = $data[$auto[1]];
                             break;
-                        case 'ignore': // ä¸ºç©ºå¿½ç•¥
+                        case 'ignore': // Îª¿ÕºöÂÔ
                             if($auto[1]===$data[$auto[0]])
                                 unset($data[$auto[0]]);
                             break;
                         case 'string':
-                        default: // é»˜è®¤ä½œä¸ºå­—ç¬¦ä¸²å¡«å……
+                        default: // Ä¬ÈÏ×÷Îª×Ö·û´®Ìî³ä
                             $data[$auto[0]] = $auto[1];
                     }
                     if(isset($data[$auto[0]]) && false === $data[$auto[0]] )   unset($data[$auto[0]]);
@@ -1022,10 +1022,10 @@ class Model {
     }
 
     /**
-     * è‡ªåŠ¨è¡¨å•éªŒè¯
+     * ×Ô¶¯±íµ¥ÑéÖ¤
      * @access protected
-     * @param array $data åˆ›å»ºæ•°æ®
-     * @param string $type åˆ›å»ºç±»å‹
+     * @param array $data ´´½¨Êı¾İ
+     * @param string $type ´´½¨ÀàĞÍ
      * @return boolean
      */
     protected function autoValidation($data,$type) {
@@ -1035,56 +1035,56 @@ class Model {
         }elseif(!empty($this->_validate)){
             $_validate   =   $this->_validate;
         }
-        // å±æ€§éªŒè¯
-        if(isset($_validate)) { // å¦‚æœè®¾ç½®äº†æ•°æ®è‡ªåŠ¨éªŒè¯åˆ™è¿›è¡Œæ•°æ®éªŒè¯
-            if($this->patchValidate) { // é‡ç½®éªŒè¯é”™è¯¯ä¿¡æ¯
+        // ÊôĞÔÑéÖ¤
+        if(isset($_validate)) { // Èç¹ûÉèÖÃÁËÊı¾İ×Ô¶¯ÑéÖ¤Ôò½øĞĞÊı¾İÑéÖ¤
+            if($this->patchValidate) { // ÖØÖÃÑéÖ¤´íÎóĞÅÏ¢
                 $this->error = array();
             }
             foreach($_validate as $key=>$val) {
-                // éªŒè¯å› å­å®šä¹‰æ ¼å¼
+                // ÑéÖ¤Òò×Ó¶¨Òå¸ñÊ½
                 // array(field,rule,message,condition,type,when,params)
-                // åˆ¤æ–­æ˜¯å¦éœ€è¦æ‰§è¡ŒéªŒè¯
+                // ÅĞ¶ÏÊÇ·ñĞèÒªÖ´ĞĞÑéÖ¤
                 if(empty($val[5]) || $val[5]== self::MODEL_BOTH || $val[5]== $type ) {
                     if(0==strpos($val[2],'{%') && strpos($val[2],'}'))
-                        // æ”¯æŒæç¤ºä¿¡æ¯çš„å¤šè¯­è¨€ ä½¿ç”¨ {%è¯­è¨€å®šä¹‰} æ–¹å¼
+                        // Ö§³ÖÌáÊ¾ĞÅÏ¢µÄ¶àÓïÑÔ Ê¹ÓÃ {%ÓïÑÔ¶¨Òå} ·½Ê½
                         $val[2]  =  L(substr($val[2],2,-1));
                     $val[3]  =  isset($val[3])?$val[3]:self::EXISTS_VALIDATE;
                     $val[4]  =  isset($val[4])?$val[4]:'regex';
-                    // åˆ¤æ–­éªŒè¯æ¡ä»¶
+                    // ÅĞ¶ÏÑéÖ¤Ìõ¼ş
                     switch($val[3]) {
-                        case self::MUST_VALIDATE:   // å¿…é¡»éªŒè¯ ä¸ç®¡è¡¨å•æ˜¯å¦æœ‰è®¾ç½®è¯¥å­—æ®µ
+                        case self::MUST_VALIDATE:   // ±ØĞëÑéÖ¤ ²»¹Ü±íµ¥ÊÇ·ñÓĞÉèÖÃ¸Ã×Ö¶Î
                             if(false === $this->_validationField($data,$val)) 
                                 return false;
                             break;
-                        case self::VALUE_VALIDATE:    // å€¼ä¸ä¸ºç©ºçš„æ—¶å€™æ‰éªŒè¯
+                        case self::VALUE_VALIDATE:    // Öµ²»Îª¿ÕµÄÊ±ºò²ÅÑéÖ¤
                             if('' != trim($data[$val[0]]))
                                 if(false === $this->_validationField($data,$val)) 
                                     return false;
                             break;
-                        default:    // é»˜è®¤è¡¨å•å­˜åœ¨è¯¥å­—æ®µå°±éªŒè¯
+                        default:    // Ä¬ÈÏ±íµ¥´æÔÚ¸Ã×Ö¶Î¾ÍÑéÖ¤
                             if(isset($data[$val[0]]))
                                 if(false === $this->_validationField($data,$val)) 
                                     return false;
                     }
                 }
             }
-            // æ‰¹é‡éªŒè¯çš„æ—¶å€™æœ€åè¿”å›é”™è¯¯
+            // ÅúÁ¿ÑéÖ¤µÄÊ±ºò×îºó·µ»Ø´íÎó
             if(!empty($this->error)) return false;
         }
         return true;
     }
 
     /**
-     * éªŒè¯è¡¨å•å­—æ®µ æ”¯æŒæ‰¹é‡éªŒè¯
-     * å¦‚æœæ‰¹é‡éªŒè¯è¿”å›é”™è¯¯çš„æ•°ç»„ä¿¡æ¯
+     * ÑéÖ¤±íµ¥×Ö¶Î Ö§³ÖÅúÁ¿ÑéÖ¤
+     * Èç¹ûÅúÁ¿ÑéÖ¤·µ»Ø´íÎóµÄÊı×éĞÅÏ¢
      * @access protected
-     * @param array $data åˆ›å»ºæ•°æ®
-     * @param array $val éªŒè¯å› å­
+     * @param array $data ´´½¨Êı¾İ
+     * @param array $val ÑéÖ¤Òò×Ó
      * @return boolean
      */
     protected function _validationField($data,$val) {
         if($this->patchValidate && isset($this->error[$val[0]]))
-            return ; //å½“å‰å­—æ®µå·²ç»æœ‰è§„åˆ™éªŒè¯æ²¡æœ‰é€šè¿‡
+            return ; //µ±Ç°×Ö¶ÎÒÑ¾­ÓĞ¹æÔòÑéÖ¤Ã»ÓĞÍ¨¹ı
         if(false === $this->_validationFieldItem($data,$val)){
             if($this->patchValidate) {
                 $this->error[$val[0]]   =   $val[2];
@@ -1097,21 +1097,21 @@ class Model {
     }
 
     /**
-     * æ ¹æ®éªŒè¯å› å­éªŒè¯å­—æ®µ
+     * ¸ù¾İÑéÖ¤Òò×ÓÑéÖ¤×Ö¶Î
      * @access protected
-     * @param array $data åˆ›å»ºæ•°æ®
-     * @param array $val éªŒè¯å› å­
+     * @param array $data ´´½¨Êı¾İ
+     * @param array $val ÑéÖ¤Òò×Ó
      * @return boolean
      */
     protected function _validationFieldItem($data,$val) {
         switch(strtolower(trim($val[4]))) {
-            case 'function':// ä½¿ç”¨å‡½æ•°è¿›è¡ŒéªŒè¯
-            case 'callback':// è°ƒç”¨æ–¹æ³•è¿›è¡ŒéªŒè¯
+            case 'function':// Ê¹ÓÃº¯Êı½øĞĞÑéÖ¤
+            case 'callback':// µ÷ÓÃ·½·¨½øĞĞÑéÖ¤
                 $args = isset($val[6])?(array)$val[6]:array();
                 if(is_string($val[0]) && strpos($val[0], ','))
                     $val[0] = explode(',', $val[0]);
                 if(is_array($val[0])){
-                    // æ”¯æŒå¤šä¸ªå­—æ®µéªŒè¯
+                    // Ö§³Ö¶à¸ö×Ö¶ÎÑéÖ¤
                     foreach($val[0] as $field)
                         $_data[$field] = $data[$field];
                     array_unshift($args, $_data);
@@ -1123,46 +1123,46 @@ class Model {
                 }else{
                     return call_user_func_array(array(&$this, $val[1]), $args);
                 }
-            case 'confirm': // éªŒè¯ä¸¤ä¸ªå­—æ®µæ˜¯å¦ç›¸åŒ
+            case 'confirm': // ÑéÖ¤Á½¸ö×Ö¶ÎÊÇ·ñÏàÍ¬
                 return $data[$val[0]] == $data[$val[1]];
-            case 'unique': // éªŒè¯æŸä¸ªå€¼æ˜¯å¦å”¯ä¸€
+            case 'unique': // ÑéÖ¤Ä³¸öÖµÊÇ·ñÎ¨Ò»
                 if(is_string($val[0]) && strpos($val[0],','))
                     $val[0]  =  explode(',',$val[0]);
                 $map = array();
                 if(is_array($val[0])) {
-                    // æ”¯æŒå¤šä¸ªå­—æ®µéªŒè¯
+                    // Ö§³Ö¶à¸ö×Ö¶ÎÑéÖ¤
                     foreach ($val[0] as $field)
                         $map[$field]   =  $data[$field];
                 }else{
                     $map[$val[0]] = $data[$val[0]];
                 }
-                if(!empty($data[$this->getPk()])) { // å®Œå–„ç¼–è¾‘çš„æ—¶å€™éªŒè¯å”¯ä¸€
+                if(!empty($data[$this->getPk()])) { // ÍêÉÆ±à¼­µÄÊ±ºòÑéÖ¤Î¨Ò»
                     $map[$this->getPk()] = array('neq',$data[$this->getPk()]);
                 }
                 if($this->where($map)->find())   return false;
                 return true;
-            default:  // æ£€æŸ¥é™„åŠ è§„åˆ™
+            default:  // ¼ì²é¸½¼Ó¹æÔò
                 return $this->check($data[$val[0]],$val[1],$val[4]);
         }
     }
 
     /**
-     * éªŒè¯æ•°æ® æ”¯æŒ in between equal length regex expire ip_allow ip_deny
+     * ÑéÖ¤Êı¾İ Ö§³Ö in between equal length regex expire ip_allow ip_deny
      * @access public
-     * @param string $value éªŒè¯æ•°æ®
-     * @param mixed $rule éªŒè¯è¡¨è¾¾å¼
-     * @param string $type éªŒè¯æ–¹å¼ é»˜è®¤ä¸ºæ­£åˆ™éªŒè¯
+     * @param string $value ÑéÖ¤Êı¾İ
+     * @param mixed $rule ÑéÖ¤±í´ïÊ½
+     * @param string $type ÑéÖ¤·½Ê½ Ä¬ÈÏÎªÕıÔòÑéÖ¤
      * @return boolean
      */
     public function check($value,$rule,$type='regex'){
         $type   =   strtolower(trim($type));
         switch($type) {
-            case 'in': // éªŒè¯æ˜¯å¦åœ¨æŸä¸ªæŒ‡å®šèŒƒå›´ä¹‹å†… é€—å·åˆ†éš”å­—ç¬¦ä¸²æˆ–è€…æ•°ç»„
+            case 'in': // ÑéÖ¤ÊÇ·ñÔÚÄ³¸öÖ¸¶¨·¶Î§Ö®ÄÚ ¶ººÅ·Ö¸ô×Ö·û´®»òÕßÊı×é
             case 'notin':
                 $range   = is_array($rule)? $rule : explode(',',$rule);
                 return $type == 'in' ? in_array($value ,$range) : !in_array($value ,$range);
-            case 'between': // éªŒè¯æ˜¯å¦åœ¨æŸä¸ªèŒƒå›´
-            case 'notbetween': // éªŒè¯æ˜¯å¦ä¸åœ¨æŸä¸ªèŒƒå›´            
+            case 'between': // ÑéÖ¤ÊÇ·ñÔÚÄ³¸ö·¶Î§
+            case 'notbetween': // ÑéÖ¤ÊÇ·ñ²»ÔÚÄ³¸ö·¶Î§            
                 if (is_array($rule)){
                     $min    =    $rule[0];
                     $max    =    $rule[1];
@@ -1170,15 +1170,15 @@ class Model {
                     list($min,$max)   =  explode(',',$rule);
                 }
                 return $type == 'between' ? $value>=$min && $value<=$max : $value<$min || $value>$max;
-            case 'equal': // éªŒè¯æ˜¯å¦ç­‰äºæŸä¸ªå€¼
-            case 'notequal': // éªŒè¯æ˜¯å¦ç­‰äºæŸä¸ªå€¼            
+            case 'equal': // ÑéÖ¤ÊÇ·ñµÈÓÚÄ³¸öÖµ
+            case 'notequal': // ÑéÖ¤ÊÇ·ñµÈÓÚÄ³¸öÖµ            
                 return $type == 'equal' ? $value == $rule : $value != $rule;
-            case 'length': // éªŒè¯é•¿åº¦
-                $length  =  mb_strlen($value,'utf-8'); // å½“å‰æ•°æ®é•¿åº¦
-                if(strpos($rule,',')) { // é•¿åº¦åŒºé—´
+            case 'length': // ÑéÖ¤³¤¶È
+                $length  =  mb_strlen($value,'utf-8'); // µ±Ç°Êı¾İ³¤¶È
+                if(strpos($rule,',')) { // ³¤¶ÈÇø¼ä
                     list($min,$max)   =  explode(',',$rule);
                     return $length >= $min && $length <= $max;
-                }else{// æŒ‡å®šé•¿åº¦
+                }else{// Ö¸¶¨³¤¶È
                     return $length == $rule;
                 }
             case 'expire':
@@ -1186,22 +1186,22 @@ class Model {
                 if(!is_numeric($start)) $start   =  strtotime($start);
                 if(!is_numeric($end)) $end   =  strtotime($end);
                 return NOW_TIME >= $start && NOW_TIME <= $end;
-            case 'ip_allow': // IP æ“ä½œè®¸å¯éªŒè¯
+            case 'ip_allow': // IP ²Ù×÷Ğí¿ÉÑéÖ¤
                 return in_array(get_client_ip(),explode(',',$rule));
-            case 'ip_deny': // IP æ“ä½œç¦æ­¢éªŒè¯
+            case 'ip_deny': // IP ²Ù×÷½ûÖ¹ÑéÖ¤
                 return !in_array(get_client_ip(),explode(',',$rule));
             case 'regex':
-            default:    // é»˜è®¤ä½¿ç”¨æ­£åˆ™éªŒè¯ å¯ä»¥ä½¿ç”¨éªŒè¯ç±»ä¸­å®šä¹‰çš„éªŒè¯åç§°
-                // æ£€æŸ¥é™„åŠ è§„åˆ™
+            default:    // Ä¬ÈÏÊ¹ÓÃÕıÔòÑéÖ¤ ¿ÉÒÔÊ¹ÓÃÑéÖ¤ÀàÖĞ¶¨ÒåµÄÑéÖ¤Ãû³Æ
+                // ¼ì²é¸½¼Ó¹æÔò
                 return $this->regex($value,$rule);
         }
     }
 
     /**
-     * SQLæŸ¥è¯¢
+     * SQL²éÑ¯
      * @access public
-     * @param string $sql  SQLæŒ‡ä»¤
-     * @param mixed $parse  æ˜¯å¦éœ€è¦è§£æSQL
+     * @param string $sql  SQLÖ¸Áî
+     * @param mixed $parse  ÊÇ·ñĞèÒª½âÎöSQL
      * @return mixed
      */
     public function query($sql,$parse=false) {
@@ -1214,10 +1214,10 @@ class Model {
     }
 
     /**
-     * æ‰§è¡ŒSQLè¯­å¥
+     * Ö´ĞĞSQLÓï¾ä
      * @access public
-     * @param string $sql  SQLæŒ‡ä»¤
-     * @param mixed $parse  æ˜¯å¦éœ€è¦è§£æSQL
+     * @param string $sql  SQLÖ¸Áî
+     * @param mixed $parse  ÊÇ·ñĞèÒª½âÎöSQL
      * @return false | integer
      */
     public function execute($sql,$parse=false) {
@@ -1230,18 +1230,18 @@ class Model {
     }
 
     /**
-     * è§£æSQLè¯­å¥
+     * ½âÎöSQLÓï¾ä
      * @access public
-     * @param string $sql  SQLæŒ‡ä»¤
-     * @param boolean $parse  æ˜¯å¦éœ€è¦è§£æSQL
+     * @param string $sql  SQLÖ¸Áî
+     * @param boolean $parse  ÊÇ·ñĞèÒª½âÎöSQL
      * @return string
      */
     protected function parseSql($sql,$parse) {
-        // åˆ†æè¡¨è¾¾å¼
+        // ·ÖÎö±í´ïÊ½
         if(true === $parse) {
             $options =  $this->_parseOptions();
             $sql    =   $this->db->parseSql($sql,$options);
-        }elseif(is_array($parse)){ // SQLé¢„å¤„ç†
+        }elseif(is_array($parse)){ // SQLÔ¤´¦Àí
             $parse  =   array_map(array($this->db,'escapeString'),$parse);
             $sql    =   vsprintf($sql,$parse);
         }else{
@@ -1254,11 +1254,11 @@ class Model {
     }
 
     /**
-     * åˆ‡æ¢å½“å‰çš„æ•°æ®åº“è¿æ¥
+     * ÇĞ»»µ±Ç°µÄÊı¾İ¿âÁ¬½Ó
      * @access public
-     * @param integer $linkNum  è¿æ¥åºå·
-     * @param mixed $config  æ•°æ®åº“è¿æ¥ä¿¡æ¯
-     * @param boolean $force å¼ºåˆ¶é‡æ–°è¿æ¥
+     * @param integer $linkNum  Á¬½ÓĞòºÅ
+     * @param mixed $config  Êı¾İ¿âÁ¬½ÓĞÅÏ¢
+     * @param boolean $force Ç¿ÖÆÖØĞÂÁ¬½Ó
      * @return Model
      */
     public function db($linkNum='',$config='',$force=false) {
@@ -1268,36 +1268,36 @@ class Model {
 
         static $_db = array();
         if(!isset($_db[$linkNum]) || $force ) {
-            // åˆ›å»ºä¸€ä¸ªæ–°çš„å®ä¾‹
-            if(!empty($config) && is_string($config) && false === strpos($config,'/')) { // æ”¯æŒè¯»å–é…ç½®å‚æ•°
+            // ´´½¨Ò»¸öĞÂµÄÊµÀı
+            if(!empty($config) && is_string($config) && false === strpos($config,'/')) { // Ö§³Ö¶ÁÈ¡ÅäÖÃ²ÎÊı
                 $config  =  C($config);
             }
             $_db[$linkNum]            =    Db::getInstance($config);
         }elseif(NULL === $config){
-            $_db[$linkNum]->close(); // å…³é—­æ•°æ®åº“è¿æ¥
+            $_db[$linkNum]->close(); // ¹Ø±ÕÊı¾İ¿âÁ¬½Ó
             unset($_db[$linkNum]);
             return ;
         }
 
-        // åˆ‡æ¢æ•°æ®åº“è¿æ¥
+        // ÇĞ»»Êı¾İ¿âÁ¬½Ó
         $this->db   =    $_db[$linkNum];
         $this->_after_db();
-        // å­—æ®µæ£€æµ‹
+        // ×Ö¶Î¼ì²â
         if(!empty($this->name) && $this->autoCheckFields)    $this->_checkTableInfo();
         return $this;
     }
-    // æ•°æ®åº“åˆ‡æ¢åå›è°ƒæ–¹æ³•
+    // Êı¾İ¿âÇĞ»»ºó»Øµ÷·½·¨
     protected function _after_db() {}
 
     /**
-     * å¾—åˆ°å½“å‰çš„æ•°æ®å¯¹è±¡åç§°
+     * µÃµ½µ±Ç°µÄÊı¾İ¶ÔÏóÃû³Æ
      * @access public
      * @return string
      */
     public function getModelName() {
         if(empty($this->name)){
             $name = substr(get_class($this),0,-5);
-            if ( $pos = strrpos($name,'\\') ) {//æœ‰å‘½åç©ºé—´
+            if ( $pos = strrpos($name,'\\') ) {//ÓĞÃüÃû¿Õ¼ä
                 $this->name = substr($name,$pos+1);
             }else{
                 $this->name = $name;
@@ -1307,7 +1307,7 @@ class Model {
     }
 
     /**
-     * å¾—åˆ°å®Œæ•´çš„æ•°æ®è¡¨å
+     * µÃµ½ÍêÕûµÄÊı¾İ±íÃû
      * @access public
      * @return string
      */
@@ -1325,7 +1325,7 @@ class Model {
     }
 
     /**
-     * å¯åŠ¨äº‹åŠ¡
+     * Æô¶¯ÊÂÎñ
      * @access public
      * @return void
      */
@@ -1336,7 +1336,7 @@ class Model {
     }
 
     /**
-     * æäº¤äº‹åŠ¡
+     * Ìá½»ÊÂÎñ
      * @access public
      * @return boolean
      */
@@ -1345,7 +1345,7 @@ class Model {
     }
 
     /**
-     * äº‹åŠ¡å›æ»š
+     * ÊÂÎñ»Ø¹ö
      * @access public
      * @return boolean
      */
@@ -1354,7 +1354,7 @@ class Model {
     }
 
     /**
-     * è¿”å›æ¨¡å‹çš„é”™è¯¯ä¿¡æ¯
+     * ·µ»ØÄ£ĞÍµÄ´íÎóĞÅÏ¢
      * @access public
      * @return string
      */
@@ -1363,7 +1363,7 @@ class Model {
     }
 
     /**
-     * è¿”å›æ•°æ®åº“çš„é”™è¯¯ä¿¡æ¯
+     * ·µ»ØÊı¾İ¿âµÄ´íÎóĞÅÏ¢
      * @access public
      * @return string
      */
@@ -1372,7 +1372,7 @@ class Model {
     }
 
     /**
-     * è¿”å›æœ€åæ’å…¥çš„ID
+     * ·µ»Ø×îºó²åÈëµÄID
      * @access public
      * @return string
      */
@@ -1381,20 +1381,20 @@ class Model {
     }
 
     /**
-     * è¿”å›æœ€åæ‰§è¡Œçš„sqlè¯­å¥
+     * ·µ»Ø×îºóÖ´ĞĞµÄsqlÓï¾ä
      * @access public
      * @return string
      */
     public function getLastSql() {
         return $this->db->getLastSql($this->name);
     }
-    // é‰´äºgetLastSqlæ¯”è¾ƒå¸¸ç”¨ å¢åŠ _sql åˆ«å
+    // ¼øÓÚgetLastSql±È½Ï³£ÓÃ Ôö¼Ó_sql ±ğÃû
     public function _sql(){
         return $this->getLastSql();
     }
 
     /**
-     * è·å–ä¸»é”®åç§°
+     * »ñÈ¡Ö÷¼üÃû³Æ
      * @access public
      * @return string
      */
@@ -1403,12 +1403,12 @@ class Model {
     }
 
     /**
-     * è·å–æ•°æ®è¡¨å­—æ®µä¿¡æ¯
+     * »ñÈ¡Êı¾İ±í×Ö¶ÎĞÅÏ¢
      * @access public
      * @return array
      */
     public function getDbFields(){
-        if(isset($this->options['table'])) {// åŠ¨æ€æŒ‡å®šè¡¨å
+        if(isset($this->options['table'])) {// ¶¯Ì¬Ö¸¶¨±íÃû
             $array      =   explode(' ',$this->options['table']);
             $fields     =   $this->db->getFields($array[0]);
             return  $fields?array_keys($fields):false;
@@ -1422,9 +1422,9 @@ class Model {
     }
 
     /**
-     * è®¾ç½®æ•°æ®å¯¹è±¡å€¼
+     * ÉèÖÃÊı¾İ¶ÔÏóÖµ
      * @access public
-     * @param mixed $data æ•°æ®
+     * @param mixed $data Êı¾İ
      * @return Model
      */
     public function data($data=''){
@@ -1443,7 +1443,7 @@ class Model {
     }
 
     /**
-     * æŒ‡å®šå½“å‰çš„æ•°æ®è¡¨
+     * Ö¸¶¨µ±Ç°µÄÊı¾İ±í
      * @access public
      * @param mixed $table
      * @return Model
@@ -1453,7 +1453,7 @@ class Model {
         if(is_array($table)) {
             $this->options['table'] =   $table;
         }elseif(!empty($table)) {
-            //å°†__TABLE_NAME__æ›¿æ¢æˆå¸¦å‰ç¼€çš„è¡¨å
+            //½«__TABLE_NAME__Ìæ»»³É´øÇ°×ºµÄ±íÃû
             $table  = preg_replace_callback("/__([A-Z_-]+)__/sU", function($match) use($prefix){ return $prefix.strtolower($match[1]);}, $table);
             $this->options['table'] =   $table;
         }
@@ -1461,10 +1461,10 @@ class Model {
     }
 
     /**
-     * æŸ¥è¯¢SQLç»„è£… join
+     * ²éÑ¯SQL×é×° join
      * @access public
      * @param mixed $join
-     * @param string $type JOINç±»å‹
+     * @param string $type JOINÀàĞÍ
      * @return Model
      */
     public function join($join,$type='INNER') {
@@ -1476,7 +1476,7 @@ class Model {
             }
             $this->options['join']      =   $join;
         }elseif(!empty($join)) {
-            //å°†__TABLE_NAME__å­—ç¬¦ä¸²æ›¿æ¢æˆå¸¦å‰ç¼€çš„è¡¨å
+            //½«__TABLE_NAME__×Ö·û´®Ìæ»»³É´øÇ°×ºµÄ±íÃû
             $join  = preg_replace_callback("/__([A-Z_-]+)__/sU", function($match) use($prefix){ return $prefix.strtolower($match[1]);}, $join);
             $this->options['join'][]    =   false !== stripos($join,'JOIN')? $join : $type.' JOIN '.$join;
         }
@@ -1484,7 +1484,7 @@ class Model {
     }
 
     /**
-     * æŸ¥è¯¢SQLç»„è£… union
+     * ²éÑ¯SQL×é×° union
      * @access public
      * @param mixed $union
      * @param boolean $all
@@ -1498,10 +1498,10 @@ class Model {
         if(is_object($union)) {
             $union   =  get_object_vars($union);
         }
-        // è½¬æ¢unionè¡¨è¾¾å¼
+        // ×ª»»union±í´ïÊ½
         if(is_string($union) ) {
             $prefix =   $this->tablePrefix;
-            //å°†__TABLE_NAME__å­—ç¬¦ä¸²æ›¿æ¢æˆå¸¦å‰ç¼€çš„è¡¨å
+            //½«__TABLE_NAME__×Ö·û´®Ìæ»»³É´øÇ°×ºµÄ±íÃû
             $options  = preg_replace_callback("/__([A-Z_-]+)__/sU", function($match) use($prefix){ return $prefix.strtolower($match[1]);}, $union);
         }elseif(is_array($union)){
             if(isset($union[0])) {
@@ -1518,7 +1518,7 @@ class Model {
     }
 
     /**
-     * æŸ¥è¯¢ç¼“å­˜
+     * ²éÑ¯»º´æ
      * @access public
      * @param mixed $key
      * @param integer $expire
@@ -1532,17 +1532,17 @@ class Model {
     }
 
     /**
-     * æŒ‡å®šæŸ¥è¯¢å­—æ®µ æ”¯æŒå­—æ®µæ’é™¤
+     * Ö¸¶¨²éÑ¯×Ö¶Î Ö§³Ö×Ö¶ÎÅÅ³ı
      * @access public
      * @param mixed $field
-     * @param boolean $except æ˜¯å¦æ’é™¤
+     * @param boolean $except ÊÇ·ñÅÅ³ı
      * @return Model
      */
     public function field($field,$except=false){
-        if(true === $field) {// è·å–å…¨éƒ¨å­—æ®µ
+        if(true === $field) {// »ñÈ¡È«²¿×Ö¶Î
             $fields     =  $this->getDbFields();
             $field      =  $fields?:'*';
-        }elseif($except) {// å­—æ®µæ’é™¤
+        }elseif($except) {// ×Ö¶ÎÅÅ³ı
             if(is_string($field)) {
                 $field  =  explode(',',$field);
             }
@@ -1554,21 +1554,21 @@ class Model {
     }
 
     /**
-     * è°ƒç”¨å‘½åèŒƒå›´
+     * µ÷ÓÃÃüÃû·¶Î§
      * @access public
-     * @param mixed $scope å‘½åèŒƒå›´åç§° æ”¯æŒå¤šä¸ª å’Œç›´æ¥å®šä¹‰
-     * @param array $args å‚æ•°
+     * @param mixed $scope ÃüÃû·¶Î§Ãû³Æ Ö§³Ö¶à¸ö ºÍÖ±½Ó¶¨Òå
+     * @param array $args ²ÎÊı
      * @return Model
      */
     public function scope($scope='',$args=NULL){
         if('' === $scope) {
             if(isset($this->_scope['default'])) {
-                // é»˜è®¤çš„å‘½åèŒƒå›´
+                // Ä¬ÈÏµÄÃüÃû·¶Î§
                 $options    =   $this->_scope['default'];
             }else{
                 return $this;
             }
-        }elseif(is_string($scope)){ // æ”¯æŒå¤šä¸ªå‘½åèŒƒå›´è°ƒç”¨ ç”¨é€—å·åˆ†å‰²
+        }elseif(is_string($scope)){ // Ö§³Ö¶à¸öÃüÃû·¶Î§µ÷ÓÃ ÓÃ¶ººÅ·Ö¸î
             $scopes         =   explode(',',$scope);
             $options        =   array();
             foreach ($scopes as $name){
@@ -1578,7 +1578,7 @@ class Model {
             if(!empty($args) && is_array($args)) {
                 $options    =   array_merge($options,$args);
             }
-        }elseif(is_array($scope)){ // ç›´æ¥ä¼ å…¥å‘½åèŒƒå›´å®šä¹‰
+        }elseif(is_array($scope)){ // Ö±½Ó´«ÈëÃüÃû·¶Î§¶¨Òå
             $options        =   $scope;
         }
         
@@ -1589,10 +1589,10 @@ class Model {
     }
 
     /**
-     * æŒ‡å®šæŸ¥è¯¢æ¡ä»¶ æ”¯æŒå®‰å…¨è¿‡æ»¤
+     * Ö¸¶¨²éÑ¯Ìõ¼ş Ö§³Ö°²È«¹ıÂË
      * @access public
-     * @param mixed $where æ¡ä»¶è¡¨è¾¾å¼
-     * @param mixed $parse é¢„å¤„ç†å‚æ•°
+     * @param mixed $where Ìõ¼ş±í´ïÊ½
+     * @param mixed $parse Ô¤´¦Àí²ÎÊı
      * @return Model
      */
     public function where($where,$parse=null){
@@ -1621,10 +1621,10 @@ class Model {
     }
 
     /**
-     * æŒ‡å®šæŸ¥è¯¢æ•°é‡
+     * Ö¸¶¨²éÑ¯ÊıÁ¿
      * @access public
-     * @param mixed $offset èµ·å§‹ä½ç½®
-     * @param mixed $length æŸ¥è¯¢æ•°é‡
+     * @param mixed $offset ÆğÊ¼Î»ÖÃ
+     * @param mixed $length ²éÑ¯ÊıÁ¿
      * @return Model
      */
     public function limit($offset,$length=null){
@@ -1633,10 +1633,10 @@ class Model {
     }
 
     /**
-     * æŒ‡å®šåˆ†é¡µ
+     * Ö¸¶¨·ÖÒ³
      * @access public
-     * @param mixed $page é¡µæ•°
-     * @param mixed $listRows æ¯é¡µæ•°é‡
+     * @param mixed $page Ò³Êı
+     * @param mixed $listRows Ã¿Ò³ÊıÁ¿
      * @return Model
      */
     public function page($page,$listRows=null){
@@ -1645,9 +1645,9 @@ class Model {
     }
 
     /**
-     * æŸ¥è¯¢æ³¨é‡Š
+     * ²éÑ¯×¢ÊÍ
      * @access public
-     * @param string $comment æ³¨é‡Š
+     * @param string $comment ×¢ÊÍ
      * @return Model
      */
     public function comment($comment){
@@ -1656,10 +1656,10 @@ class Model {
     }
 
     /**
-     * å‚æ•°ç»‘å®š
+     * ²ÎÊı°ó¶¨
      * @access public
-     * @param string $key  å‚æ•°å
-     * @param mixed $value  ç»‘å®šçš„å˜é‡åŠç»‘å®šå‚æ•°
+     * @param string $key  ²ÎÊıÃû
+     * @param mixed $value  °ó¶¨µÄ±äÁ¿¼°°ó¶¨²ÎÊı
      * @return Model
      */
     public function bind($key,$value=false) {
@@ -1679,10 +1679,10 @@ class Model {
     }
 
     /**
-     * è®¾ç½®æ¨¡å‹çš„å±æ€§å€¼
+     * ÉèÖÃÄ£ĞÍµÄÊôĞÔÖµ
      * @access public
-     * @param string $name åç§°
-     * @param mixed $value å€¼
+     * @param string $name Ãû³Æ
+     * @param mixed $value Öµ
      * @return Model
      */
     public function setProperty($name,$value) {

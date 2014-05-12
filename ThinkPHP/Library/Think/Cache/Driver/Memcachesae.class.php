@@ -13,7 +13,7 @@ use Think\Cache;
 
 defined('THINK_PATH') or exit();
 /**
- * Memcacheç¼“å­˜é©±åŠ¨
+ * Memcache»º´æÇý¶¯
  * @category   Extend
  * @package  Extend
  * @subpackage  Driver.Cache
@@ -22,8 +22,8 @@ defined('THINK_PATH') or exit();
 class Memcachesae extends Cache {
 
     /**
-     * æž¶æž„å‡½æ•°
-     * @param array $options ç¼“å­˜å‚æ•°
+     * ¼Ü¹¹º¯Êý
+     * @param array $options »º´æ²ÎÊý
      * @access public
      */
     function __construct($options=array()) {
@@ -40,8 +40,8 @@ class Memcachesae extends Cache {
         $this->options['prefix'] =  isset($options['prefix'])?  $options['prefix']  :   C('DATA_CACHE_PREFIX');
         $this->options['length'] =  isset($options['length'])?  $options['length']  :   0;
       //  $func               =   isset($options['persistent']) ? 'pconnect' : 'connect';
-        $this->handler      =  memcache_init();//[sae] ä¸‹å®žä¾‹åŒ–
-        //[sae] ä¸‹ä¸ç”¨é“¾æŽ¥
+        $this->handler      =  memcache_init();//[sae] ÏÂÊµÀý»¯
+        //[sae] ÏÂ²»ÓÃÁ´½Ó
         $this->connected=true;
         // $this->connected    =   $options['timeout'] === false ?
         //     $this->handler->$func($options['host'], $options['port']) :
@@ -49,7 +49,7 @@ class Memcachesae extends Cache {
     }
 
     /**
-     * æ˜¯å¦è¿žæŽ¥
+     * ÊÇ·ñÁ¬½Ó
      * @access private
      * @return boolean
      */
@@ -58,9 +58,9 @@ class Memcachesae extends Cache {
     }
 
     /**
-     * è¯»å–ç¼“å­˜
+     * ¶ÁÈ¡»º´æ
      * @access public
-     * @param string $name ç¼“å­˜å˜é‡å
+     * @param string $name »º´æ±äÁ¿Ãû
      * @return mixed
      */
     public function get($name) {
@@ -69,11 +69,11 @@ class Memcachesae extends Cache {
     }
 
     /**
-     * å†™å…¥ç¼“å­˜
+     * Ð´Èë»º´æ
      * @access public
-     * @param string $name ç¼“å­˜å˜é‡å
-     * @param mixed $value  å­˜å‚¨æ•°æ®
-     * @param integer $expire  æœ‰æ•ˆæ—¶é—´ï¼ˆç§’ï¼‰
+     * @param string $name »º´æ±äÁ¿Ãû
+     * @param mixed $value  ´æ´¢Êý¾Ý
+     * @param integer $expire  ÓÐÐ§Ê±¼ä£¨Ãë£©
      * @return boolean
      */
     public function set($name, $value, $expire = null) {
@@ -84,7 +84,7 @@ class Memcachesae extends Cache {
         $name   =   $this->options['prefix'].$name;
         if($this->handler->set($_SERVER['HTTP_APPVERSION'].'/'.$name, $value, 0, $expire)) {
             if($this->options['length']>0) {
-                // è®°å½•ç¼“å­˜é˜Ÿåˆ—
+                // ¼ÇÂ¼»º´æ¶ÓÁÐ
                 $this->queue($name);
             }
             return true;
@@ -93,9 +93,9 @@ class Memcachesae extends Cache {
     }
 
     /**
-     * åˆ é™¤ç¼“å­˜
+     * É¾³ý»º´æ
      * @access public
-     * @param string $name ç¼“å­˜å˜é‡å
+     * @param string $name »º´æ±äÁ¿Ãû
      * @return boolean
      */
     public function rm($name, $ttl = false) {
@@ -106,7 +106,7 @@ class Memcachesae extends Cache {
     }
 
     /**
-     * æ¸…é™¤ç¼“å­˜
+     * Çå³ý»º´æ
      * @access public
      * @return boolean
      */
@@ -115,27 +115,27 @@ class Memcachesae extends Cache {
     }
 
     /**
-     * é˜Ÿåˆ—ç¼“å­˜
+     * ¶ÓÁÐ»º´æ
      * @access protected
-     * @param string $key é˜Ÿåˆ—å
+     * @param string $key ¶ÓÁÐÃû
      * @return mixed
      */
-    //[sae] ä¸‹é‡å†™quequeé˜Ÿåˆ—ç¼“å­˜æ–¹æ³•
+    //[sae] ÏÂÖØÐ´queque¶ÓÁÐ»º´æ·½·¨
     protected function queue($key) {
         $queue_name=isset($this->options['queue_name'])?$this->options['queue_name']:'think_queue';
         $value  =  F($queue_name);
         if(!$value) {
             $value   =  array();
         }
-        // è¿›åˆ—
+        // ½øÁÐ
         if(false===array_search($key, $value)) array_push($value,$key);
         if(count($value) > $this->options['length']) {
-            // å‡ºåˆ—
+            // ³öÁÐ
             $key =  array_shift($value);
-            // åˆ é™¤ç¼“å­˜
+            // É¾³ý»º´æ
             $this->rm($key);
             if (APP_DEBUG) {
-                    //è°ƒè¯•æ¨¡å¼ä¸‹è®°å½•å‡ºé˜Ÿæ¬¡æ•°
+                    //µ÷ÊÔÄ£Ê½ÏÂ¼ÇÂ¼³ö¶Ó´ÎÊý
                         $counter = Think::instance('SaeCounter');
                         if ($counter->exists($queue_name.'_out_times'))
                             $counter->incr($queue_name.'_out_times');

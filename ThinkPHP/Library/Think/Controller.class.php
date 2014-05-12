@@ -10,46 +10,46 @@
 // +----------------------------------------------------------------------
 namespace Think;
 /**
- * ThinkPHP æ§åˆ¶å™¨åŸºç±» æŠ½è±¡ç±»
+ * ThinkPHP ¿ØÖÆÆ÷»ùÀà ³éÏóÀà
  */
 abstract class Controller {
 
     /**
-     * è§†å›¾å®ä¾‹å¯¹è±¡
+     * ÊÓÍ¼ÊµÀı¶ÔÏó
      * @var view
      * @access protected
      */    
     protected $view     =  null;
 
     /**
-     * æ§åˆ¶å™¨å‚æ•°
+     * ¿ØÖÆÆ÷²ÎÊı
      * @var config
      * @access protected
      */      
     protected $config   =   array();
 
    /**
-     * æ¶æ„å‡½æ•° å–å¾—æ¨¡æ¿å¯¹è±¡å®ä¾‹
+     * ¼Ü¹¹º¯Êı È¡µÃÄ£°å¶ÔÏóÊµÀı
      * @access public
      */
     public function __construct() {
         Hook::listen('action_begin',$this->config);
-        //å®ä¾‹åŒ–è§†å›¾ç±»
+        //ÊµÀı»¯ÊÓÍ¼Àà
         $this->view     = Think::instance('Think\View');
-        //æ§åˆ¶å™¨åˆå§‹åŒ–
+        //¿ØÖÆÆ÷³õÊ¼»¯
         if(method_exists($this,'_initialize'))
             $this->_initialize();
     }
 
     /**
-     * æ¨¡æ¿æ˜¾ç¤º è°ƒç”¨å†…ç½®çš„æ¨¡æ¿å¼•æ“æ˜¾ç¤ºæ–¹æ³•ï¼Œ
+     * Ä£°åÏÔÊ¾ µ÷ÓÃÄÚÖÃµÄÄ£°åÒıÇæÏÔÊ¾·½·¨£¬
      * @access protected
-     * @param string $templateFile æŒ‡å®šè¦è°ƒç”¨çš„æ¨¡æ¿æ–‡ä»¶
-     * é»˜è®¤ä¸ºç©º ç”±ç³»ç»Ÿè‡ªåŠ¨å®šä½æ¨¡æ¿æ–‡ä»¶
-     * @param string $charset è¾“å‡ºç¼–ç 
-     * @param string $contentType è¾“å‡ºç±»å‹
-     * @param string $content è¾“å‡ºå†…å®¹
-     * @param string $prefix æ¨¡æ¿ç¼“å­˜å‰ç¼€
+     * @param string $templateFile Ö¸¶¨Òªµ÷ÓÃµÄÄ£°åÎÄ¼ş
+     * Ä¬ÈÏÎª¿Õ ÓÉÏµÍ³×Ô¶¯¶¨Î»Ä£°åÎÄ¼ş
+     * @param string $charset Êä³ö±àÂë
+     * @param string $contentType Êä³öÀàĞÍ
+     * @param string $content Êä³öÄÚÈİ
+     * @param string $prefix Ä£°å»º´æÇ°×º
      * @return void
      */
     protected function display($templateFile='',$charset='',$contentType='',$content='',$prefix='') {
@@ -57,12 +57,12 @@ abstract class Controller {
     }
 
     /**
-     * è¾“å‡ºå†…å®¹æ–‡æœ¬å¯ä»¥åŒ…æ‹¬Html å¹¶æ”¯æŒå†…å®¹è§£æ
+     * Êä³öÄÚÈİÎÄ±¾¿ÉÒÔ°üÀ¨Html ²¢Ö§³ÖÄÚÈİ½âÎö
      * @access protected
-     * @param string $content è¾“å‡ºå†…å®¹
-     * @param string $charset æ¨¡æ¿è¾“å‡ºå­—ç¬¦é›†
-     * @param string $contentType è¾“å‡ºç±»å‹
-     * @param string $prefix æ¨¡æ¿ç¼“å­˜å‰ç¼€
+     * @param string $content Êä³öÄÚÈİ
+     * @param string $charset Ä£°åÊä³ö×Ö·û¼¯
+     * @param string $contentType Êä³öÀàĞÍ
+     * @param string $prefix Ä£°å»º´æÇ°×º
      * @return mixed
      */
     protected function show($content,$charset='',$contentType='',$prefix='') {
@@ -70,13 +70,13 @@ abstract class Controller {
     }
 
     /**
-     *  è·å–è¾“å‡ºé¡µé¢å†…å®¹
-     * è°ƒç”¨å†…ç½®çš„æ¨¡æ¿å¼•æ“fetchæ–¹æ³•ï¼Œ
+     *  »ñÈ¡Êä³öÒ³ÃæÄÚÈİ
+     * µ÷ÓÃÄÚÖÃµÄÄ£°åÒıÇæfetch·½·¨£¬
      * @access protected
-     * @param string $templateFile æŒ‡å®šè¦è°ƒç”¨çš„æ¨¡æ¿æ–‡ä»¶
-     * é»˜è®¤ä¸ºç©º ç”±ç³»ç»Ÿè‡ªåŠ¨å®šä½æ¨¡æ¿æ–‡ä»¶
-     * @param string $content æ¨¡æ¿è¾“å‡ºå†…å®¹
-     * @param string $prefix æ¨¡æ¿ç¼“å­˜å‰ç¼€* 
+     * @param string $templateFile Ö¸¶¨Òªµ÷ÓÃµÄÄ£°åÎÄ¼ş
+     * Ä¬ÈÏÎª¿Õ ÓÉÏµÍ³×Ô¶¯¶¨Î»Ä£°åÎÄ¼ş
+     * @param string $content Ä£°åÊä³öÄÚÈİ
+     * @param string $prefix Ä£°å»º´æÇ°×º* 
      * @return string
      */
     protected function fetch($templateFile='',$content='',$prefix='') {
@@ -84,12 +84,12 @@ abstract class Controller {
     }
 
     /**
-     *  åˆ›å»ºé™æ€é¡µé¢
+     *  ´´½¨¾²Ì¬Ò³Ãæ
      * @access protected
-     * @htmlfile ç”Ÿæˆçš„é™æ€æ–‡ä»¶åç§°
-     * @htmlpath ç”Ÿæˆçš„é™æ€æ–‡ä»¶è·¯å¾„
-     * @param string $templateFile æŒ‡å®šè¦è°ƒç”¨çš„æ¨¡æ¿æ–‡ä»¶
-     * é»˜è®¤ä¸ºç©º ç”±ç³»ç»Ÿè‡ªåŠ¨å®šä½æ¨¡æ¿æ–‡ä»¶
+     * @htmlfile Éú³ÉµÄ¾²Ì¬ÎÄ¼şÃû³Æ
+     * @htmlpath Éú³ÉµÄ¾²Ì¬ÎÄ¼şÂ·¾¶
+     * @param string $templateFile Ö¸¶¨Òªµ÷ÓÃµÄÄ£°åÎÄ¼ş
+     * Ä¬ÈÏÎª¿Õ ÓÉÏµÍ³×Ô¶¯¶¨Î»Ä£°åÎÄ¼ş
      * @return string
      */
     protected function buildHtml($htmlfile='',$htmlpath='',$templateFile='') {
@@ -101,9 +101,9 @@ abstract class Controller {
     }
 
     /**
-     * æ¨¡æ¿ä¸»é¢˜è®¾ç½®
+     * Ä£°åÖ÷ÌâÉèÖÃ
      * @access protected
-     * @param string $theme æ¨¡ç‰ˆä¸»é¢˜
+     * @param string $theme Ä£°æÖ÷Ìâ
      * @return Action
      */
     protected function theme($theme){
@@ -112,10 +112,10 @@ abstract class Controller {
     }
 
     /**
-     * æ¨¡æ¿å˜é‡èµ‹å€¼
+     * Ä£°å±äÁ¿¸³Öµ
      * @access protected
-     * @param mixed $name è¦æ˜¾ç¤ºçš„æ¨¡æ¿å˜é‡
-     * @param mixed $value å˜é‡çš„å€¼
+     * @param mixed $name ÒªÏÔÊ¾µÄÄ£°å±äÁ¿
+     * @param mixed $value ±äÁ¿µÄÖµ
      * @return Action
      */
     protected function assign($name,$value='') {
@@ -128,9 +128,9 @@ abstract class Controller {
     }
 
     /**
-     * å–å¾—æ¨¡æ¿æ˜¾ç¤ºå˜é‡çš„å€¼
+     * È¡µÃÄ£°åÏÔÊ¾±äÁ¿µÄÖµ
      * @access protected
-     * @param string $name æ¨¡æ¿æ˜¾ç¤ºå˜é‡
+     * @param string $name Ä£°åÏÔÊ¾±äÁ¿
      * @return mixed
      */
     public function get($name='') {
@@ -142,9 +142,9 @@ abstract class Controller {
     }
 
     /**
-     * æ£€æµ‹æ¨¡æ¿å˜é‡çš„å€¼
+     * ¼ì²âÄ£°å±äÁ¿µÄÖµ
      * @access public
-     * @param string $name åç§°
+     * @param string $name Ãû³Æ
      * @return boolean
      */
     public function __isset($name) {
@@ -152,19 +152,19 @@ abstract class Controller {
     }
 
     /**
-     * é­”æœ¯æ–¹æ³• æœ‰ä¸å­˜åœ¨çš„æ“ä½œçš„æ—¶å€™æ‰§è¡Œ
+     * Ä§Êõ·½·¨ ÓĞ²»´æÔÚµÄ²Ù×÷µÄÊ±ºòÖ´ĞĞ
      * @access public
-     * @param string $method æ–¹æ³•å
-     * @param array $args å‚æ•°
+     * @param string $method ·½·¨Ãû
+     * @param array $args ²ÎÊı
      * @return mixed
      */
     public function __call($method,$args) {
         if( 0 === strcasecmp($method,ACTION_NAME.C('ACTION_SUFFIX'))) {
             if(method_exists($this,'_empty')) {
-                // å¦‚æœå®šä¹‰äº†_emptyæ“ä½œ åˆ™è°ƒç”¨
+                // Èç¹û¶¨ÒåÁË_empty²Ù×÷ Ôòµ÷ÓÃ
                 $this->_empty($method,$args);
             }elseif(file_exists_case($this->view->parseTemplate())){
-                // æ£€æŸ¥æ˜¯å¦å­˜åœ¨é»˜è®¤æ¨¡ç‰ˆ å¦‚æœæœ‰ç›´æ¥è¾“å‡ºæ¨¡ç‰ˆ
+                // ¼ì²éÊÇ·ñ´æÔÚÄ¬ÈÏÄ£°æ Èç¹ûÓĞÖ±½ÓÊä³öÄ£°æ
                 $this->display();
             }else{
                 E(L('_ERROR_ACTION_').':'.ACTION_NAME);
@@ -176,11 +176,11 @@ abstract class Controller {
     }
 
     /**
-     * æ“ä½œé”™è¯¯è·³è½¬çš„å¿«æ·æ–¹æ³•
+     * ²Ù×÷´íÎóÌø×ªµÄ¿ì½İ·½·¨
      * @access protected
-     * @param string $message é”™è¯¯ä¿¡æ¯
-     * @param string $jumpUrl é¡µé¢è·³è½¬åœ°å€
-     * @param mixed $ajax æ˜¯å¦ä¸ºAjaxæ–¹å¼ å½“æ•°å­—æ—¶æŒ‡å®šè·³è½¬æ—¶é—´
+     * @param string $message ´íÎóĞÅÏ¢
+     * @param string $jumpUrl Ò³ÃæÌø×ªµØÖ·
+     * @param mixed $ajax ÊÇ·ñÎªAjax·½Ê½ µ±Êı×ÖÊ±Ö¸¶¨Ìø×ªÊ±¼ä
      * @return void
      */
     protected function error($message='',$jumpUrl='',$ajax=false) {
@@ -188,11 +188,11 @@ abstract class Controller {
     }
 
     /**
-     * æ“ä½œæˆåŠŸè·³è½¬çš„å¿«æ·æ–¹æ³•
+     * ²Ù×÷³É¹¦Ìø×ªµÄ¿ì½İ·½·¨
      * @access protected
-     * @param string $message æç¤ºä¿¡æ¯
-     * @param string $jumpUrl é¡µé¢è·³è½¬åœ°å€
-     * @param mixed $ajax æ˜¯å¦ä¸ºAjaxæ–¹å¼ å½“æ•°å­—æ—¶æŒ‡å®šè·³è½¬æ—¶é—´
+     * @param string $message ÌáÊ¾ĞÅÏ¢
+     * @param string $jumpUrl Ò³ÃæÌø×ªµØÖ·
+     * @param mixed $ajax ÊÇ·ñÎªAjax·½Ê½ µ±Êı×ÖÊ±Ö¸¶¨Ìø×ªÊ±¼ä
      * @return void
      */
     protected function success($message='',$jumpUrl='',$ajax=false) {
@@ -200,45 +200,45 @@ abstract class Controller {
     }
 
     /**
-     * Ajaxæ–¹å¼è¿”å›æ•°æ®åˆ°å®¢æˆ·ç«¯
+     * Ajax·½Ê½·µ»ØÊı¾İµ½¿Í»§¶Ë
      * @access protected
-     * @param mixed $data è¦è¿”å›çš„æ•°æ®
-     * @param String $type AJAXè¿”å›æ•°æ®æ ¼å¼
+     * @param mixed $data Òª·µ»ØµÄÊı¾İ
+     * @param String $type AJAX·µ»ØÊı¾İ¸ñÊ½
      * @return void
      */
     protected function ajaxReturn($data,$type='') {
         if(empty($type)) $type  =   C('DEFAULT_AJAX_RETURN');
         switch (strtoupper($type)){
             case 'JSON' :
-                // è¿”å›JSONæ•°æ®æ ¼å¼åˆ°å®¢æˆ·ç«¯ åŒ…å«çŠ¶æ€ä¿¡æ¯
+                // ·µ»ØJSONÊı¾İ¸ñÊ½µ½¿Í»§¶Ë °üº¬×´Ì¬ĞÅÏ¢
                 header('Content-Type:application/json; charset=utf-8');
                 exit(json_encode($data));
             case 'XML'  :
-                // è¿”å›xmlæ ¼å¼æ•°æ®
+                // ·µ»Øxml¸ñÊ½Êı¾İ
                 header('Content-Type:text/xml; charset=utf-8');
                 exit(xml_encode($data));
             case 'JSONP':
-                // è¿”å›JSONæ•°æ®æ ¼å¼åˆ°å®¢æˆ·ç«¯ åŒ…å«çŠ¶æ€ä¿¡æ¯
+                // ·µ»ØJSONÊı¾İ¸ñÊ½µ½¿Í»§¶Ë °üº¬×´Ì¬ĞÅÏ¢
                 header('Content-Type:application/json; charset=utf-8');
                 $handler  =   isset($_GET[C('VAR_JSONP_HANDLER')]) ? $_GET[C('VAR_JSONP_HANDLER')] : C('DEFAULT_JSONP_HANDLER');
                 exit($handler.'('.json_encode($data).');');  
             case 'EVAL' :
-                // è¿”å›å¯æ‰§è¡Œçš„jsè„šæœ¬
+                // ·µ»Ø¿ÉÖ´ĞĞµÄjs½Å±¾
                 header('Content-Type:text/html; charset=utf-8');
                 exit($data);            
             default     :
-                // ç”¨äºæ‰©å±•å…¶ä»–è¿”å›æ ¼å¼æ•°æ®
+                // ÓÃÓÚÀ©Õ¹ÆäËû·µ»Ø¸ñÊ½Êı¾İ
                 Hook::listen('ajax_return',$data);
         }
     }
 
     /**
-     * Actionè·³è½¬(URLé‡å®šå‘ï¼‰ æ”¯æŒæŒ‡å®šæ¨¡å—å’Œå»¶æ—¶è·³è½¬
+     * ActionÌø×ª(URLÖØ¶¨Ïò£© Ö§³ÖÖ¸¶¨Ä£¿éºÍÑÓÊ±Ìø×ª
      * @access protected
-     * @param string $url è·³è½¬çš„URLè¡¨è¾¾å¼
-     * @param array $params å…¶å®ƒURLå‚æ•°
-     * @param integer $delay å»¶æ—¶è·³è½¬çš„æ—¶é—´ å•ä½ä¸ºç§’
-     * @param string $msg è·³è½¬æç¤ºä¿¡æ¯
+     * @param string $url Ìø×ªµÄURL±í´ïÊ½
+     * @param array $params ÆäËüURL²ÎÊı
+     * @param integer $delay ÑÓÊ±Ìø×ªµÄÊ±¼ä µ¥Î»ÎªÃë
+     * @param string $msg Ìø×ªÌáÊ¾ĞÅÏ¢
      * @return void
      */
     protected function redirect($url,$params=array(),$delay=0,$msg='') {
@@ -247,18 +247,18 @@ abstract class Controller {
     }
 
     /**
-     * é»˜è®¤è·³è½¬æ“ä½œ æ”¯æŒé”™è¯¯å¯¼å‘å’Œæ­£ç¡®è·³è½¬
-     * è°ƒç”¨æ¨¡æ¿æ˜¾ç¤º é»˜è®¤ä¸ºpublicç›®å½•ä¸‹é¢çš„successé¡µé¢
-     * æç¤ºé¡µé¢ä¸ºå¯é…ç½® æ”¯æŒæ¨¡æ¿æ ‡ç­¾
-     * @param string $message æç¤ºä¿¡æ¯
-     * @param Boolean $status çŠ¶æ€
-     * @param string $jumpUrl é¡µé¢è·³è½¬åœ°å€
-     * @param mixed $ajax æ˜¯å¦ä¸ºAjaxæ–¹å¼ å½“æ•°å­—æ—¶æŒ‡å®šè·³è½¬æ—¶é—´
+     * Ä¬ÈÏÌø×ª²Ù×÷ Ö§³Ö´íÎóµ¼ÏòºÍÕıÈ·Ìø×ª
+     * µ÷ÓÃÄ£°åÏÔÊ¾ Ä¬ÈÏÎªpublicÄ¿Â¼ÏÂÃæµÄsuccessÒ³Ãæ
+     * ÌáÊ¾Ò³ÃæÎª¿ÉÅäÖÃ Ö§³ÖÄ£°å±êÇ©
+     * @param string $message ÌáÊ¾ĞÅÏ¢
+     * @param Boolean $status ×´Ì¬
+     * @param string $jumpUrl Ò³ÃæÌø×ªµØÖ·
+     * @param mixed $ajax ÊÇ·ñÎªAjax·½Ê½ µ±Êı×ÖÊ±Ö¸¶¨Ìø×ªÊ±¼ä
      * @access private
      * @return void
      */
     private function dispatchJump($message,$status=1,$jumpUrl='',$ajax=false) {
-        if(true === $ajax || IS_AJAX) {// AJAXæäº¤
+        if(true === $ajax || IS_AJAX) {// AJAXÌá½»
             $data           =   is_array($ajax)?$ajax:array();
             $data['info']   =   $message;
             $data['status'] =   $status;
@@ -267,42 +267,42 @@ abstract class Controller {
         }
         if(is_int($ajax)) $this->assign('waitSecond',$ajax);
         if(!empty($jumpUrl)) $this->assign('jumpUrl',$jumpUrl);
-        // æç¤ºæ ‡é¢˜
+        // ÌáÊ¾±êÌâ
         $this->assign('msgTitle',$status? L('_OPERATION_SUCCESS_') : L('_OPERATION_FAIL_'));
-        //å¦‚æœè®¾ç½®äº†å…³é—­çª—å£ï¼Œåˆ™æç¤ºå®Œæ¯•åè‡ªåŠ¨å…³é—­çª—å£
+        //Èç¹ûÉèÖÃÁË¹Ø±Õ´°¿Ú£¬ÔòÌáÊ¾Íê±Ïºó×Ô¶¯¹Ø±Õ´°¿Ú
         if($this->get('closeWin'))    $this->assign('jumpUrl','javascript:window.close();');
-        $this->assign('status',$status);   // çŠ¶æ€
-        //ä¿è¯è¾“å‡ºä¸å—é™æ€ç¼“å­˜å½±å“
+        $this->assign('status',$status);   // ×´Ì¬
+        //±£Ö¤Êä³ö²»ÊÜ¾²Ì¬»º´æÓ°Ïì
         C('HTML_CACHE_ON',false);
-        if($status) { //å‘é€æˆåŠŸä¿¡æ¯
-            $this->assign('message',$message);// æç¤ºä¿¡æ¯
-            // æˆåŠŸæ“ä½œåé»˜è®¤åœç•™1ç§’
+        if($status) { //·¢ËÍ³É¹¦ĞÅÏ¢
+            $this->assign('message',$message);// ÌáÊ¾ĞÅÏ¢
+            // ³É¹¦²Ù×÷ºóÄ¬ÈÏÍ£Áô1Ãë
             if(!isset($this->waitSecond))    $this->assign('waitSecond','1');
-            // é»˜è®¤æ“ä½œæˆåŠŸè‡ªåŠ¨è¿”å›æ“ä½œå‰é¡µé¢
+            // Ä¬ÈÏ²Ù×÷³É¹¦×Ô¶¯·µ»Ø²Ù×÷Ç°Ò³Ãæ
             if(!isset($this->jumpUrl)) $this->assign("jumpUrl",$_SERVER["HTTP_REFERER"]);
             $this->display(C('TMPL_ACTION_SUCCESS'));
         }else{
-            $this->assign('error',$message);// æç¤ºä¿¡æ¯
-            //å‘ç”Ÿé”™è¯¯æ—¶å€™é»˜è®¤åœç•™3ç§’
+            $this->assign('error',$message);// ÌáÊ¾ĞÅÏ¢
+            //·¢Éú´íÎóÊ±ºòÄ¬ÈÏÍ£Áô3Ãë
             if(!isset($this->waitSecond))    $this->assign('waitSecond','3');
-            // é»˜è®¤å‘ç”Ÿé”™è¯¯çš„è¯è‡ªåŠ¨è¿”å›ä¸Šé¡µ
+            // Ä¬ÈÏ·¢Éú´íÎóµÄ»°×Ô¶¯·µ»ØÉÏÒ³
             if(!isset($this->jumpUrl)) $this->assign('jumpUrl',"javascript:history.back(-1);");
             $this->display(C('TMPL_ACTION_ERROR'));
-            // ä¸­æ­¢æ‰§è¡Œ  é¿å…å‡ºé”™åç»§ç»­æ‰§è¡Œ
+            // ÖĞÖ¹Ö´ĞĞ  ±ÜÃâ³ö´íºó¼ÌĞøÖ´ĞĞ
             exit ;
         }
     }
 
    /**
-     * ææ„æ–¹æ³•
+     * Îö¹¹·½·¨
      * @access public
      */
     public function __destruct() {
-        // æ‰§è¡Œåç»­æ“ä½œ
+        // Ö´ĞĞºóĞø²Ù×÷
         Hook::listen('action_end');
     }
 }
-// è®¾ç½®æ§åˆ¶å™¨åˆ«å ä¾¿äºå‡çº§
+// ÉèÖÃ¿ØÖÆÆ÷±ğÃû ±ãÓÚÉı¼¶
 if(function_exists("class_alias")){
     class_alias('Think\Controller','Think\Action');    
 }

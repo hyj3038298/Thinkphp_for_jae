@@ -10,24 +10,24 @@
 // +----------------------------------------------------------------------
 namespace Think;
 /**
- * ThinkPHPå†…ç½®æ¨¡æ¿å¼•æ“ç±»
- * æ”¯æŒXMLæ ‡ç­¾å’Œæ™®é€šæ ‡ç­¾çš„æ¨¡æ¿è§£æ
- * ç¼–è¯‘å‹æ¨¡æ¿å¼•æ“ æ”¯æŒåŠ¨æ€ç¼“å­˜
+ * ThinkPHPÄÚÖÃÄ£°åÒıÇæÀà
+ * Ö§³ÖXML±êÇ©ºÍÆÕÍ¨±êÇ©µÄÄ£°å½âÎö
+ * ±àÒëĞÍÄ£°åÒıÇæ Ö§³Ö¶¯Ì¬»º´æ
  */
 class  Template {
 
-    // æ¨¡æ¿é¡µé¢ä¸­å¼•å…¥çš„æ ‡ç­¾åº“åˆ—è¡¨
+    // Ä£°åÒ³ÃæÖĞÒıÈëµÄ±êÇ©¿âÁĞ±í
     protected   $tagLib          =   array();
-    // å½“å‰æ¨¡æ¿æ–‡ä»¶
+    // µ±Ç°Ä£°åÎÄ¼ş
     protected   $templateFile    =   '';
-    // æ¨¡æ¿å˜é‡
+    // Ä£°å±äÁ¿
     public      $tVar            =   array();
     public      $config          =   array();
     private     $literal         =   array();
     private     $block           =   array();
 
     /**
-     * æ¶æ„å‡½æ•°
+     * ¼Ü¹¹º¯Êı
      * @access public
      */
     public function __construct(){
@@ -51,7 +51,7 @@ class  Template {
             $str);        
     }
 
-    // æ¨¡æ¿å˜é‡è·å–å’Œè®¾ç½®
+    // Ä£°å±äÁ¿»ñÈ¡ºÍÉèÖÃ
     public function get($name) {
         if(isset($this->tVar[$name]))
             return $this->tVar[$name];
@@ -64,11 +64,11 @@ class  Template {
     }
 
     /**
-     * åŠ è½½æ¨¡æ¿
+     * ¼ÓÔØÄ£°å
      * @access public
-     * @param string $tmplTemplateFile æ¨¡æ¿æ–‡ä»¶
-     * @param array  $templateVar æ¨¡æ¿å˜é‡
-     * @param string $prefix æ¨¡æ¿æ ‡è¯†å‰ç¼€
+     * @param string $tmplTemplateFile Ä£°åÎÄ¼ş
+     * @param array  $templateVar Ä£°å±äÁ¿
+     * @param string $prefix Ä£°å±êÊ¶Ç°×º
      * @return void
      */
     public function fetch($templateFile,$templateVar,$prefix='') {
@@ -78,136 +78,136 @@ class  Template {
     }
 
     /**
-     * åŠ è½½ä¸»æ¨¡æ¿å¹¶ç¼“å­˜
+     * ¼ÓÔØÖ÷Ä£°å²¢»º´æ
      * @access public
-     * @param string $tmplTemplateFile æ¨¡æ¿æ–‡ä»¶
-     * @param string $prefix æ¨¡æ¿æ ‡è¯†å‰ç¼€
+     * @param string $tmplTemplateFile Ä£°åÎÄ¼ş
+     * @param string $prefix Ä£°å±êÊ¶Ç°×º
      * @return string
      * @throws ThinkExecption
      */
     public function loadTemplate ($tmplTemplateFile,$prefix='') {
         if(is_file($tmplTemplateFile)) {
             $this->templateFile    =  $tmplTemplateFile;
-            // è¯»å–æ¨¡æ¿æ–‡ä»¶å†…å®¹
+            // ¶ÁÈ¡Ä£°åÎÄ¼şÄÚÈİ
             $tmplContent =  file_get_contents($tmplTemplateFile);
         }else{
             $tmplContent =  $tmplTemplateFile;
         }
-         // æ ¹æ®æ¨¡ç‰ˆæ–‡ä»¶åå®šä½ç¼“å­˜æ–‡ä»¶
+         // ¸ù¾İÄ£°æÎÄ¼şÃû¶¨Î»»º´æÎÄ¼ş
         $tmplCacheFile = $this->config['cache_path'].$prefix.md5($tmplTemplateFile).$this->config['cache_suffix'];
 
-        // åˆ¤æ–­æ˜¯å¦å¯ç”¨å¸ƒå±€
+        // ÅĞ¶ÏÊÇ·ñÆôÓÃ²¼¾Ö
         if(C('LAYOUT_ON')) {
-            if(false !== strpos($tmplContent,'{__NOLAYOUT__}')) { // å¯ä»¥å•ç‹¬å®šä¹‰ä¸ä½¿ç”¨å¸ƒå±€
+            if(false !== strpos($tmplContent,'{__NOLAYOUT__}')) { // ¿ÉÒÔµ¥¶À¶¨Òå²»Ê¹ÓÃ²¼¾Ö
                 $tmplContent = str_replace('{__NOLAYOUT__}','',$tmplContent);
-            }else{ // æ›¿æ¢å¸ƒå±€çš„ä¸»ä½“å†…å®¹
+            }else{ // Ìæ»»²¼¾ÖµÄÖ÷ÌåÄÚÈİ
                 $layoutFile  =  THEME_PATH.C('LAYOUT_NAME').$this->config['template_suffix'];
                 $tmplContent = str_replace($this->config['layout_item'],$tmplContent,file_get_contents($layoutFile));
             }
         }
-        // ç¼–è¯‘æ¨¡æ¿å†…å®¹
+        // ±àÒëÄ£°åÄÚÈİ
         $tmplContent =  $this->compiler($tmplContent);
         Storage::put($tmplCacheFile,trim($tmplContent),'tpl');
         return $tmplCacheFile;
     }
 
     /**
-     * ç¼–è¯‘æ¨¡æ¿æ–‡ä»¶å†…å®¹
+     * ±àÒëÄ£°åÎÄ¼şÄÚÈİ
      * @access protected
-     * @param mixed $tmplContent æ¨¡æ¿å†…å®¹
+     * @param mixed $tmplContent Ä£°åÄÚÈİ
      * @return string
      */
     protected function compiler($tmplContent) {
-        //æ¨¡æ¿è§£æ
+        //Ä£°å½âÎö
         $tmplContent =  $this->parse($tmplContent);
-        // è¿˜åŸè¢«æ›¿æ¢çš„Literalæ ‡ç­¾
+        // »¹Ô­±»Ìæ»»µÄLiteral±êÇ©
         $tmplContent =  preg_replace_callback('/<!--###literal(\d+)###-->/is', array($this, 'restoreLiteral'), $tmplContent);
-        // æ·»åŠ å®‰å…¨ä»£ç 
+        // Ìí¼Ó°²È«´úÂë
         $tmplContent =  '<?php if (!defined(\'THINK_PATH\')) exit();?>'.$tmplContent;
-        // ä¼˜åŒ–ç”Ÿæˆçš„phpä»£ç 
+        // ÓÅ»¯Éú³ÉµÄphp´úÂë
         $tmplContent = str_replace('?><?php','',$tmplContent);
-        // æ¨¡ç‰ˆç¼–è¯‘è¿‡æ»¤æ ‡ç­¾
+        // Ä£°æ±àÒë¹ıÂË±êÇ©
         Hook::listen('template_filter',$tmplContent);
         return strip_whitespace($tmplContent);
     }
 
     /**
-     * æ¨¡æ¿è§£æå…¥å£
-     * æ”¯æŒæ™®é€šæ ‡ç­¾å’ŒTagLibè§£æ æ”¯æŒè‡ªå®šä¹‰æ ‡ç­¾åº“
+     * Ä£°å½âÎöÈë¿Ú
+     * Ö§³ÖÆÕÍ¨±êÇ©ºÍTagLib½âÎö Ö§³Ö×Ô¶¨Òå±êÇ©¿â
      * @access public
-     * @param string $content è¦è§£æçš„æ¨¡æ¿å†…å®¹
+     * @param string $content Òª½âÎöµÄÄ£°åÄÚÈİ
      * @return string
      */
     public function parse($content) {
-        // å†…å®¹ä¸ºç©ºä¸è§£æ
+        // ÄÚÈİÎª¿Õ²»½âÎö
         if(empty($content)) return '';
         $begin      =   $this->config['taglib_begin'];
         $end        =   $this->config['taglib_end'];
-        // æ£€æŸ¥includeè¯­æ³•
+        // ¼ì²éincludeÓï·¨
         $content    =   $this->parseInclude($content);
-        // æ£€æŸ¥PHPè¯­æ³•
+        // ¼ì²éPHPÓï·¨
         $content    =   $this->parsePhp($content);
-        // é¦–å…ˆæ›¿æ¢literalæ ‡ç­¾å†…å®¹
+        // Ê×ÏÈÌæ»»literal±êÇ©ÄÚÈİ
         $content    =   preg_replace_callback('/'.$begin.'literal'.$end.'(.*?)'.$begin.'\/literal'.$end.'/is', array($this, 'parseLiteral'),$content);
 
-        // è·å–éœ€è¦å¼•å…¥çš„æ ‡ç­¾åº“åˆ—è¡¨
-        // æ ‡ç­¾åº“åªéœ€è¦å®šä¹‰ä¸€æ¬¡ï¼Œå…è®¸å¼•å…¥å¤šä¸ªä¸€æ¬¡
-        // ä¸€èˆ¬æ”¾åœ¨æ–‡ä»¶çš„æœ€å‰é¢
-        // æ ¼å¼ï¼š<taglib name="html,mytag..." />
-        // å½“TAGLIB_LOADé…ç½®ä¸ºtrueæ—¶æ‰ä¼šè¿›è¡Œæ£€æµ‹
+        // »ñÈ¡ĞèÒªÒıÈëµÄ±êÇ©¿âÁĞ±í
+        // ±êÇ©¿âÖ»ĞèÒª¶¨ÒåÒ»´Î£¬ÔÊĞíÒıÈë¶à¸öÒ»´Î
+        // Ò»°ã·ÅÔÚÎÄ¼şµÄ×îÇ°Ãæ
+        // ¸ñÊ½£º<taglib name="html,mytag..." />
+        // µ±TAGLIB_LOADÅäÖÃÎªtrueÊ±²Å»á½øĞĞ¼ì²â
         if(C('TAGLIB_LOAD')) {
             $this->getIncludeTagLib($content);
             if(!empty($this->tagLib)) {
-                // å¯¹å¯¼å…¥çš„TagLibè¿›è¡Œè§£æ
+                // ¶Ôµ¼ÈëµÄTagLib½øĞĞ½âÎö
                 foreach($this->tagLib as $tagLibName) {
                     $this->parseTagLib($tagLibName,$content);
                 }
             }
         }
-        // é¢„å…ˆåŠ è½½çš„æ ‡ç­¾åº“ æ— éœ€åœ¨æ¯ä¸ªæ¨¡æ¿ä¸­ä½¿ç”¨taglibæ ‡ç­¾åŠ è½½ ä½†å¿…é¡»ä½¿ç”¨æ ‡ç­¾åº“XMLå‰ç¼€
+        // Ô¤ÏÈ¼ÓÔØµÄ±êÇ©¿â ÎŞĞèÔÚÃ¿¸öÄ£°åÖĞÊ¹ÓÃtaglib±êÇ©¼ÓÔØ µ«±ØĞëÊ¹ÓÃ±êÇ©¿âXMLÇ°×º
         if(C('TAGLIB_PRE_LOAD')) {
             $tagLibs =  explode(',',C('TAGLIB_PRE_LOAD'));
             foreach ($tagLibs as $tag){
                 $this->parseTagLib($tag,$content);
             }
         }
-        // å†…ç½®æ ‡ç­¾åº“ æ— éœ€ä½¿ç”¨taglibæ ‡ç­¾å¯¼å…¥å°±å¯ä»¥ä½¿ç”¨ å¹¶ä¸”ä¸éœ€ä½¿ç”¨æ ‡ç­¾åº“XMLå‰ç¼€
+        // ÄÚÖÃ±êÇ©¿â ÎŞĞèÊ¹ÓÃtaglib±êÇ©µ¼Èë¾Í¿ÉÒÔÊ¹ÓÃ ²¢ÇÒ²»ĞèÊ¹ÓÃ±êÇ©¿âXMLÇ°×º
         $tagLibs =  explode(',',C('TAGLIB_BUILD_IN'));
         foreach ($tagLibs as $tag){
             $this->parseTagLib($tag,$content,true);
         }
-        //è§£ææ™®é€šæ¨¡æ¿æ ‡ç­¾ {tagName}
+        //½âÎöÆÕÍ¨Ä£°å±êÇ© {tagName}
         $content = preg_replace_callback('/('.$this->config['tmpl_begin'].')([^\d\s'.$this->config['tmpl_begin'].$this->config['tmpl_end'].'].+?)('.$this->config['tmpl_end'].')/is', array($this, 'parseTag'),$content);
         return $content;
     }
 
-    // æ£€æŸ¥PHPè¯­æ³•
+    // ¼ì²éPHPÓï·¨
     protected function parsePhp($content) {
         if(ini_get('short_open_tag')){
-            // å¼€å¯çŸ­æ ‡ç­¾çš„æƒ…å†µè¦å°†<?æ ‡ç­¾ç”¨echoæ–¹å¼è¾“å‡º å¦åˆ™æ— æ³•æ­£å¸¸è¾“å‡ºxmlæ ‡è¯†
+            // ¿ªÆô¶Ì±êÇ©µÄÇé¿öÒª½«<?±êÇ©ÓÃecho·½Ê½Êä³ö ·ñÔòÎŞ·¨Õı³£Êä³öxml±êÊ¶
             $content = preg_replace('/(<\?(?!php|=|$))/i', '<?php echo \'\\1\'; ?>'."\n", $content );
         }
-        // PHPè¯­æ³•æ£€æŸ¥
+        // PHPÓï·¨¼ì²é
         if(C('TMPL_DENY_PHP') && false !== strpos($content,'<?php')) {
             E(L('_NOT_ALLOW_PHP_'));
         }
         return $content;
     }
 
-    // è§£ææ¨¡æ¿ä¸­çš„å¸ƒå±€æ ‡ç­¾
+    // ½âÎöÄ£°åÖĞµÄ²¼¾Ö±êÇ©
     protected function parseLayout($content) {
-        // è¯»å–æ¨¡æ¿ä¸­çš„å¸ƒå±€æ ‡ç­¾
+        // ¶ÁÈ¡Ä£°åÖĞµÄ²¼¾Ö±êÇ©
         $find = preg_match('/'.$this->config['taglib_begin'].'layout\s(.+?)\s*?\/'.$this->config['taglib_end'].'/is',$content,$matches);
         if($find) {
-            //æ›¿æ¢Layoutæ ‡ç­¾
+            //Ìæ»»Layout±êÇ©
             $content    =   str_replace($matches[0],'',$content);
-            //è§£æLayoutæ ‡ç­¾
+            //½âÎöLayout±êÇ©
             $array      =   $this->parseXmlAttrs($matches[1]);
             if(!C('LAYOUT_ON') || C('LAYOUT_NAME') !=$array['name'] ) {
-                // è¯»å–å¸ƒå±€æ¨¡æ¿
+                // ¶ÁÈ¡²¼¾ÖÄ£°å
                 $layoutFile =   THEME_PATH.$array['name'].$this->config['template_suffix'];
                 $replace    =   isset($array['replace'])?$array['replace']:$this->config['layout_item'];
-                // æ›¿æ¢å¸ƒå±€çš„ä¸»ä½“å†…å®¹
+                // Ìæ»»²¼¾ÖµÄÖ÷ÌåÄÚÈİ
                 $content    =   str_replace($replace,$content,file_get_contents($layoutFile));
             }
         }else{
@@ -216,14 +216,14 @@ class  Template {
         return $content;
     }
 
-    // è§£ææ¨¡æ¿ä¸­çš„includeæ ‡ç­¾
+    // ½âÎöÄ£°åÖĞµÄinclude±êÇ©
     protected function parseInclude($content, $extend = true) {
-        // è§£æç»§æ‰¿
+        // ½âÎö¼Ì³Ğ
         if($extend)
             $content    =   $this->parseExtend($content);
-        // è§£æå¸ƒå±€
+        // ½âÎö²¼¾Ö
         $content    =   $this->parseLayout($content);
-        // è¯»å–æ¨¡æ¿ä¸­çš„includeæ ‡ç­¾
+        // ¶ÁÈ¡Ä£°åÖĞµÄinclude±êÇ©
         $find       =   preg_match_all('/'.$this->config['taglib_begin'].'include\s(.+?)\s*?\/'.$this->config['taglib_end'].'/is',$content,$matches);
         if($find) {
             for($i=0;$i<$find;$i++) {
@@ -237,22 +237,22 @@ class  Template {
         return $content;
     }
 
-    // è§£ææ¨¡æ¿ä¸­çš„extendæ ‡ç­¾
+    // ½âÎöÄ£°åÖĞµÄextend±êÇ©
     protected function parseExtend($content) {
         $begin      =   $this->config['taglib_begin'];
         $end        =   $this->config['taglib_end'];        
-        // è¯»å–æ¨¡æ¿ä¸­çš„ç»§æ‰¿æ ‡ç­¾
+        // ¶ÁÈ¡Ä£°åÖĞµÄ¼Ì³Ğ±êÇ©
         $find       =   preg_match('/'.$begin.'extend\s(.+?)\s*?\/'.$end.'/is',$content,$matches);
         if($find) {
-            //æ›¿æ¢extendæ ‡ç­¾
+            //Ìæ»»extend±êÇ©
             $content    =   str_replace($matches[0],'',$content);
-            // è®°å½•é¡µé¢ä¸­çš„blockæ ‡ç­¾
+            // ¼ÇÂ¼Ò³ÃæÖĞµÄblock±êÇ©
             preg_replace_callback('/'.$begin.'block\sname=[\'"](.+?)[\'"]\s*?'.$end.'(.*?)'.$begin.'\/block'.$end.'/is', array($this, 'parseBlock'),$content);
-            // è¯»å–ç»§æ‰¿æ¨¡æ¿
+            // ¶ÁÈ¡¼Ì³ĞÄ£°å
             $array      =   $this->parseXmlAttrs($matches[1]);
             $content    =   $this->parseTemplateName($array['name']);
-            $content    =   $this->parseInclude($content, false); //å¯¹ç»§æ‰¿æ¨¡æ¿ä¸­çš„includeè¿›è¡Œåˆ†æ
-            // æ›¿æ¢blockæ ‡ç­¾
+            $content    =   $this->parseInclude($content, false); //¶Ô¼Ì³ĞÄ£°åÖĞµÄinclude½øĞĞ·ÖÎö
+            // Ìæ»»block±êÇ©
             $content = $this->replaceBlock($content);
         }else{
             $content    =   preg_replace_callback('/'.$begin.'block\sname=[\'"](.+?)[\'"]\s*?'.$end.'(.*?)'.$begin.'\/block'.$end.'/is', function($match){return stripslashes($match[2]);}, $content);            
@@ -261,9 +261,9 @@ class  Template {
     }
 
     /**
-     * åˆ†æXMLå±æ€§
+     * ·ÖÎöXMLÊôĞÔ
      * @access private
-     * @param string $attrs  XMLå±æ€§å­—ç¬¦ä¸²
+     * @param string $attrs  XMLÊôĞÔ×Ö·û´®
      * @return array
      */
     private function parseXmlAttrs($attrs) {
@@ -277,9 +277,9 @@ class  Template {
     }
 
     /**
-     * æ›¿æ¢é¡µé¢ä¸­çš„literalæ ‡ç­¾
+     * Ìæ»»Ò³ÃæÖĞµÄliteral±êÇ©
      * @access private
-     * @param string $content  æ¨¡æ¿å†…å®¹
+     * @param string $content  Ä£°åÄÚÈİ
      * @return string|false
      */
     private function parseLiteral($content) {
@@ -293,25 +293,25 @@ class  Template {
     }
 
     /**
-     * è¿˜åŸè¢«æ›¿æ¢çš„literalæ ‡ç­¾
+     * »¹Ô­±»Ìæ»»µÄliteral±êÇ©
      * @access private
-     * @param string $tag  literalæ ‡ç­¾åºå·
+     * @param string $tag  literal±êÇ©ĞòºÅ
      * @return string|false
      */
     private function restoreLiteral($tag) {
         if(is_array($tag)) $tag = $tag[1];
-        // è¿˜åŸliteralæ ‡ç­¾
+        // »¹Ô­literal±êÇ©
         $parseStr   =  $this->literal[$tag];
-        // é”€æ¯literalè®°å½•
+        // Ïú»Ùliteral¼ÇÂ¼
         unset($this->literal[$tag]);
         return $parseStr;
     }
 
     /**
-     * è®°å½•å½“å‰é¡µé¢ä¸­çš„blockæ ‡ç­¾
+     * ¼ÇÂ¼µ±Ç°Ò³ÃæÖĞµÄblock±êÇ©
      * @access private
-     * @param string $name blockåç§°
-     * @param string $content  æ¨¡æ¿å†…å®¹
+     * @param string $name blockÃû³Æ
+     * @param string $content  Ä£°åÄÚÈİ
      * @return string
      */
     private function parseBlock($name,$content = '') {
@@ -324,9 +324,9 @@ class  Template {
     }
 
     /**
-     * æ›¿æ¢ç»§æ‰¿æ¨¡æ¿ä¸­çš„blockæ ‡ç­¾
+     * Ìæ»»¼Ì³ĞÄ£°åÖĞµÄblock±êÇ©
      * @access private
-     * @param string $content  æ¨¡æ¿å†…å®¹
+     * @param string $content  Ä£°åÄÚÈİ
      * @return string
      */
     private function replaceBlock($content){
@@ -340,7 +340,7 @@ class  Template {
             } while ($parse && $parse--);
             return $content;
         } elseif(is_array($content)){
-            if(preg_match('/'.$begin.'block\sname=[\'"](.+?)[\'"]\s*?'.$end.'/is', $content[3])){ //å­˜åœ¨åµŒå¥—ï¼Œè¿›ä¸€æ­¥è§£æ
+            if(preg_match('/'.$begin.'block\sname=[\'"](.+?)[\'"]\s*?'.$end.'/is', $content[3])){ //´æÔÚÇ¶Ì×£¬½øÒ»²½½âÎö
                 $parse = 1;
                 $content[3] = preg_replace_callback($reg, array($this, 'replaceBlock'), "{$content[3]}{$begin}/block{$end}");
                 return $content[1] . $content[3];
@@ -354,19 +354,19 @@ class  Template {
     }
 
     /**
-     * æœç´¢æ¨¡æ¿é¡µé¢ä¸­åŒ…å«çš„TagLibåº“
-     * å¹¶è¿”å›åˆ—è¡¨
+     * ËÑË÷Ä£°åÒ³ÃæÖĞ°üº¬µÄTagLib¿â
+     * ²¢·µ»ØÁĞ±í
      * @access public
-     * @param string $content  æ¨¡æ¿å†…å®¹
+     * @param string $content  Ä£°åÄÚÈİ
      * @return string|false
      */
     public function getIncludeTagLib(& $content) {
-        //æœç´¢æ˜¯å¦æœ‰TagLibæ ‡ç­¾
+        //ËÑË÷ÊÇ·ñÓĞTagLib±êÇ©
         $find = preg_match('/'.$this->config['taglib_begin'].'taglib\s(.+?)(\s*?)\/'.$this->config['taglib_end'].'\W/is',$content,$matches);
         if($find) {
-            //æ›¿æ¢TagLibæ ‡ç­¾
+            //Ìæ»»TagLib±êÇ©
             $content        =   str_replace($matches[0],'',$content);
-            //è§£æTagLibæ ‡ç­¾
+            //½âÎöTagLib±êÇ©
             $array          =   $this->parseXmlAttrs($matches[1]);
             $this->tagLib   =   explode(',',$array['name']);
         }
@@ -374,18 +374,18 @@ class  Template {
     }
 
     /**
-     * TagLibåº“è§£æ
+     * TagLib¿â½âÎö
      * @access public
-     * @param string $tagLib è¦è§£æçš„æ ‡ç­¾åº“
-     * @param string $content è¦è§£æçš„æ¨¡æ¿å†…å®¹
-     * @param boolen $hide æ˜¯å¦éšè—æ ‡ç­¾åº“å‰ç¼€
+     * @param string $tagLib Òª½âÎöµÄ±êÇ©¿â
+     * @param string $content Òª½âÎöµÄÄ£°åÄÚÈİ
+     * @param boolen $hide ÊÇ·ñÒş²Ø±êÇ©¿âÇ°×º
      * @return string
      */
     public function parseTagLib($tagLib,&$content,$hide=false) {
         $begin      =   $this->config['taglib_begin'];
         $end        =   $this->config['taglib_end'];
         if(strpos($tagLib,'\\')){
-            // æ”¯æŒæŒ‡å®šæ ‡ç­¾åº“çš„å‘½åç©ºé—´
+            // Ö§³ÖÖ¸¶¨±êÇ©¿âµÄÃüÃû¿Õ¼ä
             $className  =   $tagLib;
             $tagLib     =   substr($tagLib,strrpos($tagLib,'\\')+1);
         }else{
@@ -395,16 +395,16 @@ class  Template {
         $that       =   $this;
         foreach ($tLib->getTags() as $name=>$val){
             $tags = array($name);
-            if(isset($val['alias'])) {// åˆ«åè®¾ç½®
+            if(isset($val['alias'])) {// ±ğÃûÉèÖÃ
                 $tags       = explode(',',$val['alias']);
                 $tags[]     =  $name;
             }
             $level      =   isset($val['level'])?$val['level']:1;
             $closeTag   =   isset($val['close'])?$val['close']:true;
             foreach ($tags as $tag){
-                $parseTag = !$hide? $tagLib.':'.$tag: $tag;// å®é™…è¦è§£æçš„æ ‡ç­¾åç§°
+                $parseTag = !$hide? $tagLib.':'.$tag: $tag;// Êµ¼ÊÒª½âÎöµÄ±êÇ©Ãû³Æ
                 if(!method_exists($tLib,'_'.$tag)) {
-                    // åˆ«åå¯ä»¥æ— éœ€å®šä¹‰è§£ææ–¹æ³•
+                    // ±ğÃû¿ÉÒÔÎŞĞè¶¨Òå½âÎö·½·¨
                     $tag  =  $name;
                 }
                 $n1 = empty($val['attr'])?'(\s*?)':'\s([^'.$end.']*)';
@@ -428,13 +428,13 @@ class  Template {
     }
 
     /**
-     * è§£ææ ‡ç­¾åº“çš„æ ‡ç­¾
-     * éœ€è¦è°ƒç”¨å¯¹åº”çš„æ ‡ç­¾åº“æ–‡ä»¶è§£æç±»
+     * ½âÎö±êÇ©¿âµÄ±êÇ©
+     * ĞèÒªµ÷ÓÃ¶ÔÓ¦µÄ±êÇ©¿âÎÄ¼ş½âÎöÀà
      * @access public
-     * @param object $tagLib  æ ‡ç­¾åº“å¯¹è±¡å®ä¾‹
-     * @param string $tag  æ ‡ç­¾å
-     * @param string $attr  æ ‡ç­¾å±æ€§
-     * @param string $content  æ ‡ç­¾å†…å®¹
+     * @param object $tagLib  ±êÇ©¿â¶ÔÏóÊµÀı
+     * @param string $tag  ±êÇ©Ãû
+     * @param string $attr  ±êÇ©ÊôĞÔ
+     * @param string $content  ±êÇ©ÄÚÈİ
      * @return string|false
      */
     public function parseXmlTag($tagLib,$tag,$attr,$content) {
@@ -447,10 +447,10 @@ class  Template {
     }
 
     /**
-     * æ¨¡æ¿æ ‡ç­¾è§£æ
-     * æ ¼å¼ï¼š {TagName:args [|content] }
+     * Ä£°å±êÇ©½âÎö
+     * ¸ñÊ½£º {TagName:args [|content] }
      * @access public
-     * @param string $tagStr æ ‡ç­¾å†…å®¹
+     * @param string $tagStr ±êÇ©ÄÚÈİ
      * @return string
      */
     public function parseTag($tagStr){
@@ -458,75 +458,75 @@ class  Template {
         //if (MAGIC_QUOTES_GPC) {
             $tagStr = stripslashes($tagStr);
         //}
-        //è¿˜åŸéæ¨¡æ¿æ ‡ç­¾
+        //»¹Ô­·ÇÄ£°å±êÇ©
         if(preg_match('/^[\s|\d]/is',$tagStr))
-            //è¿‡æ»¤ç©ºæ ¼å’Œæ•°å­—æ‰“å¤´çš„æ ‡ç­¾
+            //¹ıÂË¿Õ¸ñºÍÊı×Ö´òÍ·µÄ±êÇ©
             return C('TMPL_L_DELIM') . $tagStr .C('TMPL_R_DELIM');
         $flag   =  substr($tagStr,0,1);
         $flag2  =  substr($tagStr,1,1);
         $name   = substr($tagStr,1);
-        if('$' == $flag && '.' != $flag2 && '(' != $flag2){ //è§£ææ¨¡æ¿å˜é‡ æ ¼å¼ {$varName}
+        if('$' == $flag && '.' != $flag2 && '(' != $flag2){ //½âÎöÄ£°å±äÁ¿ ¸ñÊ½ {$varName}
             return $this->parseVar($name);
-        }elseif('-' == $flag || '+'== $flag){ // è¾“å‡ºè®¡ç®—
+        }elseif('-' == $flag || '+'== $flag){ // Êä³ö¼ÆËã
             return  '<?php echo '.$flag.$name.';?>';
-        }elseif(':' == $flag){ // è¾“å‡ºæŸä¸ªå‡½æ•°çš„ç»“æœ
+        }elseif(':' == $flag){ // Êä³öÄ³¸öº¯ÊıµÄ½á¹û
             return  '<?php echo '.$name.';?>';
-        }elseif('~' == $flag){ // æ‰§è¡ŒæŸä¸ªå‡½æ•°
+        }elseif('~' == $flag){ // Ö´ĞĞÄ³¸öº¯Êı
             return  '<?php '.$name.';?>';
         }elseif(substr($tagStr,0,2)=='//' || (substr($tagStr,0,2)=='/*' && substr(rtrim($tagStr),-2)=='*/')){
-            //æ³¨é‡Šæ ‡ç­¾
+            //×¢ÊÍ±êÇ©
             return '';
         }
-        // æœªè¯†åˆ«çš„æ ‡ç­¾ç›´æ¥è¿”å›
+        // Î´Ê¶±ğµÄ±êÇ©Ö±½Ó·µ»Ø
         return C('TMPL_L_DELIM') . $tagStr .C('TMPL_R_DELIM');
     }
 
     /**
-     * æ¨¡æ¿å˜é‡è§£æ,æ”¯æŒä½¿ç”¨å‡½æ•°
-     * æ ¼å¼ï¼š {$varname|function1|function2=arg1,arg2}
+     * Ä£°å±äÁ¿½âÎö,Ö§³ÖÊ¹ÓÃº¯Êı
+     * ¸ñÊ½£º {$varname|function1|function2=arg1,arg2}
      * @access public
-     * @param string $varStr å˜é‡æ•°æ®
+     * @param string $varStr ±äÁ¿Êı¾İ
      * @return string
      */
     public function parseVar($varStr){
         $varStr     =   trim($varStr);
         static $_varParseList = array();
-        //å¦‚æœå·²ç»è§£æè¿‡è¯¥å˜é‡å­—ä¸²ï¼Œåˆ™ç›´æ¥è¿”å›å˜é‡å€¼
+        //Èç¹ûÒÑ¾­½âÎö¹ı¸Ã±äÁ¿×Ö´®£¬ÔòÖ±½Ó·µ»Ø±äÁ¿Öµ
         if(isset($_varParseList[$varStr])) return $_varParseList[$varStr];
         $parseStr   =   '';
         $varExists  =   true;
         if(!empty($varStr)){
             $varArray = explode('|',$varStr);
-            //å–å¾—å˜é‡åç§°
+            //È¡µÃ±äÁ¿Ãû³Æ
             $var = array_shift($varArray);
             if('Think.' == substr($var,0,6)){
-                // æ‰€æœ‰ä»¥Think.æ‰“å¤´çš„ä»¥ç‰¹æ®Šå˜é‡å¯¹å¾… æ— éœ€æ¨¡æ¿èµ‹å€¼å°±å¯ä»¥è¾“å‡º
+                // ËùÓĞÒÔThink.´òÍ·µÄÒÔÌØÊâ±äÁ¿¶Ô´ı ÎŞĞèÄ£°å¸³Öµ¾Í¿ÉÒÔÊä³ö
                 $name = $this->parseThinkVar($var);
             }elseif( false !== strpos($var,'.')) {
-                //æ”¯æŒ {$var.property}
+                //Ö§³Ö {$var.property}
                 $vars = explode('.',$var);
                 $var  =  array_shift($vars);
                 switch(strtolower(C('TMPL_VAR_IDENTIFY'))) {
-                    case 'array': // è¯†åˆ«ä¸ºæ•°ç»„
+                    case 'array': // Ê¶±ğÎªÊı×é
                         $name = '$'.$var;
                         foreach ($vars as $key=>$val)
                             $name .= '["'.$val.'"]';
                         break;
-                    case 'obj':  // è¯†åˆ«ä¸ºå¯¹è±¡
+                    case 'obj':  // Ê¶±ğÎª¶ÔÏó
                         $name = '$'.$var;
                         foreach ($vars as $key=>$val)
                             $name .= '->'.$val;
                         break;
-                    default:  // è‡ªåŠ¨åˆ¤æ–­æ•°ç»„æˆ–å¯¹è±¡ åªæ”¯æŒäºŒç»´
+                    default:  // ×Ô¶¯ÅĞ¶ÏÊı×é»ò¶ÔÏó Ö»Ö§³Ö¶şÎ¬
                         $name = 'is_array($'.$var.')?$'.$var.'["'.$vars[0].'"]:$'.$var.'->'.$vars[0];
                 }
             }elseif(false !== strpos($var,'[')) {
-                //æ”¯æŒ {$var['key']} æ–¹å¼è¾“å‡ºæ•°ç»„
+                //Ö§³Ö {$var['key']} ·½Ê½Êä³öÊı×é
                 $name = "$".$var;
                 preg_match('/(.+?)\[(.+?)\]/is',$var,$match);
                 $var = $match[1];
             }elseif(false !==strpos($var,':') && false ===strpos($var,'(') && false ===strpos($var,'::') && false ===strpos($var,'?')){
-                //æ”¯æŒ {$var:property} æ–¹å¼è¾“å‡ºå¯¹è±¡çš„å±æ€§
+                //Ö§³Ö {$var:property} ·½Ê½Êä³ö¶ÔÏóµÄÊôĞÔ
                 $vars = explode(':',$var);
                 $var  =  str_replace(':','->',$var);
                 $name = "$".$var;
@@ -534,7 +534,7 @@ class  Template {
             }else {
                 $name = "$$var";
             }
-            //å¯¹å˜é‡ä½¿ç”¨å‡½æ•°
+            //¶Ô±äÁ¿Ê¹ÓÃº¯Êı
             if(count($varArray)>0)
                 $name = $this->parseVarFunction($name,$varArray);
             $parseStr = '<?php echo ('.$name.'); ?>';
@@ -544,27 +544,27 @@ class  Template {
     }
 
     /**
-     * å¯¹æ¨¡æ¿å˜é‡ä½¿ç”¨å‡½æ•°
-     * æ ¼å¼ {$varname|function1|function2=arg1,arg2}
+     * ¶ÔÄ£°å±äÁ¿Ê¹ÓÃº¯Êı
+     * ¸ñÊ½ {$varname|function1|function2=arg1,arg2}
      * @access public
-     * @param string $name å˜é‡å
-     * @param array $varArray  å‡½æ•°åˆ—è¡¨
+     * @param string $name ±äÁ¿Ãû
+     * @param array $varArray  º¯ÊıÁĞ±í
      * @return string
      */
     public function parseVarFunction($name,$varArray){
-        //å¯¹å˜é‡ä½¿ç”¨å‡½æ•°
+        //¶Ô±äÁ¿Ê¹ÓÃº¯Êı
         $length = count($varArray);
-        //å–å¾—æ¨¡æ¿ç¦æ­¢ä½¿ç”¨å‡½æ•°åˆ—è¡¨
+        //È¡µÃÄ£°å½ûÖ¹Ê¹ÓÃº¯ÊıÁĞ±í
         $template_deny_funs = explode(',',C('TMPL_DENY_FUNC_LIST'));
         for($i=0;$i<$length ;$i++ ){
             $args = explode('=',$varArray[$i],2);
-            //æ¨¡æ¿å‡½æ•°è¿‡æ»¤
+            //Ä£°åº¯Êı¹ıÂË
             $fun = strtolower(trim($args[0]));
             switch($fun) {
-            case 'default':  // ç‰¹æ®Šæ¨¡æ¿å‡½æ•°
+            case 'default':  // ÌØÊâÄ£°åº¯Êı
                 $name = '(isset('.$name.') && ('.$name.' !== ""))?('.$name.'):'.$args[1];
                 break;
-            default:  // é€šç”¨æ¨¡æ¿å‡½æ•°
+            default:  // Í¨ÓÃÄ£°åº¯Êı
                 if(!in_array($fun,$template_deny_funs)){
                     if(isset($args[1])){
                         if(strstr($args[1],'###')){
@@ -583,10 +583,10 @@ class  Template {
     }
 
     /**
-     * ç‰¹æ®Šæ¨¡æ¿å˜é‡è§£æ
-     * æ ¼å¼ ä»¥ $Think. æ‰“å¤´çš„å˜é‡å±äºç‰¹æ®Šæ¨¡æ¿å˜é‡
+     * ÌØÊâÄ£°å±äÁ¿½âÎö
+     * ¸ñÊ½ ÒÔ $Think. ´òÍ·µÄ±äÁ¿ÊôÓÚÌØÊâÄ£°å±äÁ¿
      * @access public
-     * @param string $varStr  å˜é‡å­—ç¬¦ä¸²
+     * @param string $varStr  ±äÁ¿×Ö·û´®
      * @return string
      */
     public function parseThinkVar($varStr){
@@ -657,42 +657,42 @@ class  Template {
     }
 
     /**
-     * åŠ è½½å…¬å…±æ¨¡æ¿å¹¶ç¼“å­˜ å’Œå½“å‰æ¨¡æ¿åœ¨åŒä¸€è·¯å¾„ï¼Œå¦åˆ™ä½¿ç”¨ç›¸å¯¹è·¯å¾„
+     * ¼ÓÔØ¹«¹²Ä£°å²¢»º´æ ºÍµ±Ç°Ä£°åÔÚÍ¬Ò»Â·¾¶£¬·ñÔòÊ¹ÓÃÏà¶ÔÂ·¾¶
      * @access private
-     * @param string $tmplPublicName  å…¬å…±æ¨¡æ¿æ–‡ä»¶å
-     * @param array $vars  è¦ä¼ é€’çš„å˜é‡åˆ—è¡¨
+     * @param string $tmplPublicName  ¹«¹²Ä£°åÎÄ¼şÃû
+     * @param array $vars  Òª´«µİµÄ±äÁ¿ÁĞ±í
      * @return string
      */
     private function parseIncludeItem($tmplPublicName,$vars=array(),$extend){
-        // åˆ†ææ¨¡æ¿æ–‡ä»¶åå¹¶è¯»å–å†…å®¹
+        // ·ÖÎöÄ£°åÎÄ¼şÃû²¢¶ÁÈ¡ÄÚÈİ
         $parseStr = $this->parseTemplateName($tmplPublicName);
-        // æ›¿æ¢å˜é‡
+        // Ìæ»»±äÁ¿
         foreach ($vars as $key=>$val) {
             $parseStr = str_replace('['.$key.']',$val,$parseStr);
         }
-        // å†æ¬¡å¯¹åŒ…å«æ–‡ä»¶è¿›è¡Œæ¨¡æ¿åˆ†æ
+        // ÔÙ´Î¶Ô°üº¬ÎÄ¼ş½øĞĞÄ£°å·ÖÎö
         return $this->parseInclude($parseStr,$extend);
     }
 
     /**
-     * åˆ†æåŠ è½½çš„æ¨¡æ¿æ–‡ä»¶å¹¶è¯»å–å†…å®¹ æ”¯æŒå¤šä¸ªæ¨¡æ¿æ–‡ä»¶è¯»å–
+     * ·ÖÎö¼ÓÔØµÄÄ£°åÎÄ¼ş²¢¶ÁÈ¡ÄÚÈİ Ö§³Ö¶à¸öÄ£°åÎÄ¼ş¶ÁÈ¡
      * @access private
-     * @param string $tmplPublicName  æ¨¡æ¿æ–‡ä»¶å
+     * @param string $tmplPublicName  Ä£°åÎÄ¼şÃû
      * @return string
      */    
     private function parseTemplateName($templateName){
         if(substr($templateName,0,1)=='$')
-            //æ”¯æŒåŠ è½½å˜é‡æ–‡ä»¶å
+            //Ö§³Ö¼ÓÔØ±äÁ¿ÎÄ¼şÃû
             $templateName = $this->get(substr($templateName,1));
         $array  =   explode(',',$templateName);
         $parseStr   =   ''; 
         foreach ($array as $templateName){
             if(empty($templateName)) continue;
             if(false === strpos($templateName,$this->config['template_suffix'])) {
-                // è§£æè§„åˆ™ä¸º æ¨¡å—@ä¸»é¢˜/æ§åˆ¶å™¨/æ“ä½œ
+                // ½âÎö¹æÔòÎª Ä£¿é@Ö÷Ìâ/¿ØÖÆÆ÷/²Ù×÷
                 $templateName   =   T($templateName);
             }
-            // è·å–æ¨¡æ¿æ–‡ä»¶å†…å®¹
+            // »ñÈ¡Ä£°åÎÄ¼şÄÚÈİ
             $parseStr .= file_get_contents($templateName);
         }
         return $parseStr;

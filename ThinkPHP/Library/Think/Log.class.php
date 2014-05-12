@@ -10,28 +10,28 @@
 // +----------------------------------------------------------------------
 namespace Think;
 /**
- * æ—¥å¿—å¤„ç†ç±»
+ * ÈÕÖ¾´¦ÀíÀà
  */
 class Log {
 
-    // æ—¥å¿—çº§åˆ« ä»ä¸Šåˆ°ä¸‹ï¼Œç”±ä½åˆ°é«˜
-    const EMERG     = 'EMERG';  // ä¸¥é‡é”™è¯¯: å¯¼è‡´ç³»ç»Ÿå´©æºƒæ— æ³•ä½¿ç”¨
-    const ALERT     = 'ALERT';  // è­¦æˆ’æ€§é”™è¯¯: å¿…é¡»è¢«ç«‹å³ä¿®æ”¹çš„é”™è¯¯
-    const CRIT      = 'CRIT';  // ä¸´ç•Œå€¼é”™è¯¯: è¶…è¿‡ä¸´ç•Œå€¼çš„é”™è¯¯ï¼Œä¾‹å¦‚ä¸€å¤©24å°æ—¶ï¼Œè€Œè¾“å…¥çš„æ˜¯25å°æ—¶è¿™æ ·
-    const ERR       = 'ERR';  // ä¸€èˆ¬é”™è¯¯: ä¸€èˆ¬æ€§é”™è¯¯
-    const WARN      = 'WARN';  // è­¦å‘Šæ€§é”™è¯¯: éœ€è¦å‘å‡ºè­¦å‘Šçš„é”™è¯¯
-    const NOTICE    = 'NOTIC';  // é€šçŸ¥: ç¨‹åºå¯ä»¥è¿è¡Œä½†æ˜¯è¿˜ä¸å¤Ÿå®Œç¾çš„é”™è¯¯
-    const INFO      = 'INFO';  // ä¿¡æ¯: ç¨‹åºè¾“å‡ºä¿¡æ¯
-    const DEBUG     = 'DEBUG';  // è°ƒè¯•: è°ƒè¯•ä¿¡æ¯
-    const SQL       = 'SQL';  // SQLï¼šSQLè¯­å¥ æ³¨æ„åªåœ¨è°ƒè¯•æ¨¡å¼å¼€å¯æ—¶æœ‰æ•ˆ
+    // ÈÕÖ¾¼¶±ğ ´ÓÉÏµ½ÏÂ£¬ÓÉµÍµ½¸ß
+    const EMERG     = 'EMERG';  // ÑÏÖØ´íÎó: µ¼ÖÂÏµÍ³±ÀÀ£ÎŞ·¨Ê¹ÓÃ
+    const ALERT     = 'ALERT';  // ¾¯½äĞÔ´íÎó: ±ØĞë±»Á¢¼´ĞŞ¸ÄµÄ´íÎó
+    const CRIT      = 'CRIT';  // ÁÙ½çÖµ´íÎó: ³¬¹ıÁÙ½çÖµµÄ´íÎó£¬ÀıÈçÒ»Ìì24Ğ¡Ê±£¬¶øÊäÈëµÄÊÇ25Ğ¡Ê±ÕâÑù
+    const ERR       = 'ERR';  // Ò»°ã´íÎó: Ò»°ãĞÔ´íÎó
+    const WARN      = 'WARN';  // ¾¯¸æĞÔ´íÎó: ĞèÒª·¢³ö¾¯¸æµÄ´íÎó
+    const NOTICE    = 'NOTIC';  // Í¨Öª: ³ÌĞò¿ÉÒÔÔËĞĞµ«ÊÇ»¹²»¹»ÍêÃÀµÄ´íÎó
+    const INFO      = 'INFO';  // ĞÅÏ¢: ³ÌĞòÊä³öĞÅÏ¢
+    const DEBUG     = 'DEBUG';  // µ÷ÊÔ: µ÷ÊÔĞÅÏ¢
+    const SQL       = 'SQL';  // SQL£ºSQLÓï¾ä ×¢ÒâÖ»ÔÚµ÷ÊÔÄ£Ê½¿ªÆôÊ±ÓĞĞ§
 
-    // æ—¥å¿—ä¿¡æ¯
+    // ÈÕÖ¾ĞÅÏ¢
     static protected $log       =  array();
 
-    // æ—¥å¿—å­˜å‚¨
+    // ÈÕÖ¾´æ´¢
     static protected $storage   =   null;
 
-    // æ—¥å¿—åˆå§‹åŒ–
+    // ÈÕÖ¾³õÊ¼»¯
     static public function init($config=array()){
         $type   =   isset($config['type'])?$config['type']:'File';
         $class  =   strpos($type,'\\')? $type: 'Think\\Log\\Driver\\'. ucwords(strtolower($type));           
@@ -40,12 +40,12 @@ class Log {
     }
 
     /**
-     * è®°å½•æ—¥å¿— å¹¶ä¸”ä¼šè¿‡æ»¤æœªç»è®¾ç½®çš„çº§åˆ«
+     * ¼ÇÂ¼ÈÕÖ¾ ²¢ÇÒ»á¹ıÂËÎ´¾­ÉèÖÃµÄ¼¶±ğ
      * @static
      * @access public
-     * @param string $message æ—¥å¿—ä¿¡æ¯
-     * @param string $level  æ—¥å¿—çº§åˆ«
-     * @param boolean $record  æ˜¯å¦å¼ºåˆ¶è®°å½•
+     * @param string $message ÈÕÖ¾ĞÅÏ¢
+     * @param string $level  ÈÕÖ¾¼¶±ğ
+     * @param boolean $record  ÊÇ·ñÇ¿ÖÆ¼ÇÂ¼
      * @return void
      */
     static function record($message,$level=self::ERR,$record=false) {
@@ -55,11 +55,11 @@ class Log {
     }
 
     /**
-     * æ—¥å¿—ä¿å­˜
+     * ÈÕÖ¾±£´æ
      * @static
      * @access public
-     * @param integer $type æ—¥å¿—è®°å½•æ–¹å¼
-     * @param string $destination  å†™å…¥ç›®æ ‡
+     * @param integer $type ÈÕÖ¾¼ÇÂ¼·½Ê½
+     * @param string $destination  Ğ´ÈëÄ¿±ê
      * @return void
      */
     static function save($type='',$destination='') {
@@ -74,18 +74,18 @@ class Log {
         }
         $message    =   implode('',self::$log);
         self::$storage->write($message,$destination);
-        // ä¿å­˜åæ¸…ç©ºæ—¥å¿—ç¼“å­˜
+        // ±£´æºóÇå¿ÕÈÕÖ¾»º´æ
         self::$log = array();
     }
 
     /**
-     * æ—¥å¿—ç›´æ¥å†™å…¥
+     * ÈÕÖ¾Ö±½ÓĞ´Èë
      * @static
      * @access public
-     * @param string $message æ—¥å¿—ä¿¡æ¯
-     * @param string $level  æ—¥å¿—çº§åˆ«
-     * @param integer $type æ—¥å¿—è®°å½•æ–¹å¼
-     * @param string $destination  å†™å…¥ç›®æ ‡
+     * @param string $message ÈÕÖ¾ĞÅÏ¢
+     * @param string $level  ÈÕÖ¾¼¶±ğ
+     * @param integer $type ÈÕÖ¾¼ÇÂ¼·½Ê½
+     * @param string $destination  Ğ´ÈëÄ¿±ê
      * @return void
      */
     static function write($message,$level=self::ERR,$type='',$destination='') {

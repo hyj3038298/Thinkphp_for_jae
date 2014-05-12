@@ -10,23 +10,23 @@
 // +----------------------------------------------------------------------
 
 /**
- * Think ç³»ç»Ÿå‡½æ•°åº“
+ * Think ÏµÍ³º¯Êı¿â
  */
 
 /**
- * è·å–å’Œè®¾ç½®é…ç½®å‚æ•° æ”¯æŒæ‰¹é‡å®šä¹‰
- * @param string|array $name é…ç½®å˜é‡
- * @param mixed $value é…ç½®å€¼
- * @param mixed $default é»˜è®¤å€¼
+ * »ñÈ¡ºÍÉèÖÃÅäÖÃ²ÎÊı Ö§³ÖÅúÁ¿¶¨Òå
+ * @param string|array $name ÅäÖÃ±äÁ¿
+ * @param mixed $value ÅäÖÃÖµ
+ * @param mixed $default Ä¬ÈÏÖµ
  * @return mixed
  */
 function C($name=null, $value=null,$default=null) {
     static $_config = array();
-    // æ— å‚æ•°æ—¶è·å–æ‰€æœ‰
+    // ÎŞ²ÎÊıÊ±»ñÈ¡ËùÓĞ
     if (empty($name)) {
         return $_config;
     }
-    // ä¼˜å…ˆæ‰§è¡Œè®¾ç½®è·å–æˆ–èµ‹å€¼
+    // ÓÅÏÈÖ´ĞĞÉèÖÃ»ñÈ¡»ò¸³Öµ
     if (is_string($name)) {
         if (!strpos($name, '.')) {
             $name = strtoupper($name);
@@ -35,7 +35,7 @@ function C($name=null, $value=null,$default=null) {
             $_config[$name] = $value;
             return;
         }
-        // äºŒç»´æ•°ç»„è®¾ç½®å’Œè·å–æ”¯æŒ
+        // ¶şÎ¬Êı×éÉèÖÃºÍ»ñÈ¡Ö§³Ö
         $name = explode('.', $name);
         $name[0]   =  strtoupper($name[0]);
         if (is_null($value))
@@ -43,18 +43,18 @@ function C($name=null, $value=null,$default=null) {
         $_config[$name[0]][$name[1]] = $value;
         return;
     }
-    // æ‰¹é‡è®¾ç½®
+    // ÅúÁ¿ÉèÖÃ
     if (is_array($name)){
         $_config = array_merge($_config, array_change_key_case($name,CASE_UPPER));
         return;
     }
-    return null; // é¿å…éæ³•å‚æ•°
+    return null; // ±ÜÃâ·Ç·¨²ÎÊı
 }
 
 /**
- * åŠ è½½é…ç½®æ–‡ä»¶ æ”¯æŒæ ¼å¼è½¬æ¢ ä»…æ”¯æŒä¸€çº§é…ç½®
- * @param string $file é…ç½®æ–‡ä»¶å
- * @param string $parse é…ç½®è§£ææ–¹æ³• æœ‰äº›æ ¼å¼éœ€è¦ç”¨æˆ·è‡ªå·±è§£æ
+ * ¼ÓÔØÅäÖÃÎÄ¼ş Ö§³Ö¸ñÊ½×ª»» ½öÖ§³ÖÒ»¼¶ÅäÖÃ
+ * @param string $file ÅäÖÃÎÄ¼şÃû
+ * @param string $parse ÅäÖÃ½âÎö·½·¨ ÓĞĞ©¸ñÊ½ĞèÒªÓÃ»§×Ô¼º½âÎö
  * @return void
  */
 function load_config($file,$parse=CONF_PARSE){
@@ -80,9 +80,9 @@ function load_config($file,$parse=CONF_PARSE){
 }
 
 /**
- * æŠ›å‡ºå¼‚å¸¸å¤„ç†
- * @param string $msg å¼‚å¸¸æ¶ˆæ¯
- * @param integer $code å¼‚å¸¸ä»£ç  é»˜è®¤ä¸º0
+ * Å×³öÒì³£´¦Àí
+ * @param string $msg Òì³£ÏûÏ¢
+ * @param integer $code Òì³£´úÂë Ä¬ÈÏÎª0
  * @return void
  */
 function E($msg, $code=0) {
@@ -90,28 +90,28 @@ function E($msg, $code=0) {
 }
 
 /**
- * è®°å½•å’Œç»Ÿè®¡æ—¶é—´ï¼ˆå¾®ç§’ï¼‰å’Œå†…å­˜ä½¿ç”¨æƒ…å†µ
- * ä½¿ç”¨æ–¹æ³•:
+ * ¼ÇÂ¼ºÍÍ³¼ÆÊ±¼ä£¨Î¢Ãë£©ºÍÄÚ´æÊ¹ÓÃÇé¿ö
+ * Ê¹ÓÃ·½·¨:
  * <code>
- * G('begin'); // è®°å½•å¼€å§‹æ ‡è®°ä½
- * // ... åŒºé—´è¿è¡Œä»£ç 
- * G('end'); // è®°å½•ç»“æŸæ ‡ç­¾ä½
- * echo G('begin','end',6); // ç»Ÿè®¡åŒºé—´è¿è¡Œæ—¶é—´ ç²¾ç¡®åˆ°å°æ•°å6ä½
- * echo G('begin','end','m'); // ç»Ÿè®¡åŒºé—´å†…å­˜ä½¿ç”¨æƒ…å†µ
- * å¦‚æœendæ ‡è®°ä½æ²¡æœ‰å®šä¹‰ï¼Œåˆ™ä¼šè‡ªåŠ¨ä»¥å½“å‰ä½œä¸ºæ ‡è®°ä½
- * å…¶ä¸­ç»Ÿè®¡å†…å­˜ä½¿ç”¨éœ€è¦ MEMORY_LIMIT_ON å¸¸é‡ä¸ºtrueæ‰æœ‰æ•ˆ
+ * G('begin'); // ¼ÇÂ¼¿ªÊ¼±ê¼ÇÎ»
+ * // ... Çø¼äÔËĞĞ´úÂë
+ * G('end'); // ¼ÇÂ¼½áÊø±êÇ©Î»
+ * echo G('begin','end',6); // Í³¼ÆÇø¼äÔËĞĞÊ±¼ä ¾«È·µ½Ğ¡Êıºó6Î»
+ * echo G('begin','end','m'); // Í³¼ÆÇø¼äÄÚ´æÊ¹ÓÃÇé¿ö
+ * Èç¹ûend±ê¼ÇÎ»Ã»ÓĞ¶¨Òå£¬Ôò»á×Ô¶¯ÒÔµ±Ç°×÷Îª±ê¼ÇÎ»
+ * ÆäÖĞÍ³¼ÆÄÚ´æÊ¹ÓÃĞèÒª MEMORY_LIMIT_ON ³£Á¿Îªtrue²ÅÓĞĞ§
  * </code>
- * @param string $start å¼€å§‹æ ‡ç­¾
- * @param string $end ç»“æŸæ ‡ç­¾
- * @param integer|string $dec å°æ•°ä½æˆ–è€…m
+ * @param string $start ¿ªÊ¼±êÇ©
+ * @param string $end ½áÊø±êÇ©
+ * @param integer|string $dec Ğ¡ÊıÎ»»òÕßm
  * @return mixed
  */
 function G($start,$end='',$dec=4) {
     static $_info       =   array();
     static $_mem        =   array();
-    if(is_float($end)) { // è®°å½•æ—¶é—´
+    if(is_float($end)) { // ¼ÇÂ¼Ê±¼ä
         $_info[$start]  =   $end;
-    }elseif(!empty($end)){ // ç»Ÿè®¡æ—¶é—´å’Œå†…å­˜ä½¿ç”¨
+    }elseif(!empty($end)){ // Í³¼ÆÊ±¼äºÍÄÚ´æÊ¹ÓÃ
         if(!isset($_info[$end])) $_info[$end]       =  microtime(TRUE);
         if(MEMORY_LIMIT_ON && $dec=='m'){
             if(!isset($_mem[$end])) $_mem[$end]     =  memory_get_usage();
@@ -120,67 +120,77 @@ function G($start,$end='',$dec=4) {
             return number_format(($_info[$end]-$_info[$start]),$dec);
         }
 
-    }else{ // è®°å½•æ—¶é—´å’Œå†…å­˜ä½¿ç”¨
+    }else{ // ¼ÇÂ¼Ê±¼äºÍÄÚ´æÊ¹ÓÃ
         $_info[$start]  =  microtime(TRUE);
         if(MEMORY_LIMIT_ON) $_mem[$start]           =  memory_get_usage();
     }
 }
 
 /**
- * è·å–å’Œè®¾ç½®è¯­è¨€å®šä¹‰(ä¸åŒºåˆ†å¤§å°å†™)
- * @param string|array $name è¯­è¨€å˜é‡
- * @param mixed $value è¯­è¨€å€¼æˆ–è€…å˜é‡
+ * »ñÈ¡ºÍÉèÖÃÓïÑÔ¶¨Òå(²»Çø·Ö´óĞ¡Ğ´)
+ * @param string|array $name ÓïÑÔ±äÁ¿
+ * @param mixed $value ÓïÑÔÖµ»òÕß±äÁ¿
  * @return mixed
  */
 function L($name=null, $value=null) {
     static $_lang = array();
-    // ç©ºå‚æ•°è¿”å›æ‰€æœ‰å®šä¹‰
+    // ¿Õ²ÎÊı·µ»ØËùÓĞ¶¨Òå
     if (empty($name))
         return $_lang;
-    // åˆ¤æ–­è¯­è¨€è·å–(æˆ–è®¾ç½®)
-    // è‹¥ä¸å­˜åœ¨,ç›´æ¥è¿”å›å…¨å¤§å†™$name
+    // ÅĞ¶ÏÓïÑÔ»ñÈ¡(»òÉèÖÃ)
+    // Èô²»´æÔÚ,Ö±½Ó·µ»ØÈ«´óĞ´$name
     if (is_string($name)) {
         $name   =   strtoupper($name);
         if (is_null($value)){
             return isset($_lang[$name]) ? $_lang[$name] : $name;
         }elseif(is_array($value)){
-            // æ”¯æŒå˜é‡
+            // Ö§³Ö±äÁ¿
             $replace = array_keys($value);
             foreach($replace as &$v){
                 $v = '{$'.$v.'}';
             }
             return str_replace($replace,$value,isset($_lang[$name]) ? $_lang[$name] : $name);        
         }
-        $_lang[$name] = $value; // è¯­è¨€å®šä¹‰
+        $_lang[$name] = $value; // ÓïÑÔ¶¨Òå
         return;
     }
-    // æ‰¹é‡å®šä¹‰
+    // ÅúÁ¿¶¨Òå
     if (is_array($name))
         $_lang = array_merge($_lang, array_change_key_case($name, CASE_UPPER));
     return;
 }
 
 /**
- * æ·»åŠ å’Œè·å–é¡µé¢Traceè®°å½•
- * @param string $value å˜é‡
- * @param string $label æ ‡ç­¾
- * @param string $level æ—¥å¿—çº§åˆ«
- * @param boolean $record æ˜¯å¦è®°å½•æ—¥å¿—
+ * Ìí¼ÓºÍ»ñÈ¡Ò³ÃæTrace¼ÇÂ¼
+ * @param string $value ±äÁ¿
+ * @param string $label ±êÇ©
+ * @param string $level ÈÕÖ¾¼¶±ğ
+ * @param boolean $record ÊÇ·ñ¼ÇÂ¼ÈÕÖ¾
  * @return void
  */
 function trace($value='[think]',$label='',$level='DEBUG',$record=false) {
     return Think\Think::trace($value,$label,$level,$record);
 }
 
+
 /**
- * ç¼–è¯‘æ–‡ä»¶
- * @param string $filename æ–‡ä»¶å
+ÕûºÏJAE
+**/
+function php_strip_whitespace($filename){
+    return file_get_contents($filename);
+}
+/**
+ * ±àÒëÎÄ¼ş
+ * @param string $filename ÎÄ¼şÃû
  * @return string
  */
 function compile($filename) {
+    //$content = file_get_contents($filename);
+    //echo $content;    
     $content    =   php_strip_whitespace($filename);
     $content    =   trim(substr($content, 5));
-    // æ›¿æ¢é¢„ç¼–è¯‘æŒ‡ä»¤
+    // Ìæ»»Ô¤±àÒëÖ¸Áî
+
     $content    =   preg_replace('/\/\/\[RUNTIME\](.*?)\/\/\[\/RUNTIME\]/s', '', $content);
     if(0===strpos($content,'namespace')){
         $content    =   preg_replace('/namespace\s(.*?);/','namespace \\1{',$content,1);
@@ -193,14 +203,14 @@ function compile($filename) {
 }
 
 /**
- * è·å–æ¨¡ç‰ˆæ–‡ä»¶ æ ¼å¼ èµ„æº://æ¨¡å—@ä¸»é¢˜/æ§åˆ¶å™¨/æ“ä½œ
- * @param string $name æ¨¡ç‰ˆèµ„æºåœ°å€
- * @param string $layer è§†å›¾å±‚ï¼ˆç›®å½•ï¼‰åç§°
+ * »ñÈ¡Ä£°æÎÄ¼ş ¸ñÊ½ ×ÊÔ´://Ä£¿é@Ö÷Ìâ/¿ØÖÆÆ÷/²Ù×÷
+ * @param string $name Ä£°æ×ÊÔ´µØÖ·
+ * @param string $layer ÊÓÍ¼²ã£¨Ä¿Â¼£©Ãû³Æ
  * @return string
  */
 function T($template='',$layer=''){
 
-    // è§£ææ¨¡ç‰ˆèµ„æºåœ°å€
+    // ½âÎöÄ£°æ×ÊÔ´µØÖ·
     if(false === strpos($template,'://')){
         $template   =   'http://'.str_replace(':', '/',$template);
     }
@@ -210,23 +220,23 @@ function T($template='',$layer=''){
     $extend =   $info['scheme'];
     $layer  =   $layer?$layer:C('DEFAULT_V_LAYER');
 
-    // è·å–å½“å‰ä¸»é¢˜çš„æ¨¡ç‰ˆè·¯å¾„
+    // »ñÈ¡µ±Ç°Ö÷ÌâµÄÄ£°æÂ·¾¶
     $auto   =   C('AUTOLOAD_NAMESPACE');
-    if($auto && isset($auto[$extend])){ // æ‰©å±•èµ„æº
+    if($auto && isset($auto[$extend])){ // À©Õ¹×ÊÔ´
         $baseUrl    =   $auto[$extend].$module.$layer.'/';
-    }elseif(C('VIEW_PATH')){ // æŒ‡å®šè§†å›¾ç›®å½•
+    }elseif(C('VIEW_PATH')){ // Ö¸¶¨ÊÓÍ¼Ä¿Â¼
         $baseUrl    =   C('VIEW_PATH');
     }else{
         $baseUrl    =   APP_PATH.$module.$layer.'/';
     }
 
-    // è·å–ä¸»é¢˜
+    // »ñÈ¡Ö÷Ìâ
     $theme  =   substr_count($file,'/')<2 ? C('DEFAULT_THEME') : '';
 
-    // åˆ†ææ¨¡æ¿æ–‡ä»¶è§„åˆ™
+    // ·ÖÎöÄ£°åÎÄ¼ş¹æÔò
     $depr   =   C('TMPL_FILE_DEPR');
     if('' == $file) {
-        // å¦‚æœæ¨¡æ¿æ–‡ä»¶åä¸ºç©º æŒ‰ç…§é»˜è®¤è§„åˆ™å®šä½
+        // Èç¹ûÄ£°åÎÄ¼şÃûÎª¿Õ °´ÕÕÄ¬ÈÏ¹æÔò¶¨Î»
         $file = CONTROLLER_NAME . $depr . ACTION_NAME;
     }elseif(false === strpos($file, '/')){
         $file = CONTROLLER_NAME . $depr . $file;
@@ -237,23 +247,23 @@ function T($template='',$layer=''){
 }
 
 /**
- * è·å–è¾“å…¥å‚æ•° æ”¯æŒè¿‡æ»¤å’Œé»˜è®¤å€¼
- * ä½¿ç”¨æ–¹æ³•:
+ * »ñÈ¡ÊäÈë²ÎÊı Ö§³Ö¹ıÂËºÍÄ¬ÈÏÖµ
+ * Ê¹ÓÃ·½·¨:
  * <code>
- * I('id',0); è·å–idå‚æ•° è‡ªåŠ¨åˆ¤æ–­getæˆ–è€…post
- * I('post.name','','htmlspecialchars'); è·å–$_POST['name']
- * I('get.'); è·å–$_GET
+ * I('id',0); »ñÈ¡id²ÎÊı ×Ô¶¯ÅĞ¶Ïget»òÕßpost
+ * I('post.name','','htmlspecialchars'); »ñÈ¡$_POST['name']
+ * I('get.'); »ñÈ¡$_GET
  * </code>
- * @param string $name å˜é‡çš„åç§° æ”¯æŒæŒ‡å®šç±»å‹
- * @param mixed $default ä¸å­˜åœ¨çš„æ—¶å€™é»˜è®¤å€¼
- * @param mixed $filter å‚æ•°è¿‡æ»¤æ–¹æ³•
- * @param mixed $datas è¦è·å–çš„é¢å¤–æ•°æ®æº
+ * @param string $name ±äÁ¿µÄÃû³Æ Ö§³ÖÖ¸¶¨ÀàĞÍ
+ * @param mixed $default ²»´æÔÚµÄÊ±ºòÄ¬ÈÏÖµ
+ * @param mixed $filter ²ÎÊı¹ıÂË·½·¨
+ * @param mixed $datas Òª»ñÈ¡µÄ¶îÍâÊı¾İÔ´
  * @return mixed
  */
 function I($name,$default='',$filter=null,$datas=null) {
-    if(strpos($name,'.')) { // æŒ‡å®šå‚æ•°æ¥æº
+    if(strpos($name,'.')) { // Ö¸¶¨²ÎÊıÀ´Ô´
         list($method,$name) =   explode('.',$name,2);
-    }else{ // é»˜è®¤ä¸ºè‡ªåŠ¨åˆ¤æ–­
+    }else{ // Ä¬ÈÏÎª×Ô¶¯ÅĞ¶Ï
         $method =   'param';
     }
     switch(strtolower($method)) {
@@ -288,17 +298,17 @@ function I($name,$default='',$filter=null,$datas=null) {
         default:
             return NULL;
     }
-    if(empty($name)) { // è·å–å…¨éƒ¨å˜é‡
+    if(empty($name)) { // »ñÈ¡È«²¿±äÁ¿
         $data       =   $input;
         array_walk_recursive($data,'filter_exp');
         $filters    =   isset($filter)?$filter:C('DEFAULT_FILTER');
         if($filters) {
             $filters    =   explode(',',$filters);
             foreach($filters as $filter){
-                $data   =   array_map_recursive($filter,$data); // å‚æ•°è¿‡æ»¤
+                $data   =   array_map_recursive($filter,$data); // ²ÎÊı¹ıÂË
             }
         }
-    }elseif(isset($input[$name])) { // å–å€¼æ“ä½œ
+    }elseif(isset($input[$name])) { // È¡Öµ²Ù×÷
         $data       =   $input[$name];
         is_array($data) && array_walk_recursive($data,'filter_exp');
         $filters    =   isset($filter)?$filter:C('DEFAULT_FILTER');
@@ -306,7 +316,7 @@ function I($name,$default='',$filter=null,$datas=null) {
             $filters    =   explode(',',$filters);
             foreach($filters as $filter){
                 if(function_exists($filter)) {
-                    $data   =   is_array($data)?array_map_recursive($filter,$data):$filter($data); // å‚æ•°è¿‡æ»¤
+                    $data   =   is_array($data)?array_map_recursive($filter,$data):$filter($data); // ²ÎÊı¹ıÂË
                 }else{
                     $data   =   filter_var($data,is_int($filter)?$filter:filter_id($filter));
                     if(false === $data) {
@@ -315,7 +325,7 @@ function I($name,$default='',$filter=null,$datas=null) {
                 }
             }
         }
-    }else{ // å˜é‡é»˜è®¤å€¼
+    }else{ // ±äÁ¿Ä¬ÈÏÖµ
         $data       =    isset($default)?$default:NULL;
     }
     return $data;
@@ -332,16 +342,16 @@ function array_map_recursive($filter, $data) {
  }
 
 /**
- * è®¾ç½®å’Œè·å–ç»Ÿè®¡æ•°æ®
- * ä½¿ç”¨æ–¹æ³•:
+ * ÉèÖÃºÍ»ñÈ¡Í³¼ÆÊı¾İ
+ * Ê¹ÓÃ·½·¨:
  * <code>
- * N('db',1); // è®°å½•æ•°æ®åº“æ“ä½œæ¬¡æ•°
- * N('read',1); // è®°å½•è¯»å–æ¬¡æ•°
- * echo N('db'); // è·å–å½“å‰é¡µé¢æ•°æ®åº“çš„æ‰€æœ‰æ“ä½œæ¬¡æ•°
- * echo N('read'); // è·å–å½“å‰é¡µé¢è¯»å–æ¬¡æ•°
+ * N('db',1); // ¼ÇÂ¼Êı¾İ¿â²Ù×÷´ÎÊı
+ * N('read',1); // ¼ÇÂ¼¶ÁÈ¡´ÎÊı
+ * echo N('db'); // »ñÈ¡µ±Ç°Ò³ÃæÊı¾İ¿âµÄËùÓĞ²Ù×÷´ÎÊı
+ * echo N('read'); // »ñÈ¡µ±Ç°Ò³Ãæ¶ÁÈ¡´ÎÊı
  * </code>
- * @param string $key æ ‡è¯†ä½ç½®
- * @param integer $step æ­¥è¿›å€¼
+ * @param string $key ±êÊ¶Î»ÖÃ
+ * @param integer $step ²½½øÖµ
  * @return mixed
  */
 function N($key, $step=0,$save=false) {
@@ -353,16 +363,16 @@ function N($key, $step=0,$save=false) {
         return $_num[$key];
     else
         $_num[$key] = $_num[$key] + (int) $step;
-    if(false !== $save){ // ä¿å­˜ç»“æœ
+    if(false !== $save){ // ±£´æ½á¹û
         S('N_'.$key,$_num[$key],$save);
     }
 }
 
 /**
- * å­—ç¬¦ä¸²å‘½åé£æ ¼è½¬æ¢
- * type 0 å°†Javaé£æ ¼è½¬æ¢ä¸ºCçš„é£æ ¼ 1 å°†Cé£æ ¼è½¬æ¢ä¸ºJavaçš„é£æ ¼
- * @param string $name å­—ç¬¦ä¸²
- * @param integer $type è½¬æ¢ç±»å‹
+ * ×Ö·û´®ÃüÃû·ç¸ñ×ª»»
+ * type 0 ½«Java·ç¸ñ×ª»»ÎªCµÄ·ç¸ñ 1 ½«C·ç¸ñ×ª»»ÎªJavaµÄ·ç¸ñ
+ * @param string $name ×Ö·û´®
+ * @param integer $type ×ª»»ÀàĞÍ
  * @return string
  */
 function parse_name($name, $type=0) {
@@ -374,8 +384,8 @@ function parse_name($name, $type=0) {
 }
 
 /**
- * ä¼˜åŒ–çš„require_once
- * @param string $filename æ–‡ä»¶åœ°å€
+ * ÓÅ»¯µÄrequire_once
+ * @param string $filename ÎÄ¼şµØÖ·
  * @return boolean
  */
 function require_cache($filename) {
@@ -392,8 +402,8 @@ function require_cache($filename) {
 }
 
 /**
- * åŒºåˆ†å¤§å°å†™çš„æ–‡ä»¶å­˜åœ¨åˆ¤æ–­
- * @param string $filename æ–‡ä»¶åœ°å€
+ * Çø·Ö´óĞ¡Ğ´µÄÎÄ¼ş´æÔÚÅĞ¶Ï
+ * @param string $filename ÎÄ¼şµØÖ·
  * @return boolean
  */
 function file_exists_case($filename) {
@@ -408,10 +418,10 @@ function file_exists_case($filename) {
 }
 
 /**
- * å¯¼å…¥æ‰€éœ€çš„ç±»åº“ åŒjavaçš„Import æœ¬å‡½æ•°æœ‰ç¼“å­˜åŠŸèƒ½
- * @param string $class ç±»åº“å‘½åç©ºé—´å­—ç¬¦ä¸²
- * @param string $baseUrl èµ·å§‹è·¯å¾„
- * @param string $ext å¯¼å…¥çš„æ–‡ä»¶æ‰©å±•å
+ * µ¼ÈëËùĞèµÄÀà¿â Í¬javaµÄImport ±¾º¯ÊıÓĞ»º´æ¹¦ÄÜ
+ * @param string $class Àà¿âÃüÃû¿Õ¼ä×Ö·û´®
+ * @param string $baseUrl ÆğÊ¼Â·¾¶
+ * @param string $ext µ¼ÈëµÄÎÄ¼şÀ©Õ¹Ãû
  * @return boolean
  */
 function import($class, $baseUrl = '', $ext=EXT) {
@@ -424,13 +434,13 @@ function import($class, $baseUrl = '', $ext=EXT) {
     $class_strut     = explode('/', $class);
     if (empty($baseUrl)) {
         if ('@' == $class_strut[0] || MODULE_NAME == $class_strut[0]) {
-            //åŠ è½½å½“å‰æ¨¡å—çš„ç±»åº“
+            //¼ÓÔØµ±Ç°Ä£¿éµÄÀà¿â
             $baseUrl = MODULE_PATH;
             $class   = substr_replace($class, '', 0, strlen($class_strut[0]) + 1);
         }elseif (in_array($class_strut[0],array('Think','Org','Behavior','Com','Vendor')) || is_dir(LIB_PATH.$class_strut[0])) {
-            // ç³»ç»Ÿç±»åº“åŒ…å’Œç¬¬ä¸‰æ–¹ç±»åº“åŒ…
+            // ÏµÍ³Àà¿â°üºÍµÚÈı·½Àà¿â°ü
             $baseUrl = LIB_PATH;
-        }else { // åŠ è½½å…¶ä»–æ¨¡å—çš„ç±»åº“
+        }else { // ¼ÓÔØÆäËûÄ£¿éµÄÀà¿â
             $baseUrl = APP_PATH;
         }
     }
@@ -438,26 +448,26 @@ function import($class, $baseUrl = '', $ext=EXT) {
         $baseUrl    .= '/';
     $classfile       = $baseUrl . $class . $ext;
     if (!class_exists(basename($class),false)) {
-        // å¦‚æœç±»ä¸å­˜åœ¨ åˆ™å¯¼å…¥ç±»åº“æ–‡ä»¶
+        // Èç¹ûÀà²»´æÔÚ Ôòµ¼ÈëÀà¿âÎÄ¼ş
         return require_cache($classfile);
     }
 }
 
 /**
- * åŸºäºå‘½åç©ºé—´æ–¹å¼å¯¼å…¥å‡½æ•°åº“
+ * »ùÓÚÃüÃû¿Õ¼ä·½Ê½µ¼Èëº¯Êı¿â
  * load('@.Util.Array')
- * @param string $name å‡½æ•°åº“å‘½åç©ºé—´å­—ç¬¦ä¸²
- * @param string $baseUrl èµ·å§‹è·¯å¾„
- * @param string $ext å¯¼å…¥çš„æ–‡ä»¶æ‰©å±•å
+ * @param string $name º¯Êı¿âÃüÃû¿Õ¼ä×Ö·û´®
+ * @param string $baseUrl ÆğÊ¼Â·¾¶
+ * @param string $ext µ¼ÈëµÄÎÄ¼şÀ©Õ¹Ãû
  * @return void
  */
 function load($name, $baseUrl='', $ext='.php') {
     $name = str_replace(array('.', '#'), array('/', '.'), $name);
     if (empty($baseUrl)) {
-        if (0 === strpos($name, '@/')) {//åŠ è½½å½“å‰æ¨¡å—å‡½æ•°åº“
+        if (0 === strpos($name, '@/')) {//¼ÓÔØµ±Ç°Ä£¿éº¯Êı¿â
             $baseUrl    =   MODULE_PATH.'Common/';
             $name       =   substr($name, 2);
-        } else { //åŠ è½½å…¶ä»–æ¨¡å—å‡½æ•°åº“
+        } else { //¼ÓÔØÆäËûÄ£¿éº¯Êı¿â
             $array      =   explode('/', $name);
             $baseUrl    =   APP_PATH . array_shift($array).'/Common/';
             $name       =   implode('/',$array);
@@ -469,10 +479,10 @@ function load($name, $baseUrl='', $ext='.php') {
 }
 
 /**
- * å¿«é€Ÿå¯¼å…¥ç¬¬ä¸‰æ–¹æ¡†æ¶ç±»åº“ æ‰€æœ‰ç¬¬ä¸‰æ–¹æ¡†æ¶çš„ç±»åº“æ–‡ä»¶ç»Ÿä¸€æ”¾åˆ° ç³»ç»Ÿçš„Vendorç›®å½•ä¸‹é¢
- * @param string $class ç±»åº“
- * @param string $baseUrl åŸºç¡€ç›®å½•
- * @param string $ext ç±»åº“åç¼€
+ * ¿ìËÙµ¼ÈëµÚÈı·½¿ò¼ÜÀà¿â ËùÓĞµÚÈı·½¿ò¼ÜµÄÀà¿âÎÄ¼şÍ³Ò»·Åµ½ ÏµÍ³µÄVendorÄ¿Â¼ÏÂÃæ
+ * @param string $class Àà¿â
+ * @param string $baseUrl »ù´¡Ä¿Â¼
+ * @param string $ext Àà¿âºó×º
  * @return boolean
  */
 function vendor($class, $baseUrl = '', $ext='.php') {
@@ -482,9 +492,9 @@ function vendor($class, $baseUrl = '', $ext='.php') {
 }
 
 /**
- * å®ä¾‹åŒ–æ¨¡å‹ç±» æ ¼å¼ [èµ„æº://][æ¨¡å—/]æ¨¡å‹
- * @param string $name èµ„æºåœ°å€
- * @param string $layer æ¨¡å‹å±‚åç§°
+ * ÊµÀı»¯Ä£ĞÍÀà ¸ñÊ½ [×ÊÔ´://][Ä£¿é/]Ä£ĞÍ
+ * @param string $name ×ÊÔ´µØÖ·
+ * @param string $layer Ä£ĞÍ²ãÃû³Æ
  * @return Model
  */
 function D($name='',$layer='') {
@@ -497,7 +507,7 @@ function D($name='',$layer='') {
     if(class_exists($class)) {
         $model      =   new $class(basename($name));
     }elseif(false === strpos($name,'/')){
-        // è‡ªåŠ¨åŠ è½½å…¬å…±æ¨¡å—ä¸‹é¢çš„æ¨¡å‹
+        // ×Ô¶¯¼ÓÔØ¹«¹²Ä£¿éÏÂÃæµÄÄ£ĞÍ
         if(!C('APP_USE_NAMESPACE')){
             import('Common/'.$layer.'/'.$class);
         }else{
@@ -505,7 +515,7 @@ function D($name='',$layer='') {
         }
         $model      =   class_exists($class)? new $class($name) : new Think\Model($name);
     }else {
-        Think\Log::record('Dæ–¹æ³•å®ä¾‹åŒ–æ²¡æ‰¾åˆ°æ¨¡å‹ç±»'.$class,Think\Log::NOTICE);
+        Think\Log::record('D·½·¨ÊµÀı»¯Ã»ÕÒµ½Ä£ĞÍÀà'.$class,Think\Log::NOTICE);
         $model      =   new Think\Model(basename($name));
     }
     $_model[$name.$layer]  =  $model;
@@ -513,10 +523,10 @@ function D($name='',$layer='') {
 }
 
 /**
- * å®ä¾‹åŒ–ä¸€ä¸ªæ²¡æœ‰æ¨¡å‹æ–‡ä»¶çš„Model
- * @param string $name Modelåç§° æ”¯æŒæŒ‡å®šåŸºç¡€æ¨¡å‹ ä¾‹å¦‚ MongoModel:User
- * @param string $tablePrefix è¡¨å‰ç¼€
- * @param mixed $connection æ•°æ®åº“è¿æ¥ä¿¡æ¯
+ * ÊµÀı»¯Ò»¸öÃ»ÓĞÄ£ĞÍÎÄ¼şµÄModel
+ * @param string $name ModelÃû³Æ Ö§³ÖÖ¸¶¨»ù´¡Ä£ĞÍ ÀıÈç MongoModel:User
+ * @param string $tablePrefix ±íÇ°×º
+ * @param mixed $connection Êı¾İ¿âÁ¬½ÓĞÅÏ¢
  * @return Model
  */
 function M($name='', $tablePrefix='',$connection='') {
@@ -533,19 +543,19 @@ function M($name='', $tablePrefix='',$connection='') {
 }
 
 /**
- * è§£æèµ„æºåœ°å€å¹¶å¯¼å…¥ç±»åº“æ–‡ä»¶
- * ä¾‹å¦‚ module/controller addon://module/behavior
- * @param string $name èµ„æºåœ°å€ æ ¼å¼ï¼š[æ‰©å±•://][æ¨¡å—/]èµ„æºå
- * @param string $layer åˆ†å±‚åç§°
+ * ½âÎö×ÊÔ´µØÖ·²¢µ¼ÈëÀà¿âÎÄ¼ş
+ * ÀıÈç module/controller addon://module/behavior
+ * @param string $name ×ÊÔ´µØÖ· ¸ñÊ½£º[À©Õ¹://][Ä£¿é/]×ÊÔ´Ãû
+ * @param string $layer ·Ö²ãÃû³Æ
  * @return string
  */
 function parse_res_name($name,$layer,$level=1){
-    if(strpos($name,'://')) {// æŒ‡å®šæ‰©å±•èµ„æº
+    if(strpos($name,'://')) {// Ö¸¶¨À©Õ¹×ÊÔ´
         list($extend,$name)  =   explode('://',$name);
     }else{
         $extend  =   '';
     }
-    if(strpos($name,'/') && substr_count($name, '/')>=$level){ // æŒ‡å®šæ¨¡å—
+    if(strpos($name,'/') && substr_count($name, '/')>=$level){ // Ö¸¶¨Ä£¿é
         list($module,$name) =  explode('/',$name,2);
     }else{
         $module =   MODULE_NAME;
@@ -559,8 +569,8 @@ function parse_res_name($name,$layer,$level=1){
         foreach($array as $name){
             $class  .=   '\\'.parse_name($name, 1);
         }
-        // å¯¼å…¥èµ„æºç±»åº“
-        if($extend){ // æ‰©å±•èµ„æº
+        // µ¼Èë×ÊÔ´Àà¿â
+        if($extend){ // À©Õ¹×ÊÔ´
             $class      =   $extend.'\\'.$class;
         }
     }
@@ -568,9 +578,9 @@ function parse_res_name($name,$layer,$level=1){
 }
 
 /**
- * ç”¨äºå®ä¾‹åŒ–è®¿é—®æ§åˆ¶å™¨
- * @param string $name æ§åˆ¶å™¨å
- * @param string $path æ§åˆ¶å™¨å‘½åç©ºé—´ï¼ˆè·¯å¾„ï¼‰
+ * ÓÃÓÚÊµÀı»¯·ÃÎÊ¿ØÖÆÆ÷
+ * @param string $name ¿ØÖÆÆ÷Ãû
+ * @param string $path ¿ØÖÆÆ÷ÃüÃû¿Õ¼ä£¨Â·¾¶£©
  * @return Controller|false
  */
 function controller($name,$path=''){
@@ -594,10 +604,10 @@ function controller($name,$path=''){
 }
 
 /**
- * å®ä¾‹åŒ–å¤šå±‚æ§åˆ¶å™¨ æ ¼å¼ï¼š[èµ„æº://][æ¨¡å—/]æ§åˆ¶å™¨
- * @param string $name èµ„æºåœ°å€
- * @param string $layer æ§åˆ¶å±‚åç§°
- * @param integer $level æ§åˆ¶å™¨å±‚æ¬¡
+ * ÊµÀı»¯¶à²ã¿ØÖÆÆ÷ ¸ñÊ½£º[×ÊÔ´://][Ä£¿é/]¿ØÖÆÆ÷
+ * @param string $name ×ÊÔ´µØÖ·
+ * @param string $layer ¿ØÖÆ²ãÃû³Æ
+ * @param integer $level ¿ØÖÆÆ÷²ã´Î
  * @return Controller|false
  */
 function A($name,$layer='',$level='') {
@@ -618,10 +628,10 @@ function A($name,$layer='',$level='') {
 }
 
 /**
- * è¿œç¨‹è°ƒç”¨æ§åˆ¶å™¨çš„æ“ä½œæ–¹æ³• URL å‚æ•°æ ¼å¼ [èµ„æº://][æ¨¡å—/]æ§åˆ¶å™¨/æ“ä½œ
- * @param string $url è°ƒç”¨åœ°å€
- * @param string|array $vars è°ƒç”¨å‚æ•° æ”¯æŒå­—ç¬¦ä¸²å’Œæ•°ç»„
- * @param string $layer è¦è°ƒç”¨çš„æ§åˆ¶å±‚åç§°
+ * Ô¶³Ìµ÷ÓÃ¿ØÖÆÆ÷µÄ²Ù×÷·½·¨ URL ²ÎÊı¸ñÊ½ [×ÊÔ´://][Ä£¿é/]¿ØÖÆÆ÷/²Ù×÷
+ * @param string $url µ÷ÓÃµØÖ·
+ * @param string|array $vars µ÷ÓÃ²ÎÊı Ö§³Ö×Ö·û´®ºÍÊı×é
+ * @param string $layer Òªµ÷ÓÃµÄ¿ØÖÆ²ãÃû³Æ
  * @return mixed
  */
 function R($url,$vars=array(),$layer='') {
@@ -640,9 +650,9 @@ function R($url,$vars=array(),$layer='') {
 }
 
 /**
- * å¤„ç†æ ‡ç­¾æ‰©å±•
- * @param string $tag æ ‡ç­¾åç§°
- * @param mixed $params ä¼ å…¥å‚æ•°
+ * ´¦Àí±êÇ©À©Õ¹
+ * @param string $tag ±êÇ©Ãû³Æ
+ * @param mixed $params ´«Èë²ÎÊı
  * @return mixed
  */
 function tag($tag, &$params=NULL) {
@@ -650,10 +660,10 @@ function tag($tag, &$params=NULL) {
 }
 
 /**
- * æ‰§è¡ŒæŸä¸ªè¡Œä¸º
- * @param string $name è¡Œä¸ºåç§°
- * @param string $tag æ ‡ç­¾åç§°ï¼ˆè¡Œä¸ºç±»æ— éœ€ä¼ å…¥ï¼‰ 
- * @param Mixed $params ä¼ å…¥çš„å‚æ•°
+ * Ö´ĞĞÄ³¸öĞĞÎª
+ * @param string $name ĞĞÎªÃû³Æ
+ * @param string $tag ±êÇ©Ãû³Æ£¨ĞĞÎªÀàÎŞĞè´«Èë£© 
+ * @param Mixed $params ´«ÈëµÄ²ÎÊı
  * @return void
  */
 function B($name, $tag='',&$params=NULL) {
@@ -664,13 +674,13 @@ function B($name, $tag='',&$params=NULL) {
 }
 
 /**
- * å»é™¤ä»£ç ä¸­çš„ç©ºç™½å’Œæ³¨é‡Š
- * @param string $content ä»£ç å†…å®¹
+ * È¥³ı´úÂëÖĞµÄ¿Õ°×ºÍ×¢ÊÍ
+ * @param string $content ´úÂëÄÚÈİ
  * @return string
  */
 function strip_whitespace($content) {
     $stripStr   = '';
-    //åˆ†æphpæºç 
+    //·ÖÎöphpÔ´Âë
     $tokens     = token_get_all($content);
     $last_space = false;
     for ($i = 0, $j = count($tokens); $i < $j; $i++) {
@@ -679,11 +689,11 @@ function strip_whitespace($content) {
             $stripStr  .= $tokens[$i];
         } else {
             switch ($tokens[$i][0]) {
-                //è¿‡æ»¤å„ç§PHPæ³¨é‡Š
+                //¹ıÂË¸÷ÖÖPHP×¢ÊÍ
                 case T_COMMENT:
                 case T_DOC_COMMENT:
                     break;
-                //è¿‡æ»¤ç©ºæ ¼
+                //¹ıÂË¿Õ¸ñ
                 case T_WHITESPACE:
                     if (!$last_space) {
                         $stripStr  .= ' ';
@@ -714,26 +724,26 @@ function strip_whitespace($content) {
 }
 
 /**
- * è‡ªå®šä¹‰å¼‚å¸¸å¤„ç†
- * @param string $msg å¼‚å¸¸æ¶ˆæ¯
- * @param string $type å¼‚å¸¸ç±»å‹ é»˜è®¤ä¸ºThink\Exception
- * @param integer $code å¼‚å¸¸ä»£ç  é»˜è®¤ä¸º0
+ * ×Ô¶¨ÒåÒì³£´¦Àí
+ * @param string $msg Òì³£ÏûÏ¢
+ * @param string $type Òì³£ÀàĞÍ Ä¬ÈÏÎªThink\Exception
+ * @param integer $code Òì³£´úÂë Ä¬ÈÏÎª0
  * @return void
  */
 function throw_exception($msg, $type='Think\\Exception', $code=0) {
-    Think\Log::record('å»ºè®®ä½¿ç”¨Eæ–¹æ³•æ›¿ä»£throw_exception',Think\Log::NOTICE);
+    Think\Log::record('½¨ÒéÊ¹ÓÃE·½·¨Ìæ´úthrow_exception',Think\Log::NOTICE);
     if (class_exists($type, false))
         throw new $type($msg, $code);
     else
-        Think\Think::halt($msg);        // å¼‚å¸¸ç±»å‹ä¸å­˜åœ¨åˆ™è¾“å‡ºé”™è¯¯ä¿¡æ¯å­—ä¸²
+        Think\Think::halt($msg);        // Òì³£ÀàĞÍ²»´æÔÚÔòÊä³ö´íÎóĞÅÏ¢×Ö´®
 }
 
 /**
- * æµè§ˆå™¨å‹å¥½çš„å˜é‡è¾“å‡º
- * @param mixed $var å˜é‡
- * @param boolean $echo æ˜¯å¦è¾“å‡º é»˜è®¤ä¸ºTrue å¦‚æœä¸ºfalse åˆ™è¿”å›è¾“å‡ºå­—ç¬¦ä¸²
- * @param string $label æ ‡ç­¾ é»˜è®¤ä¸ºç©º
- * @param boolean $strict æ˜¯å¦ä¸¥è°¨ é»˜è®¤ä¸ºtrue
+ * ä¯ÀÀÆ÷ÓÑºÃµÄ±äÁ¿Êä³ö
+ * @param mixed $var ±äÁ¿
+ * @param boolean $echo ÊÇ·ñÊä³ö Ä¬ÈÏÎªTrue Èç¹ûÎªfalse Ôò·µ»ØÊä³ö×Ö·û´®
+ * @param string $label ±êÇ© Ä¬ÈÏÎª¿Õ
+ * @param boolean $strict ÊÇ·ñÑÏ½÷ Ä¬ÈÏÎªtrue
  * @return void|string
  */
 function dump($var, $echo=true, $label=null, $strict=true) {
@@ -762,57 +772,57 @@ function dump($var, $echo=true, $label=null, $strict=true) {
 }
 
 /**
- * è®¾ç½®å½“å‰é¡µé¢çš„å¸ƒå±€
- * @param string|false $layout å¸ƒå±€åç§° ä¸ºfalseçš„æ—¶å€™è¡¨ç¤ºå…³é—­å¸ƒå±€
+ * ÉèÖÃµ±Ç°Ò³ÃæµÄ²¼¾Ö
+ * @param string|false $layout ²¼¾ÖÃû³Æ ÎªfalseµÄÊ±ºò±íÊ¾¹Ø±Õ²¼¾Ö
  * @return void
  */
 function layout($layout) {
     if(false !== $layout) {
-        // å¼€å¯å¸ƒå±€
+        // ¿ªÆô²¼¾Ö
         C('LAYOUT_ON',true);
-        if(is_string($layout)) { // è®¾ç½®æ–°çš„å¸ƒå±€æ¨¡æ¿
+        if(is_string($layout)) { // ÉèÖÃĞÂµÄ²¼¾ÖÄ£°å
             C('LAYOUT_NAME',$layout);
         }
-    }else{// ä¸´æ—¶å…³é—­å¸ƒå±€
+    }else{// ÁÙÊ±¹Ø±Õ²¼¾Ö
         C('LAYOUT_ON',false);
     }
 }
 
 /**
- * URLç»„è£… æ”¯æŒä¸åŒURLæ¨¡å¼
- * @param string $url URLè¡¨è¾¾å¼ï¼Œæ ¼å¼ï¼š'[æ¨¡å—/æ§åˆ¶å™¨/æ“ä½œ#é”šç‚¹@åŸŸå]?å‚æ•°1=å€¼1&å‚æ•°2=å€¼2...'
- * @param string|array $vars ä¼ å…¥çš„å‚æ•°ï¼Œæ”¯æŒæ•°ç»„å’Œå­—ç¬¦ä¸²
- * @param string $suffix ä¼ªé™æ€åç¼€ï¼Œé»˜è®¤ä¸ºtrueè¡¨ç¤ºè·å–é…ç½®å€¼
- * @param boolean $domain æ˜¯å¦æ˜¾ç¤ºåŸŸå
+ * URL×é×° Ö§³Ö²»Í¬URLÄ£Ê½
+ * @param string $url URL±í´ïÊ½£¬¸ñÊ½£º'[Ä£¿é/¿ØÖÆÆ÷/²Ù×÷#Ãªµã@ÓòÃû]?²ÎÊı1=Öµ1&²ÎÊı2=Öµ2...'
+ * @param string|array $vars ´«ÈëµÄ²ÎÊı£¬Ö§³ÖÊı×éºÍ×Ö·û´®
+ * @param string $suffix Î±¾²Ì¬ºó×º£¬Ä¬ÈÏÎªtrue±íÊ¾»ñÈ¡ÅäÖÃÖµ
+ * @param boolean $domain ÊÇ·ñÏÔÊ¾ÓòÃû
  * @return string
  */
 function U($url='',$vars='',$suffix=true,$domain=false) {
-    // è§£æURL
+    // ½âÎöURL
     $info   =  parse_url($url);
     $url    =  !empty($info['path'])?$info['path']:ACTION_NAME;
-    if(isset($info['fragment'])) { // è§£æé”šç‚¹
+    if(isset($info['fragment'])) { // ½âÎöÃªµã
         $anchor =   $info['fragment'];
-        if(false !== strpos($anchor,'?')) { // è§£æå‚æ•°
+        if(false !== strpos($anchor,'?')) { // ½âÎö²ÎÊı
             list($anchor,$info['query']) = explode('?',$anchor,2);
         }        
-        if(false !== strpos($anchor,'@')) { // è§£æåŸŸå
+        if(false !== strpos($anchor,'@')) { // ½âÎöÓòÃû
             list($anchor,$host)    =   explode('@',$anchor, 2);
         }
-    }elseif(false !== strpos($url,'@')) { // è§£æåŸŸå
+    }elseif(false !== strpos($url,'@')) { // ½âÎöÓòÃû
         list($url,$host)    =   explode('@',$info['path'], 2);
     }
-    // è§£æå­åŸŸå
+    // ½âÎö×ÓÓòÃû
     if(isset($host)) {
         $domain = $host.(strpos($host,'.')?'':strstr($_SERVER['HTTP_HOST'],'.'));
     }elseif($domain===true){
         $domain = $_SERVER['HTTP_HOST'];
-        if(C('APP_SUB_DOMAIN_DEPLOY') ) { // å¼€å¯å­åŸŸåéƒ¨ç½²
+        if(C('APP_SUB_DOMAIN_DEPLOY') ) { // ¿ªÆô×ÓÓòÃû²¿Êğ
             $domain = $domain=='localhost'?'localhost':'www'.strstr($_SERVER['HTTP_HOST'],'.');
-            // 'å­åŸŸå'=>array('æ¨¡å—[/æ§åˆ¶å™¨]');
+            // '×ÓÓòÃû'=>array('Ä£¿é[/¿ØÖÆÆ÷]');
             foreach (C('APP_SUB_DOMAIN_RULES') as $key => $rule) {
                 $rule   =   is_array($rule)?$rule[0]:$rule;
                 if(false === strpos($key,'*') && 0=== strpos($url,$rule)) {
-                    $domain = $key.strstr($domain,'.'); // ç”Ÿæˆå¯¹åº”å­åŸŸå
+                    $domain = $key.strstr($domain,'.'); // Éú³É¶ÔÓ¦×ÓÓòÃû
                     $url    =  substr_replace($url,'',0,strlen($rule));
                     break;
                 }
@@ -820,32 +830,32 @@ function U($url='',$vars='',$suffix=true,$domain=false) {
         }
     }
 
-    // è§£æå‚æ•°
-    if(is_string($vars)) { // aaa=1&bbb=2 è½¬æ¢æˆæ•°ç»„
+    // ½âÎö²ÎÊı
+    if(is_string($vars)) { // aaa=1&bbb=2 ×ª»»³ÉÊı×é
         parse_str($vars,$vars);
     }elseif(!is_array($vars)){
         $vars = array();
     }
-    if(isset($info['query'])) { // è§£æåœ°å€é‡Œé¢å‚æ•° åˆå¹¶åˆ°vars
+    if(isset($info['query'])) { // ½âÎöµØÖ·ÀïÃæ²ÎÊı ºÏ²¢µ½vars
         parse_str($info['query'],$params);
         $vars = array_merge($params,$vars);
     }
     
-    // URLç»„è£…
+    // URL×é×°
     $depr       =   C('URL_PATHINFO_DEPR');
     $urlCase    =   C('URL_CASE_INSENSITIVE');
     if($url) {
-        if(0=== strpos($url,'/')) {// å®šä¹‰è·¯ç”±
+        if(0=== strpos($url,'/')) {// ¶¨ÒåÂ·ÓÉ
             $route      =   true;
             $url        =   substr($url,1);
             if('/' != $depr) {
                 $url    =   str_replace('/',$depr,$url);
             }
         }else{
-            if('/' != $depr) { // å®‰å…¨æ›¿æ¢
+            if('/' != $depr) { // °²È«Ìæ»»
                 $url    =   str_replace('/',$depr,$url);
             }
-            // è§£ææ¨¡å—ã€æ§åˆ¶å™¨å’Œæ“ä½œ
+            // ½âÎöÄ£¿é¡¢¿ØÖÆÆ÷ºÍ²Ù×÷
             $url        =   trim($url,$depr);
             $path       =   explode($depr,$url);
             $var        =   array();
@@ -894,7 +904,7 @@ function U($url='',$vars='',$suffix=true,$domain=false) {
         }
     }
 
-    if(C('URL_MODEL') == 0) { // æ™®é€šæ¨¡å¼URLè½¬æ¢
+    if(C('URL_MODEL') == 0) { // ÆÕÍ¨Ä£Ê½URL×ª»»
         $url        =   __APP__.'?'.C('VAR_MODULE')."={$module}&".http_build_query(array_reverse($var));
         if($urlCase){
             $url    =   strtolower($url);
@@ -903,7 +913,7 @@ function U($url='',$vars='',$suffix=true,$domain=false) {
             $vars   =   http_build_query($vars);
             $url   .=   '&'.$vars;
         }
-    }else{ // PATHINFOæ¨¡å¼æˆ–è€…å…¼å®¹URLæ¨¡å¼
+    }else{ // PATHINFOÄ£Ê½»òÕß¼æÈİURLÄ£Ê½
         if(isset($route)) {
             $url    =   __APP__.'/'.rtrim($url,$depr);
         }else{
@@ -913,7 +923,7 @@ function U($url='',$vars='',$suffix=true,$domain=false) {
         if($urlCase){
             $url    =   strtolower($url);
         }
-        if(!empty($vars)) { // æ·»åŠ å‚æ•°
+        if(!empty($vars)) { // Ìí¼Ó²ÎÊı
             foreach ($vars as $var => $val){
                 if('' !== trim($val))   $url .= $depr . $var . $depr . urlencode($val);
             }                
@@ -938,9 +948,9 @@ function U($url='',$vars='',$suffix=true,$domain=false) {
 }
 
 /**
- * æ¸²æŸ“è¾“å‡ºWidget
- * @param string $name Widgetåç§°
- * @param array $data ä¼ å…¥çš„å‚æ•°
+ * äÖÈ¾Êä³öWidget
+ * @param string $name WidgetÃû³Æ
+ * @param array $data ´«ÈëµÄ²ÎÊı
  * @return void
  */
 function W($name, $data=array()) {
@@ -948,7 +958,7 @@ function W($name, $data=array()) {
 }
 
 /**
- * åˆ¤æ–­æ˜¯å¦SSLåè®®
+ * ÅĞ¶ÏÊÇ·ñSSLĞ­Òé
  * @return boolean
  */
 function is_ssl() {
@@ -961,17 +971,17 @@ function is_ssl() {
 }
 
 /**
- * URLé‡å®šå‘
- * @param string $url é‡å®šå‘çš„URLåœ°å€
- * @param integer $time é‡å®šå‘çš„ç­‰å¾…æ—¶é—´ï¼ˆç§’ï¼‰
- * @param string $msg é‡å®šå‘å‰çš„æç¤ºä¿¡æ¯
+ * URLÖØ¶¨Ïò
+ * @param string $url ÖØ¶¨ÏòµÄURLµØÖ·
+ * @param integer $time ÖØ¶¨ÏòµÄµÈ´ıÊ±¼ä£¨Ãë£©
+ * @param string $msg ÖØ¶¨ÏòÇ°µÄÌáÊ¾ĞÅÏ¢
  * @return void
  */
 function redirect($url, $time=0, $msg='') {
-    //å¤šè¡ŒURLåœ°å€æ”¯æŒ
+    //¶àĞĞURLµØÖ·Ö§³Ö
     $url        = str_replace(array("\n", "\r"), '', $url);
     if (empty($msg))
-        $msg    = "ç³»ç»Ÿå°†åœ¨{$time}ç§’ä¹‹åè‡ªåŠ¨è·³è½¬åˆ°{$url}ï¼";
+        $msg    = "ÏµÍ³½«ÔÚ{$time}ÃëÖ®ºó×Ô¶¯Ìø×ªµ½{$url}£¡";
     if (!headers_sent()) {
         // redirect
         if (0 === $time) {
@@ -990,30 +1000,30 @@ function redirect($url, $time=0, $msg='') {
 }
 
 /**
- * ç¼“å­˜ç®¡ç†
- * @param mixed $name ç¼“å­˜åç§°ï¼Œå¦‚æœä¸ºæ•°ç»„è¡¨ç¤ºè¿›è¡Œç¼“å­˜è®¾ç½®
- * @param mixed $value ç¼“å­˜å€¼
- * @param mixed $options ç¼“å­˜å‚æ•°
+ * »º´æ¹ÜÀí
+ * @param mixed $name »º´æÃû³Æ£¬Èç¹ûÎªÊı×é±íÊ¾½øĞĞ»º´æÉèÖÃ
+ * @param mixed $value »º´æÖµ
+ * @param mixed $options »º´æ²ÎÊı
  * @return mixed
  */
 function S($name,$value='',$options=null) {
     static $cache   =   '';
     if(is_array($options) && empty($cache)){
-        // ç¼“å­˜æ“ä½œçš„åŒæ—¶åˆå§‹åŒ–
+        // »º´æ²Ù×÷µÄÍ¬Ê±³õÊ¼»¯
         $type       =   isset($options['type'])?$options['type']:'';
         $cache      =   Think\Cache::getInstance($type,$options);
-    }elseif(is_array($name)) { // ç¼“å­˜åˆå§‹åŒ–
+    }elseif(is_array($name)) { // »º´æ³õÊ¼»¯
         $type       =   isset($name['type'])?$name['type']:'';
         $cache      =   Think\Cache::getInstance($type,$name);
         return $cache;
-    }elseif(empty($cache)) { // è‡ªåŠ¨åˆå§‹åŒ–
+    }elseif(empty($cache)) { // ×Ô¶¯³õÊ¼»¯
         $cache      =   Think\Cache::getInstance();
     }
-    if(''=== $value){ // è·å–ç¼“å­˜
+    if(''=== $value){ // »ñÈ¡»º´æ
         return $cache->get($name);
-    }elseif(is_null($value)) { // åˆ é™¤ç¼“å­˜
+    }elseif(is_null($value)) { // É¾³ı»º´æ
         return $cache->rm($name);
-    }else { // ç¼“å­˜æ•°æ®
+    }else { // »º´æÊı¾İ
         if(is_array($options)) {
             $expire     =   isset($options['expire'])?$options['expire']:NULL;
         }else{
@@ -1024,10 +1034,10 @@ function S($name,$value='',$options=null) {
 }
 
 /**
- * å¿«é€Ÿæ–‡ä»¶æ•°æ®è¯»å–å’Œä¿å­˜ é’ˆå¯¹ç®€å•ç±»å‹æ•°æ® å­—ç¬¦ä¸²ã€æ•°ç»„
- * @param string $name ç¼“å­˜åç§°
- * @param mixed $value ç¼“å­˜å€¼
- * @param string $path ç¼“å­˜è·¯å¾„
+ * ¿ìËÙÎÄ¼şÊı¾İ¶ÁÈ¡ºÍ±£´æ Õë¶Ô¼òµ¥ÀàĞÍÊı¾İ ×Ö·û´®¡¢Êı×é
+ * @param string $name »º´æÃû³Æ
+ * @param mixed $value »º´æÖµ
+ * @param string $path »º´æÂ·¾¶
  * @return mixed
  */
 function F($name, $value='', $path=DATA_PATH) {
@@ -1035,7 +1045,7 @@ function F($name, $value='', $path=DATA_PATH) {
     $filename       =   $path . $name . '.php';
     if ('' !== $value) {
         if (is_null($value)) {
-            // åˆ é™¤ç¼“å­˜
+            // É¾³ı»º´æ
             if(false !== strpos($name,'*')){
                 return false; // TODO 
             }else{
@@ -1044,12 +1054,12 @@ function F($name, $value='', $path=DATA_PATH) {
             }
         } else {
             Think\Storage::put($filename,serialize($value),'F');
-            // ç¼“å­˜æ•°æ®
+            // »º´æÊı¾İ
             $_cache[$name]  =   $value;
             return ;
         }
     }
-    // è·å–ç¼“å­˜æ•°æ®
+    // »ñÈ¡»º´æÊı¾İ
     if (isset($_cache[$name]))
         return $_cache[$name];
     if (Think\Storage::has($filename,'F')){
@@ -1062,8 +1072,8 @@ function F($name, $value='', $path=DATA_PATH) {
 }
 
 /**
- * æ ¹æ®PHPå„ç§ç±»å‹å˜é‡ç”Ÿæˆå”¯ä¸€æ ‡è¯†å·
- * @param mixed $mix å˜é‡
+ * ¸ù¾İPHP¸÷ÖÖÀàĞÍ±äÁ¿Éú³ÉÎ¨Ò»±êÊ¶ºÅ
+ * @param mixed $mix ±äÁ¿
  * @return string
  */
 function to_guid_string($mix) {
@@ -1078,13 +1088,13 @@ function to_guid_string($mix) {
 }
 
 /**
- * XMLç¼–ç 
- * @param mixed $data æ•°æ®
- * @param string $root æ ¹èŠ‚ç‚¹å
- * @param string $item æ•°å­—ç´¢å¼•çš„å­èŠ‚ç‚¹å
- * @param string $attr æ ¹èŠ‚ç‚¹å±æ€§
- * @param string $id   æ•°å­—ç´¢å¼•å­èŠ‚ç‚¹keyè½¬æ¢çš„å±æ€§å
- * @param string $encoding æ•°æ®ç¼–ç 
+ * XML±àÂë
+ * @param mixed $data Êı¾İ
+ * @param string $root ¸ù½ÚµãÃû
+ * @param string $item Êı×ÖË÷ÒıµÄ×Ó½ÚµãÃû
+ * @param string $attr ¸ù½ÚµãÊôĞÔ
+ * @param string $id   Êı×ÖË÷Òı×Ó½Úµãkey×ª»»µÄÊôĞÔÃû
+ * @param string $encoding Êı¾İ±àÂë
  * @return string
  */
 function xml_encode($data, $root='think', $item='item', $attr='', $id='id', $encoding='utf-8') {
@@ -1105,10 +1115,10 @@ function xml_encode($data, $root='think', $item='item', $attr='', $id='id', $enc
 }
 
 /**
- * æ•°æ®XMLç¼–ç 
- * @param mixed  $data æ•°æ®
- * @param string $item æ•°å­—ç´¢å¼•æ—¶çš„èŠ‚ç‚¹åç§°
- * @param string $id   æ•°å­—ç´¢å¼•keyè½¬æ¢ä¸ºçš„å±æ€§å
+ * Êı¾İXML±àÂë
+ * @param mixed  $data Êı¾İ
+ * @param string $item Êı×ÖË÷ÒıÊ±µÄ½ÚµãÃû³Æ
+ * @param string $id   Êı×ÖË÷Òıkey×ª»»ÎªµÄÊôĞÔÃû
  * @return string
  */
 function data_to_xml($data, $item='item', $id='id') {
@@ -1126,21 +1136,21 @@ function data_to_xml($data, $item='item', $id='id') {
 }
 
 /**
- * sessionç®¡ç†å‡½æ•°
- * @param string|array $name sessionåç§° å¦‚æœä¸ºæ•°ç»„åˆ™è¡¨ç¤ºè¿›è¡Œsessionè®¾ç½®
- * @param mixed $value sessionå€¼
+ * session¹ÜÀíº¯Êı
+ * @param string|array $name sessionÃû³Æ Èç¹ûÎªÊı×éÔò±íÊ¾½øĞĞsessionÉèÖÃ
+ * @param mixed $value sessionÖµ
  * @return mixed
  */
 function session($name='',$value='') {
     $prefix   =  C('SESSION_PREFIX');
-    if(is_array($name)) { // sessionåˆå§‹åŒ– åœ¨session_start ä¹‹å‰è°ƒç”¨
+    if(is_array($name)) { // session³õÊ¼»¯ ÔÚsession_start Ö®Ç°µ÷ÓÃ
         if(isset($name['prefix'])) C('SESSION_PREFIX',$name['prefix']);
         if(C('VAR_SESSION_ID') && isset($_REQUEST[C('VAR_SESSION_ID')])){
             session_id($_REQUEST[C('VAR_SESSION_ID')]);
         }elseif(isset($name['id'])) {
             session_id($name['id']);
         }
-        if('common' != APP_MODE){ // å…¶å®ƒæ¨¡å¼å¯èƒ½ä¸æ”¯æŒ
+        if('common' != APP_MODE){ // ÆäËüÄ£Ê½¿ÉÄÜ²»Ö§³Ö
             ini_set('session.auto_start', 0);
         }
         if(isset($name['name']))            session_name($name['name']);
@@ -1152,7 +1162,7 @@ function session($name='',$value='') {
         if(isset($name['cache_limiter']))   session_cache_limiter($name['cache_limiter']);
         if(isset($name['cache_expire']))    session_cache_expire($name['cache_expire']);
         if(isset($name['type']))            C('SESSION_TYPE',$name['type']);
-        if(C('SESSION_TYPE')) { // è¯»å–sessioné©±åŠ¨
+        if(C('SESSION_TYPE')) { // ¶ÁÈ¡sessionÇı¶¯
             $type   =   C('SESSION_TYPE');
             $class  =   strpos($type,'\\')? $type : 'Think\\Session\\Driver\\'. ucwords(strtolower($type));
             $hander =   new $class();
@@ -1164,39 +1174,39 @@ function session($name='',$value='') {
                 array(&$hander,"destroy"), 
                 array(&$hander,"gc")); 
         }
-        // å¯åŠ¨session
+        // Æô¶¯session
         if(C('SESSION_AUTO_START'))  session_start();
     }elseif('' === $value){ 
         if(''===$name){
-            // è·å–å…¨éƒ¨çš„session
+            // »ñÈ¡È«²¿µÄsession
             return $prefix ? $_SESSION[$prefix] : $_SESSION;
-        }elseif(0===strpos($name,'[')) { // session æ“ä½œ
-            if('[pause]'==$name){ // æš‚åœsession
+        }elseif(0===strpos($name,'[')) { // session ²Ù×÷
+            if('[pause]'==$name){ // ÔİÍ£session
                 session_write_close();
-            }elseif('[start]'==$name){ // å¯åŠ¨session
+            }elseif('[start]'==$name){ // Æô¶¯session
                 session_start();
-            }elseif('[destroy]'==$name){ // é”€æ¯session
+            }elseif('[destroy]'==$name){ // Ïú»Ùsession
                 $_SESSION =  array();
                 session_unset();
                 session_destroy();
-            }elseif('[regenerate]'==$name){ // é‡æ–°ç”Ÿæˆid
+            }elseif('[regenerate]'==$name){ // ÖØĞÂÉú³Éid
                 session_regenerate_id();
             }
-        }elseif(0===strpos($name,'?')){ // æ£€æŸ¥session
+        }elseif(0===strpos($name,'?')){ // ¼ì²ésession
             $name   =  substr($name,1);
-            if(strpos($name,'.')){ // æ”¯æŒæ•°ç»„
+            if(strpos($name,'.')){ // Ö§³ÖÊı×é
                 list($name1,$name2) =   explode('.',$name);
                 return $prefix?isset($_SESSION[$prefix][$name1][$name2]):isset($_SESSION[$name1][$name2]);
             }else{
                 return $prefix?isset($_SESSION[$prefix][$name]):isset($_SESSION[$name]);
             }
-        }elseif(is_null($name)){ // æ¸…ç©ºsession
+        }elseif(is_null($name)){ // Çå¿Õsession
             if($prefix) {
                 unset($_SESSION[$prefix]);
             }else{
                 $_SESSION = array();
             }
-        }elseif($prefix){ // è·å–session
+        }elseif($prefix){ // »ñÈ¡session
             if(strpos($name,'.')){
                 list($name1,$name2) =   explode('.',$name);
                 return isset($_SESSION[$prefix][$name1][$name2])?$_SESSION[$prefix][$name1][$name2]:null;  
@@ -1211,13 +1221,13 @@ function session($name='',$value='') {
                 return isset($_SESSION[$name])?$_SESSION[$name]:null;
             }            
         }
-    }elseif(is_null($value)){ // åˆ é™¤session
+    }elseif(is_null($value)){ // É¾³ısession
         if($prefix){
             unset($_SESSION[$prefix][$name]);
         }else{
             unset($_SESSION[$name]);
         }
-    }else{ // è®¾ç½®session
+    }else{ // ÉèÖÃsession
         if($prefix){
             if (!isset($_SESSION[$prefix])) {
                 $_SESSION[$prefix] = array();
@@ -1230,22 +1240,22 @@ function session($name='',$value='') {
 }
 
 /**
- * Cookie è®¾ç½®ã€è·å–ã€åˆ é™¤
- * @param string $name cookieåç§°
- * @param mixed $value cookieå€¼
- * @param mixed $options cookieå‚æ•°
+ * Cookie ÉèÖÃ¡¢»ñÈ¡¡¢É¾³ı
+ * @param string $name cookieÃû³Æ
+ * @param mixed $value cookieÖµ
+ * @param mixed $options cookie²ÎÊı
  * @return mixed
  */
 function cookie($name='', $value='', $option=null) {
-    // é»˜è®¤è®¾ç½®
+    // Ä¬ÈÏÉèÖÃ
     $config = array(
-        'prefix'    =>  C('COOKIE_PREFIX'), // cookie åç§°å‰ç¼€
-        'expire'    =>  C('COOKIE_EXPIRE'), // cookie ä¿å­˜æ—¶é—´
-        'path'      =>  C('COOKIE_PATH'), // cookie ä¿å­˜è·¯å¾„
-        'domain'    =>  C('COOKIE_DOMAIN'), // cookie æœ‰æ•ˆåŸŸå
-        'httponly'  =>  C('COOKIE_HTTPONLY'), // httponlyè®¾ç½®
+        'prefix'    =>  C('COOKIE_PREFIX'), // cookie Ãû³ÆÇ°×º
+        'expire'    =>  C('COOKIE_EXPIRE'), // cookie ±£´æÊ±¼ä
+        'path'      =>  C('COOKIE_PATH'), // cookie ±£´æÂ·¾¶
+        'domain'    =>  C('COOKIE_DOMAIN'), // cookie ÓĞĞ§ÓòÃû
+        'httponly'  =>  C('COOKIE_HTTPONLY'), // httponlyÉèÖÃ
     );
-    // å‚æ•°è®¾ç½®(ä¼šè¦†ç›–é»™è®¤è®¾ç½®)
+    // ²ÎÊıÉèÖÃ(»á¸²¸ÇüaÈÏÉèÖÃ)
     if (!is_null($option)) {
         if (is_numeric($option))
             $option = array('expire' => $option);
@@ -1256,13 +1266,13 @@ function cookie($name='', $value='', $option=null) {
     if(!empty($config['httponly'])){
         ini_set("session.cookie_httponly", 1);
     }
-    // æ¸…é™¤æŒ‡å®šå‰ç¼€çš„æ‰€æœ‰cookie
+    // Çå³ıÖ¸¶¨Ç°×ºµÄËùÓĞcookie
     if (is_null($name)) {
         if (empty($_COOKIE))
             return;
-        // è¦åˆ é™¤çš„cookieå‰ç¼€ï¼Œä¸æŒ‡å®šåˆ™åˆ é™¤configè®¾ç½®çš„æŒ‡å®šå‰ç¼€
+        // ÒªÉ¾³ıµÄcookieÇ°×º£¬²»Ö¸¶¨ÔòÉ¾³ıconfigÉèÖÃµÄÖ¸¶¨Ç°×º
         $prefix = empty($value) ? $config['prefix'] : $value;
-        if (!empty($prefix)) {// å¦‚æœå‰ç¼€ä¸ºç©ºå­—ç¬¦ä¸²å°†ä¸ä½œå¤„ç†ç›´æ¥è¿”å›
+        if (!empty($prefix)) {// Èç¹ûÇ°×ºÎª¿Õ×Ö·û´®½«²»×÷´¦ÀíÖ±½Ó·µ»Ø
             foreach ($_COOKIE as $key => $val) {
                 if (0 === stripos($key, $prefix)) {
                     setcookie($key, '', time() - 3600, $config['path'], $config['domain']);
@@ -1272,7 +1282,7 @@ function cookie($name='', $value='', $option=null) {
         }
         return;
     }elseif('' === $name){
-        // è·å–å…¨éƒ¨çš„cookie
+        // »ñÈ¡È«²¿µÄcookie
         return $_COOKIE;
     }
     $name = $config['prefix'] . str_replace('.', '_', $name);
@@ -1291,9 +1301,9 @@ function cookie($name='', $value='', $option=null) {
     } else {
         if (is_null($value)) {
             setcookie($name, '', time() - 3600, $config['path'], $config['domain']);
-            unset($_COOKIE[$name]); // åˆ é™¤æŒ‡å®šcookie
+            unset($_COOKIE[$name]); // É¾³ıÖ¸¶¨cookie
         } else {
-            // è®¾ç½®cookie
+            // ÉèÖÃcookie
             if(is_array($value)){
                 $value  = 'think:'.json_encode(array_map('urlencode',$value));
             }
@@ -1305,11 +1315,11 @@ function cookie($name='', $value='', $option=null) {
 }
 
 /**
- * åŠ è½½åŠ¨æ€æ‰©å±•æ–‡ä»¶
+ * ¼ÓÔØ¶¯Ì¬À©Õ¹ÎÄ¼ş
  * @return void
  */
 function load_ext_file($path) {
-    // åŠ è½½è‡ªå®šä¹‰å¤–éƒ¨æ–‡ä»¶
+    // ¼ÓÔØ×Ô¶¨ÒåÍâ²¿ÎÄ¼ş
     if($files = C('LOAD_EXT_FILE')) {
         $files      =  explode(',',$files);
         foreach ($files as $file){
@@ -1317,7 +1327,7 @@ function load_ext_file($path) {
             if(is_file($file)) include $file;
         }
     }
-    // åŠ è½½è‡ªå®šä¹‰çš„åŠ¨æ€é…ç½®æ–‡ä»¶
+    // ¼ÓÔØ×Ô¶¨ÒåµÄ¶¯Ì¬ÅäÖÃÎÄ¼ş
     if($configs = C('LOAD_EXT_CONFIG')) {
         if(is_string($configs)) $configs =  explode(',',$configs);
         foreach ($configs as $key=>$config){
@@ -1330,9 +1340,9 @@ function load_ext_file($path) {
 }
 
 /**
- * è·å–å®¢æˆ·ç«¯IPåœ°å€
- * @param integer $type è¿”å›ç±»å‹ 0 è¿”å›IPåœ°å€ 1 è¿”å›IPV4åœ°å€æ•°å­—
- * @param boolean $adv æ˜¯å¦è¿›è¡Œé«˜çº§æ¨¡å¼è·å–ï¼ˆæœ‰å¯èƒ½è¢«ä¼ªè£…ï¼‰ 
+ * »ñÈ¡¿Í»§¶ËIPµØÖ·
+ * @param integer $type ·µ»ØÀàĞÍ 0 ·µ»ØIPµØÖ· 1 ·µ»ØIPV4µØÖ·Êı×Ö
+ * @param boolean $adv ÊÇ·ñ½øĞĞ¸ß¼¶Ä£Ê½»ñÈ¡£¨ÓĞ¿ÉÄÜ±»Î±×°£© 
  * @return mixed
  */
 function get_client_ip($type = 0,$adv=false) {
@@ -1353,15 +1363,15 @@ function get_client_ip($type = 0,$adv=false) {
     }elseif (isset($_SERVER['REMOTE_ADDR'])) {
         $ip     =   $_SERVER['REMOTE_ADDR'];
     }
-    // IPåœ°å€åˆæ³•éªŒè¯
+    // IPµØÖ·ºÏ·¨ÑéÖ¤
     $long = sprintf("%u",ip2long($ip));
     $ip   = $long ? array($ip, $long) : array('0.0.0.0', 0);
     return $ip[$type];
 }
 
 /**
- * å‘é€HTTPçŠ¶æ€
- * @param integer $code çŠ¶æ€ç 
+ * ·¢ËÍHTTP×´Ì¬
+ * @param integer $code ×´Ì¬Âë
  * @return void
  */
 function send_http_status($code) {
@@ -1381,19 +1391,19 @@ function send_http_status($code) {
     );
     if(isset($_status[$code])) {
         header('HTTP/1.1 '.$code.' '.$_status[$code]);
-        // ç¡®ä¿FastCGIæ¨¡å¼ä¸‹æ­£å¸¸
+        // È·±£FastCGIÄ£Ê½ÏÂÕı³£
         header('Status:'.$code.' '.$_status[$code]);
     }
 }
 
-// è¿‡æ»¤è¡¨å•ä¸­çš„è¡¨è¾¾å¼
+// ¹ıÂË±íµ¥ÖĞµÄ±í´ïÊ½
 function filter_exp(&$value){
     if (in_array(strtolower($value),array('exp','or'))){
         $value .= ' ';
     }
 }
 
-// ä¸åŒºåˆ†å¤§å°å†™çš„in_arrayå®ç°
+// ²»Çø·Ö´óĞ¡Ğ´µÄin_arrayÊµÏÖ
 function in_array_case($value,$array){
     return in_array(strtolower($value),array_map('strtolower',$array));
 }

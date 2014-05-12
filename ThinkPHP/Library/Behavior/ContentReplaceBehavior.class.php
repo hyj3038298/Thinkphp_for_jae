@@ -10,34 +10,34 @@
 // +----------------------------------------------------------------------
 namespace Behavior;
 /**
- * ç³»ç»Ÿè¡Œä¸ºæ‰©å±•ï¼šæ¨¡æ¿å†…å®¹è¾“å‡ºæ›¿æ¢
+ * ÏµÍ³ĞĞÎªÀ©Õ¹£ºÄ£°åÄÚÈİÊä³öÌæ»»
  */
 class ContentReplaceBehavior {
 
-    // è¡Œä¸ºæ‰©å±•çš„æ‰§è¡Œå…¥å£å¿…é¡»æ˜¯run
+    // ĞĞÎªÀ©Õ¹µÄÖ´ĞĞÈë¿Ú±ØĞëÊÇrun
     public function run(&$content){
         $content = $this->templateContentReplace($content);
     }
 
     /**
-     * æ¨¡æ¿å†…å®¹æ›¿æ¢
+     * Ä£°åÄÚÈİÌæ»»
      * @access protected
-     * @param string $content æ¨¡æ¿å†…å®¹
+     * @param string $content Ä£°åÄÚÈİ
      * @return string
      */
     protected function templateContentReplace($content) {
-        // ç³»ç»Ÿé»˜è®¤çš„ç‰¹æ®Šå˜é‡æ›¿æ¢
+        // ÏµÍ³Ä¬ÈÏµÄÌØÊâ±äÁ¿Ìæ»»
         $replace =  array(
-            '__ROOT__'      =>  __ROOT__,       // å½“å‰ç½‘ç«™åœ°å€
-            '__APP__'       =>  __APP__,        // å½“å‰åº”ç”¨åœ°å€
+            '__ROOT__'      =>  __ROOT__,       // µ±Ç°ÍøÕ¾µØÖ·
+            '__APP__'       =>  __APP__,        // µ±Ç°Ó¦ÓÃµØÖ·
             '__MODULE__'    =>  __MODULE__,
-            '__ACTION__'    =>  __ACTION__,     // å½“å‰æ“ä½œåœ°å€
-            '__SELF__'      =>  __SELF__,       // å½“å‰é¡µé¢åœ°å€
+            '__ACTION__'    =>  __ACTION__,     // µ±Ç°²Ù×÷µØÖ·
+            '__SELF__'      =>  __SELF__,       // µ±Ç°Ò³ÃæµØÖ·
             '__CONTROLLER__'=>  __CONTROLLER__,
             '__URL__'       =>  __CONTROLLER__,
-            '__PUBLIC__'    =>  __ROOT__.'/Public',// ç«™ç‚¹å…¬å…±ç›®å½•
+            '__PUBLIC__'    =>  __ROOT__.'/Public',// Õ¾µã¹«¹²Ä¿Â¼
         );
-        // å…è®¸ç”¨æˆ·è‡ªå®šä¹‰æ¨¡æ¿çš„å­—ç¬¦ä¸²æ›¿æ¢
+        // ÔÊĞíÓÃ»§×Ô¶¨ÒåÄ£°åµÄ×Ö·û´®Ìæ»»
         if(is_array(C('TMPL_PARSE_STRING')) )
             $replace =  array_merge($replace,C('TMPL_PARSE_STRING'));
         $content = str_replace(array_keys($replace),array_values($replace),$content);

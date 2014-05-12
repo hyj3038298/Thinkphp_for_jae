@@ -34,7 +34,7 @@ return array(
     '_CACHE_TYPE_INVALID_'   => 'Unable to load the cache type',
     '_FILE_NOT_WRITEABLE_'   => 'Directory (file) is not writable',
     '_METHOD_NOT_EXIST_'     => 'The method you requested  does not exist!',
-    '_CLASS_NOT_EXIST_'      => 'Instantiating a class does not existï¼',
+    '_CLASS_NOT_EXIST_'      => 'Instantiating a class does not exist£¡',
     '_CLASS_CONFLICT_'       => 'Class name conflicts',
     '_TEMPLATE_ERROR_'       => 'Template Engine errors',
     '_CACHE_WRITE_ERROR_'    => 'Cache file write failed!',

@@ -10,7 +10,7 @@
 // +----------------------------------------------------------------------
 namespace Behavior;
 /**
- * ç³»ç»Ÿè¡Œä¸ºæ‰©å±•ï¼šè¡¨å•ä»¤ç‰Œç”Ÿæˆ
+ * ÏµÍ³ĞĞÎªÀ©Õ¹£º±íµ¥ÁîÅÆÉú³É
  */
 class TokenBuildBehavior {
 
@@ -20,10 +20,10 @@ class TokenBuildBehavior {
             $input_token = '<input type="hidden" name="'.$tokenName.'" value="'.$tokenKey.'_'.$tokenValue.'" />';
             $meta_token = '<meta name="'.$tokenName.'" content="'.$tokenKey.'_'.$tokenValue.'" />';
             if(strpos($content,'{__TOKEN__}')) {
-                // æŒ‡å®šè¡¨å•ä»¤ç‰Œéšè—åŸŸä½ç½®
+                // Ö¸¶¨±íµ¥ÁîÅÆÒş²ØÓòÎ»ÖÃ
                 $content = str_replace('{__TOKEN__}',$input_token,$content);
             }elseif(preg_match('/<\/form(\s*)>/is',$content,$match)) {
-                // æ™ºèƒ½ç”Ÿæˆè¡¨å•ä»¤ç‰Œéšè—åŸŸ
+                // ÖÇÄÜÉú³É±íµ¥ÁîÅÆÒş²ØÓò
                 $content = str_replace($match[0],$input_token.$match[0],$content);
             }
             $content = str_ireplace('</head>',$meta_token.'</head>',$content);
@@ -32,22 +32,22 @@ class TokenBuildBehavior {
         }
     }
 
-    //è·å¾—token
+    //»ñµÃtoken
     private function getToken(){
         $tokenName  = C('TOKEN_NAME',null,'__hash__');
         $tokenType  = C('TOKEN_TYPE',null,'md5');
         if(!isset($_SESSION[$tokenName])) {
             $_SESSION[$tokenName]  = array();
         }
-        // æ ‡è¯†å½“å‰é¡µé¢å”¯ä¸€æ€§
+        // ±êÊ¶µ±Ç°Ò³ÃæÎ¨Ò»ĞÔ
         $tokenKey   =  md5($_SERVER['REQUEST_URI']);
-        if(isset($_SESSION[$tokenName][$tokenKey])) {// ç›¸åŒé¡µé¢ä¸é‡å¤ç”Ÿæˆsession
+        if(isset($_SESSION[$tokenName][$tokenKey])) {// ÏàÍ¬Ò³Ãæ²»ÖØ¸´Éú³Ésession
             $tokenValue = $_SESSION[$tokenName][$tokenKey];
         }else{
             $tokenValue = $tokenType(microtime(TRUE));
             $_SESSION[$tokenName][$tokenKey]   =  $tokenValue;
             if(IS_AJAX && C('TOKEN_RESET',null,true))
-                header($tokenName.': '.$tokenKey.'_'.$tokenValue); //ajaxéœ€è¦è·å¾—è¿™ä¸ªheaderå¹¶æ›¿æ¢é¡µé¢ä¸­metaä¸­çš„tokenå€¼
+                header($tokenName.': '.$tokenKey.'_'.$tokenValue); //ajaxĞèÒª»ñµÃÕâ¸öheader²¢Ìæ»»Ò³ÃæÖĞmetaÖĞµÄtokenÖµ
         }
         return array($tokenName,$tokenKey,$tokenValue); 
     }

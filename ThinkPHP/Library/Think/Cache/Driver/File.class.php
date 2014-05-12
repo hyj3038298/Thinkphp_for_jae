@@ -12,12 +12,12 @@ namespace Think\Cache\Driver;
 use Think\Cache;
 defined('THINK_PATH') or exit();
 /**
- * æ–‡ä»¶ç±»å‹ç¼“å­˜ç±»
+ * ÎÄ¼şÀàĞÍ»º´æÀà
  */
 class File extends Cache {
 
     /**
-     * æ¶æ„å‡½æ•°
+     * ¼Ü¹¹º¯Êı
      * @access public
      */
     public function __construct($options=array()) {
@@ -33,27 +33,27 @@ class File extends Cache {
     }
 
     /**
-     * åˆå§‹åŒ–æ£€æŸ¥
+     * ³õÊ¼»¯¼ì²é
      * @access private
      * @return boolean
      */
     private function init() {
-        // åˆ›å»ºåº”ç”¨ç¼“å­˜ç›®å½•
+        // ´´½¨Ó¦ÓÃ»º´æÄ¿Â¼
         if (!is_dir($this->options['temp'])) {
             mkdir($this->options['temp']);
         }
     }
 
     /**
-     * å–å¾—å˜é‡çš„å­˜å‚¨æ–‡ä»¶å
+     * È¡µÃ±äÁ¿µÄ´æ´¢ÎÄ¼şÃû
      * @access private
-     * @param string $name ç¼“å­˜å˜é‡å
+     * @param string $name »º´æ±äÁ¿Ãû
      * @return string
      */
     private function filename($name) {
         $name	=	md5($name);
         if(C('DATA_CACHE_SUBDIR')) {
-            // ä½¿ç”¨å­ç›®å½•
+            // Ê¹ÓÃ×ÓÄ¿Â¼
             $dir   ='';
             for($i=0;$i<C('DATA_PATH_LEVEL');$i++) {
                 $dir	.=	$name{$i}.'/';
@@ -69,9 +69,9 @@ class File extends Cache {
     }
 
     /**
-     * è¯»å–ç¼“å­˜
+     * ¶ÁÈ¡»º´æ
      * @access public
-     * @param string $name ç¼“å­˜å˜é‡å
+     * @param string $name »º´æ±äÁ¿Ãû
      * @return mixed
      */
     public function get($name) {
@@ -84,21 +84,21 @@ class File extends Cache {
         if( false !== $content) {
             $expire  =  (int)substr($content,8, 12);
             if($expire != 0 && time() > filemtime($filename) + $expire) {
-                //ç¼“å­˜è¿‡æœŸåˆ é™¤ç¼“å­˜æ–‡ä»¶
+                //»º´æ¹ıÆÚÉ¾³ı»º´æÎÄ¼ş
                 unlink($filename);
                 return false;
             }
-            if(C('DATA_CACHE_CHECK')) {//å¼€å¯æ•°æ®æ ¡éªŒ
+            if(C('DATA_CACHE_CHECK')) {//¿ªÆôÊı¾İĞ£Ñé
                 $check  =  substr($content,20, 32);
                 $content   =  substr($content,52, -3);
-                if($check != md5($content)) {//æ ¡éªŒé”™è¯¯
+                if($check != md5($content)) {//Ğ£Ñé´íÎó
                     return false;
                 }
             }else {
             	$content   =  substr($content,20, -3);
             }
             if(C('DATA_CACHE_COMPRESS') && function_exists('gzcompress')) {
-                //å¯ç”¨æ•°æ®å‹ç¼©
+                //ÆôÓÃÊı¾İÑ¹Ëõ
                 $content   =   gzuncompress($content);
             }
             $content    =   unserialize($content);
@@ -110,11 +110,11 @@ class File extends Cache {
     }
 
     /**
-     * å†™å…¥ç¼“å­˜
+     * Ğ´Èë»º´æ
      * @access public
-     * @param string $name ç¼“å­˜å˜é‡å
-     * @param mixed $value  å­˜å‚¨æ•°æ®
-     * @param int $expire  æœ‰æ•ˆæ—¶é—´ 0ä¸ºæ°¸ä¹…
+     * @param string $name »º´æ±äÁ¿Ãû
+     * @param mixed $value  ´æ´¢Êı¾İ
+     * @param int $expire  ÓĞĞ§Ê±¼ä 0ÎªÓÀ¾Ã
      * @return boolean
      */
     public function set($name,$value,$expire=null) {
@@ -125,10 +125,10 @@ class File extends Cache {
         $filename   =   $this->filename($name);
         $data   =   serialize($value);
         if( C('DATA_CACHE_COMPRESS') && function_exists('gzcompress')) {
-            //æ•°æ®å‹ç¼©
+            //Êı¾İÑ¹Ëõ
             $data   =   gzcompress($data,3);
         }
-        if(C('DATA_CACHE_CHECK')) {//å¼€å¯æ•°æ®æ ¡éªŒ
+        if(C('DATA_CACHE_CHECK')) {//¿ªÆôÊı¾İĞ£Ñé
             $check  =  md5($data);
         }else {
             $check  =  '';
@@ -137,7 +137,7 @@ class File extends Cache {
         $result  =   file_put_contents($filename,$data);
         if($result) {
             if($this->options['length']>0) {
-                // è®°å½•ç¼“å­˜é˜Ÿåˆ—
+                // ¼ÇÂ¼»º´æ¶ÓÁĞ
                 $this->queue($name);
             }
             clearstatcache();
@@ -148,9 +148,9 @@ class File extends Cache {
     }
 
     /**
-     * åˆ é™¤ç¼“å­˜
+     * É¾³ı»º´æ
      * @access public
-     * @param string $name ç¼“å­˜å˜é‡å
+     * @param string $name »º´æ±äÁ¿Ãû
      * @return boolean
      */
     public function rm($name) {
@@ -158,9 +158,9 @@ class File extends Cache {
     }
 
     /**
-     * æ¸…é™¤ç¼“å­˜
+     * Çå³ı»º´æ
      * @access public
-     * @param string $name ç¼“å­˜å˜é‡å
+     * @param string $name »º´æ±äÁ¿Ãû
      * @return boolean
      */
     public function clear() {

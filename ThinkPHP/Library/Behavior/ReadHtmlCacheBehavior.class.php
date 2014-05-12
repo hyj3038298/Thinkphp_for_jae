@@ -11,46 +11,46 @@
 namespace Behavior;
 use Think\Storage;
 /**
- * ç³»ç»Ÿè¡Œä¸ºæ‰©å±•ï¼šé™æ€ç¼“å­˜è¯»å–
+ * ÏµÍ³ĞĞÎªÀ©Õ¹£º¾²Ì¬»º´æ¶ÁÈ¡
  */
 class ReadHtmlCacheBehavior {
-    // è¡Œä¸ºæ‰©å±•çš„æ‰§è¡Œå…¥å£å¿…é¡»æ˜¯run
+    // ĞĞÎªÀ©Õ¹µÄÖ´ĞĞÈë¿Ú±ØĞëÊÇrun
     public function run(&$params){
-        // å¼€å¯é™æ€ç¼“å­˜
+        // ¿ªÆô¾²Ì¬»º´æ
         if(IS_GET && C('HTML_CACHE_ON'))  {
             $cacheTime = $this->requireHtmlCache();
-            if( false !== $cacheTime && $this->checkHTMLCache(HTML_FILE_NAME,$cacheTime)) { //é™æ€é¡µé¢æœ‰æ•ˆ
-                // è¯»å–é™æ€é¡µé¢è¾“å‡º
+            if( false !== $cacheTime && $this->checkHTMLCache(HTML_FILE_NAME,$cacheTime)) { //¾²Ì¬Ò³ÃæÓĞĞ§
+                // ¶ÁÈ¡¾²Ì¬Ò³ÃæÊä³ö
                 echo Storage::read(HTML_FILE_NAME,'html');
                 exit();
             }
         }
     }
 
-    // åˆ¤æ–­æ˜¯å¦éœ€è¦é™æ€ç¼“å­˜
+    // ÅĞ¶ÏÊÇ·ñĞèÒª¾²Ì¬»º´æ
     static private function requireHtmlCache() {
-        // åˆ†æå½“å‰çš„é™æ€è§„åˆ™
-         $htmls = C('HTML_CACHE_RULES'); // è¯»å–é™æ€è§„åˆ™
+        // ·ÖÎöµ±Ç°µÄ¾²Ì¬¹æÔò
+         $htmls = C('HTML_CACHE_RULES'); // ¶ÁÈ¡¾²Ì¬¹æÔò
          if(!empty($htmls)) {
             $htmls = array_change_key_case($htmls);
-            // é™æ€è§„åˆ™æ–‡ä»¶å®šä¹‰æ ¼å¼ actionName=>array('é™æ€è§„åˆ™','ç¼“å­˜æ—¶é—´','é™„åŠ è§„åˆ™')
-            // 'read'=>array('{id},{name}',60,'md5') å¿…é¡»ä¿è¯é™æ€è§„åˆ™çš„å”¯ä¸€æ€§ å’Œ å¯åˆ¤æ–­æ€§
-            // æ£€æµ‹é™æ€è§„åˆ™
+            // ¾²Ì¬¹æÔòÎÄ¼ş¶¨Òå¸ñÊ½ actionName=>array('¾²Ì¬¹æÔò','»º´æÊ±¼ä','¸½¼Ó¹æÔò')
+            // 'read'=>array('{id},{name}',60,'md5') ±ØĞë±£Ö¤¾²Ì¬¹æÔòµÄÎ¨Ò»ĞÔ ºÍ ¿ÉÅĞ¶ÏĞÔ
+            // ¼ì²â¾²Ì¬¹æÔò
             $controllerName = strtolower(CONTROLLER_NAME);
             $actionName     = strtolower(ACTION_NAME);
             if(isset($htmls[$controllerName.':'.$actionName])) {
-                $html   =   $htmls[$controllerName.':'.$actionName];   // æŸä¸ªæ§åˆ¶å™¨çš„æ“ä½œçš„é™æ€è§„åˆ™
-            }elseif(isset($htmls[$controllerName.':'])){// æŸä¸ªæ§åˆ¶å™¨çš„é™æ€è§„åˆ™
+                $html   =   $htmls[$controllerName.':'.$actionName];   // Ä³¸ö¿ØÖÆÆ÷µÄ²Ù×÷µÄ¾²Ì¬¹æÔò
+            }elseif(isset($htmls[$controllerName.':'])){// Ä³¸ö¿ØÖÆÆ÷µÄ¾²Ì¬¹æÔò
                 $html   =   $htmls[$controllerName.':'];
             }elseif(isset($htmls[$actionName])){
-                $html   =   $htmls[$actionName]; // æ‰€æœ‰æ“ä½œçš„é™æ€è§„åˆ™
+                $html   =   $htmls[$actionName]; // ËùÓĞ²Ù×÷µÄ¾²Ì¬¹æÔò
             }elseif(isset($htmls['*'])){
-                $html   =   $htmls['*']; // å…¨å±€é™æ€è§„åˆ™
+                $html   =   $htmls['*']; // È«¾Ö¾²Ì¬¹æÔò
             }
             if(!empty($html)) {
-                // è§£è¯»é™æ€è§„åˆ™
+                // ½â¶Á¾²Ì¬¹æÔò
                 $rule   = is_array($html)?$html[0]:$html;
-                // ä»¥$_å¼€å¤´çš„ç³»ç»Ÿå˜é‡
+                // ÒÔ$_¿ªÍ·µÄÏµÍ³±äÁ¿
                 $callback = function($match){ 
                     switch($match[1]){
                         case '_GET':        $var = $_GET[$match[2]]; break;
@@ -63,54 +63,54 @@ class ReadHtmlCacheBehavior {
                     return (count($match) == 4) ? $match[3]($var) : $var;
                 };
                 $rule     = preg_replace_callback('/{\$(_\w+)\.(\w+)(?:\|(\w+))?}/', $callback, $rule);
-                // {ID|FUN} GETå˜é‡çš„ç®€å†™
+                // {ID|FUN} GET±äÁ¿µÄ¼òĞ´
                 $rule     = preg_replace_callback('/{(\w+)\|(\w+)}/', function($match){return $match[2]($_GET[$match[1]]);}, $rule);
                 $rule     = preg_replace_callback('/{(\w+)}/', function($match){return $_GET[$match[1]];}, $rule);
-                // ç‰¹æ®Šç³»ç»Ÿå˜é‡
+                // ÌØÊâÏµÍ³±äÁ¿
                 $rule   = str_ireplace(
                     array('{:controller}','{:action}','{:module}'),
                     array(CONTROLLER_NAME,ACTION_NAME,MODULE_NAME),
                     $rule);
-                // {|FUN} å•ç‹¬ä½¿ç”¨å‡½æ•°
+                // {|FUN} µ¥¶ÀÊ¹ÓÃº¯Êı
                 $rule  = preg_replace_callback('/{|(\w+)}/', function($match){return $match[1]();},$rule);
                 $cacheTime  =   C('HTML_CACHE_TIME',null,60);
                 if(is_array($html)){
-                    if(!empty($html[2])) $rule    =   $html[2]($rule); // åº”ç”¨é™„åŠ å‡½æ•°
-                    $cacheTime  =   isset($html[1])?$html[1]:$cacheTime; // ç¼“å­˜æœ‰æ•ˆæœŸ
+                    if(!empty($html[2])) $rule    =   $html[2]($rule); // Ó¦ÓÃ¸½¼Óº¯Êı
+                    $cacheTime  =   isset($html[1])?$html[1]:$cacheTime; // »º´æÓĞĞ§ÆÚ
                 }else{
                     $cacheTime  =   $cacheTime;
                 }
                 
-                // å½“å‰ç¼“å­˜æ–‡ä»¶
+                // µ±Ç°»º´æÎÄ¼ş
                 define('HTML_FILE_NAME',HTML_PATH . $rule.C('HTML_FILE_SUFFIX',null,'.html'));
                 return $cacheTime;
             }
         }
-        // æ— éœ€ç¼“å­˜
+        // ÎŞĞè»º´æ
         return false;
     }
 
     /**
-     * æ£€æŸ¥é™æ€HTMLæ–‡ä»¶æ˜¯å¦æœ‰æ•ˆ
-     * å¦‚æœæ— æ•ˆéœ€è¦é‡æ–°æ›´æ–°
+     * ¼ì²é¾²Ì¬HTMLÎÄ¼şÊÇ·ñÓĞĞ§
+     * Èç¹ûÎŞĞ§ĞèÒªÖØĞÂ¸üĞÂ
      * @access public
-     * @param string $cacheFile  é™æ€æ–‡ä»¶å
-     * @param integer $cacheTime  ç¼“å­˜æœ‰æ•ˆæœŸ
+     * @param string $cacheFile  ¾²Ì¬ÎÄ¼şÃû
+     * @param integer $cacheTime  »º´æÓĞĞ§ÆÚ
      * @return boolean
      */
     static public function checkHTMLCache($cacheFile='',$cacheTime='') {
         if(!is_file($cacheFile)){
             return false;
         }elseif (filemtime(\Think\Think::instance('Think\View')->parseTemplate()) > Storage::get($cacheFile,'mtime','html')) {
-            // æ¨¡æ¿æ–‡ä»¶å¦‚æœæ›´æ–°é™æ€æ–‡ä»¶éœ€è¦æ›´æ–°
+            // Ä£°åÎÄ¼şÈç¹û¸üĞÂ¾²Ì¬ÎÄ¼şĞèÒª¸üĞÂ
             return false;
         }elseif(!is_numeric($cacheTime) && function_exists($cacheTime)){
             return $cacheTime($cacheFile);
         }elseif ($cacheTime != 0 && NOW_TIME > Storage::get($cacheFile,'mtime','html')+$cacheTime) {
-            // æ–‡ä»¶æ˜¯å¦åœ¨æœ‰æ•ˆæœŸ
+            // ÎÄ¼şÊÇ·ñÔÚÓĞĞ§ÆÚ
             return false;
         }
-        //é™æ€æ–‡ä»¶æœ‰æ•ˆ
+        //¾²Ì¬ÎÄ¼şÓĞĞ§
         return true;
     }
 

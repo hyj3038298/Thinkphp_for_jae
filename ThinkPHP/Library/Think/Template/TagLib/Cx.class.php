@@ -11,13 +11,13 @@
 namespace Think\Template\TagLib;
 use Think\Template\TagLib;
 /**
- * CXæ ‡ç­¾åº“è§£æç±»
+ * CX±êÇ©¿â½âÎöÀà
  */
 class Cx extends TagLib {
 
-    // æ ‡ç­¾å®šä¹‰
+    // ±êÇ©¶¨Òå
     protected $tags   =  array(
-        // æ ‡ç­¾å®šä¹‰ï¼š attr å±æ€§åˆ—è¡¨ close æ˜¯å¦é—­åˆï¼ˆ0 æˆ–è€…1 é»˜è®¤1ï¼‰ alias æ ‡ç­¾åˆ«å level åµŒå¥—å±‚æ¬¡
+        // ±êÇ©¶¨Òå£º attr ÊôĞÔÁĞ±í close ÊÇ·ñ±ÕºÏ£¨0 »òÕß1 Ä¬ÈÏ1£© alias ±êÇ©±ğÃû level Ç¶Ì×²ã´Î
         'php'       =>  array(),
         'volist'    =>  array('attr'=>'name,id,offset,length,key,mod','level'=>3,'alias'=>'iterate'),
         'foreach'   =>  array('attr'=>'name,item,key','level'=>3),
@@ -42,10 +42,10 @@ class Cx extends TagLib {
         );
 
     /**
-     * phpæ ‡ç­¾è§£æ
+     * php±êÇ©½âÎö
      * @access public
-     * @param array $tag æ ‡ç­¾å±æ€§
-     * @param string $content  æ ‡ç­¾å†…å®¹
+     * @param array $tag ±êÇ©ÊôĞÔ
+     * @param string $content  ±êÇ©ÄÚÈİ
      * @return string
      */
     public function _php($tag,$content) {
@@ -54,15 +54,15 @@ class Cx extends TagLib {
     }
 
     /**
-     * volistæ ‡ç­¾è§£æ å¾ªç¯è¾“å‡ºæ•°æ®é›†
-     * æ ¼å¼ï¼š
+     * volist±êÇ©½âÎö Ñ­»·Êä³öÊı¾İ¼¯
+     * ¸ñÊ½£º
      * <volist name="userList" id="user" empty="" >
      * {user.username}
      * {user.email}
      * </volist>
      * @access public
-     * @param array $tag æ ‡ç­¾å±æ€§
-     * @param string $content  æ ‡ç­¾å†…å®¹
+     * @param array $tag ±êÇ©ÊôĞÔ
+     * @param string $content  ±êÇ©ÄÚÈİ
      * @return string|void
      */
     public function _volist($tag,$content) {
@@ -71,7 +71,7 @@ class Cx extends TagLib {
         $empty =    isset($tag['empty'])?$tag['empty']:'';
         $key   =    !empty($tag['key'])?$tag['key']:'i';
         $mod   =    isset($tag['mod'])?$tag['mod']:'2';
-        // å…è®¸ä½¿ç”¨å‡½æ•°è®¾å®šæ•°æ®é›† <volist name=":fun('arg')" id="vo">{$vo.name}</volist>
+        // ÔÊĞíÊ¹ÓÃº¯ÊıÉè¶¨Êı¾İ¼¯ <volist name=":fun('arg')" id="vo">{$vo.name}</volist>
         $parseStr   =  '<?php ';
         if(0===strpos($name,':')) {
             $parseStr   .= '$_result='.substr($name,1).';';
@@ -102,10 +102,10 @@ class Cx extends TagLib {
     }
 
     /**
-     * foreachæ ‡ç­¾è§£æ å¾ªç¯è¾“å‡ºæ•°æ®é›†
+     * foreach±êÇ©½âÎö Ñ­»·Êä³öÊı¾İ¼¯
      * @access public
-     * @param array $tag æ ‡ç­¾å±æ€§
-     * @param string $content  æ ‡ç­¾å†…å®¹
+     * @param array $tag ±êÇ©ÊôĞÔ
+     * @param string $content  ±êÇ©ÄÚÈİ
      * @return string|void
      */
     public function _foreach($tag,$content) {
@@ -124,16 +124,16 @@ class Cx extends TagLib {
     }
 
     /**
-     * ifæ ‡ç­¾è§£æ
-     * æ ¼å¼ï¼š
+     * if±êÇ©½âÎö
+     * ¸ñÊ½£º
      * <if condition=" $a eq 1" >
      * <elseif condition="$a eq 2" />
      * <else />
      * </if>
-     * è¡¨è¾¾å¼æ”¯æŒ eq neq gt egt lt elt == > >= < <= or and || &&
+     * ±í´ïÊ½Ö§³Ö eq neq gt egt lt elt == > >= < <= or and || &&
      * @access public
-     * @param array $tag æ ‡ç­¾å±æ€§
-     * @param string $content  æ ‡ç­¾å†…å®¹
+     * @param array $tag ±êÇ©ÊôĞÔ
+     * @param string $content  ±êÇ©ÄÚÈİ
      * @return string
      */
     public function _if($tag,$content) {
@@ -143,11 +143,11 @@ class Cx extends TagLib {
     }
 
     /**
-     * elseæ ‡ç­¾è§£æ
-     * æ ¼å¼ï¼šè§ifæ ‡ç­¾
+     * else±êÇ©½âÎö
+     * ¸ñÊ½£º¼ûif±êÇ©
      * @access public
-     * @param array $tag æ ‡ç­¾å±æ€§
-     * @param string $content  æ ‡ç­¾å†…å®¹
+     * @param array $tag ±êÇ©ÊôĞÔ
+     * @param string $content  ±êÇ©ÄÚÈİ
      * @return string
      */
     public function _elseif($tag,$content) {
@@ -157,9 +157,9 @@ class Cx extends TagLib {
     }
 
     /**
-     * elseæ ‡ç­¾è§£æ
+     * else±êÇ©½âÎö
      * @access public
-     * @param array $tag æ ‡ç­¾å±æ€§
+     * @param array $tag ±êÇ©ÊôĞÔ
      * @return string
      */
     public function _else($tag) {
@@ -168,16 +168,16 @@ class Cx extends TagLib {
     }
 
     /**
-     * switchæ ‡ç­¾è§£æ
-     * æ ¼å¼ï¼š
+     * switch±êÇ©½âÎö
+     * ¸ñÊ½£º
      * <switch name="a.name" >
      * <case value="1" break="false">1</case>
      * <case value="2" >2</case>
      * <default />other
      * </switch>
      * @access public
-     * @param array $tag æ ‡ç­¾å±æ€§
-     * @param string $content  æ ‡ç­¾å†…å®¹
+     * @param array $tag ±êÇ©ÊôĞÔ
+     * @param string $content  ±êÇ©ÄÚÈİ
      * @return string
      */
     public function _switch($tag,$content) {
@@ -192,10 +192,10 @@ class Cx extends TagLib {
     }
 
     /**
-     * caseæ ‡ç­¾è§£æ éœ€è¦é…åˆswitchæ‰æœ‰æ•ˆ
+     * case±êÇ©½âÎö ĞèÒªÅäºÏswitch²ÅÓĞĞ§
      * @access public
-     * @param array $tag æ ‡ç­¾å±æ€§
-     * @param string $content  æ ‡ç­¾å†…å®¹
+     * @param array $tag ±êÇ©ÊôĞÔ
+     * @param string $content  ±êÇ©ÄÚÈİ
      * @return string
      */
     public function _case($tag,$content) {
@@ -225,11 +225,11 @@ class Cx extends TagLib {
     }
 
     /**
-     * defaultæ ‡ç­¾è§£æ éœ€è¦é…åˆswitchæ‰æœ‰æ•ˆ
-     * ä½¿ç”¨ï¼š <default />ddfdf
+     * default±êÇ©½âÎö ĞèÒªÅäºÏswitch²ÅÓĞĞ§
+     * Ê¹ÓÃ£º <default />ddfdf
      * @access public
-     * @param array $tag æ ‡ç­¾å±æ€§
-     * @param string $content  æ ‡ç­¾å†…å®¹
+     * @param array $tag ±êÇ©ÊôĞÔ
+     * @param string $content  ±êÇ©ÄÚÈİ
      * @return string
      */
     public function _default($tag) {
@@ -238,12 +238,12 @@ class Cx extends TagLib {
     }
 
     /**
-     * compareæ ‡ç­¾è§£æ
-     * ç”¨äºå€¼çš„æ¯”è¾ƒ æ”¯æŒ eq neq gt lt egt elt heq nheq é»˜è®¤æ˜¯eq
-     * æ ¼å¼ï¼š <compare name="" type="eq" value="" >content</compare>
+     * compare±êÇ©½âÎö
+     * ÓÃÓÚÖµµÄ±È½Ï Ö§³Ö eq neq gt lt egt elt heq nheq Ä¬ÈÏÊÇeq
+     * ¸ñÊ½£º <compare name="" type="eq" value="" >content</compare>
      * @access public
-     * @param array $tag æ ‡ç­¾å±æ€§
-     * @param string $content  æ ‡ç­¾å†…å®¹
+     * @param array $tag ±êÇ©ÊôĞÔ
+     * @param string $content  ±êÇ©ÄÚÈİ
      * @return string
      */
     public function _compare($tag,$content,$type='eq') {
@@ -306,14 +306,14 @@ class Cx extends TagLib {
     }
 
     /**
-     * rangeæ ‡ç­¾è§£æ
-     * å¦‚æœæŸä¸ªå˜é‡å­˜åœ¨äºæŸä¸ªèŒƒå›´ åˆ™è¾“å‡ºå†…å®¹ type= in è¡¨ç¤ºåœ¨èŒƒå›´å†… å¦åˆ™è¡¨ç¤ºåœ¨èŒƒå›´å¤–
-     * æ ¼å¼ï¼š <range name="var|function"  value="val" type='in|notin' >content</range>
+     * range±êÇ©½âÎö
+     * Èç¹ûÄ³¸ö±äÁ¿´æÔÚÓÚÄ³¸ö·¶Î§ ÔòÊä³öÄÚÈİ type= in ±íÊ¾ÔÚ·¶Î§ÄÚ ·ñÔò±íÊ¾ÔÚ·¶Î§Íâ
+     * ¸ñÊ½£º <range name="var|function"  value="val" type='in|notin' >content</range>
      * example: <range name="a"  value="1,2,3" type='in' >content</range>
      * @access public
-     * @param array $tag æ ‡ç­¾å±æ€§
-     * @param string $content  æ ‡ç­¾å†…å®¹
-     * @param string $type  æ¯”è¾ƒç±»å‹
+     * @param array $tag ±êÇ©ÊôĞÔ
+     * @param string $content  ±êÇ©ÄÚÈİ
+     * @param string $type  ±È½ÏÀàĞÍ
      * @return string
      */
     public function _range($tag,$content,$type='in') {
@@ -345,12 +345,12 @@ class Cx extends TagLib {
         return $parseStr;
     }
 
-    // rangeæ ‡ç­¾çš„åˆ«å ç”¨äºinåˆ¤æ–­
+    // range±êÇ©µÄ±ğÃû ÓÃÓÚinÅĞ¶Ï
     public function _in($tag,$content) {
         return $this->_range($tag,$content,'in');
     }
 
-    // rangeæ ‡ç­¾çš„åˆ«å ç”¨äºnotinåˆ¤æ–­
+    // range±êÇ©µÄ±ğÃû ÓÃÓÚnotinÅĞ¶Ï
     public function _notin($tag,$content) {
         return $this->_range($tag,$content,'notin');
     }
@@ -364,12 +364,12 @@ class Cx extends TagLib {
     }
 
     /**
-     * presentæ ‡ç­¾è§£æ
-     * å¦‚æœæŸä¸ªå˜é‡å·²ç»è®¾ç½® åˆ™è¾“å‡ºå†…å®¹
-     * æ ¼å¼ï¼š <present name="" >content</present>
+     * present±êÇ©½âÎö
+     * Èç¹ûÄ³¸ö±äÁ¿ÒÑ¾­ÉèÖÃ ÔòÊä³öÄÚÈİ
+     * ¸ñÊ½£º <present name="" >content</present>
      * @access public
-     * @param array $tag æ ‡ç­¾å±æ€§
-     * @param string $content  æ ‡ç­¾å†…å®¹
+     * @param array $tag ±êÇ©ÊôĞÔ
+     * @param string $content  ±êÇ©ÄÚÈİ
      * @return string
      */
     public function _present($tag,$content) {
@@ -380,12 +380,12 @@ class Cx extends TagLib {
     }
 
     /**
-     * notpresentæ ‡ç­¾è§£æ
-     * å¦‚æœæŸä¸ªå˜é‡æ²¡æœ‰è®¾ç½®ï¼Œåˆ™è¾“å‡ºå†…å®¹
-     * æ ¼å¼ï¼š <notpresent name="" >content</notpresent>
+     * notpresent±êÇ©½âÎö
+     * Èç¹ûÄ³¸ö±äÁ¿Ã»ÓĞÉèÖÃ£¬ÔòÊä³öÄÚÈİ
+     * ¸ñÊ½£º <notpresent name="" >content</notpresent>
      * @access public
-     * @param array $tag æ ‡ç­¾å±æ€§
-     * @param string $content  æ ‡ç­¾å†…å®¹
+     * @param array $tag ±êÇ©ÊôĞÔ
+     * @param string $content  ±êÇ©ÄÚÈİ
      * @return string
      */
     public function _notpresent($tag,$content) {
@@ -396,12 +396,12 @@ class Cx extends TagLib {
     }
 
     /**
-     * emptyæ ‡ç­¾è§£æ
-     * å¦‚æœæŸä¸ªå˜é‡ä¸ºempty åˆ™è¾“å‡ºå†…å®¹
-     * æ ¼å¼ï¼š <empty name="" >content</empty>
+     * empty±êÇ©½âÎö
+     * Èç¹ûÄ³¸ö±äÁ¿Îªempty ÔòÊä³öÄÚÈİ
+     * ¸ñÊ½£º <empty name="" >content</empty>
      * @access public
-     * @param array $tag æ ‡ç­¾å±æ€§
-     * @param string $content  æ ‡ç­¾å†…å®¹
+     * @param array $tag ±êÇ©ÊôĞÔ
+     * @param string $content  ±êÇ©ÄÚÈİ
      * @return string
      */
     public function _empty($tag,$content) {
@@ -419,8 +419,8 @@ class Cx extends TagLib {
     }
 
     /**
-     * åˆ¤æ–­æ˜¯å¦å·²ç»å®šä¹‰äº†è¯¥å¸¸é‡
-     * <defined name='TXT'>å·²å®šä¹‰</defined>
+     * ÅĞ¶ÏÊÇ·ñÒÑ¾­¶¨ÒåÁË¸Ã³£Á¿
+     * <defined name='TXT'>ÒÑ¶¨Òå</defined>
      * @param <type> $attr
      * @param <type> $content
      * @return string
@@ -438,20 +438,20 @@ class Cx extends TagLib {
     }
 
     /**
-     * import æ ‡ç­¾è§£æ <import file="Js.Base" /> 
+     * import ±êÇ©½âÎö <import file="Js.Base" /> 
      * <import file="Css.Base" type="css" />
      * @access public
-     * @param array $tag æ ‡ç­¾å±æ€§
-     * @param string $content  æ ‡ç­¾å†…å®¹
-     * @param boolean $isFile  æ˜¯å¦æ–‡ä»¶æ–¹å¼
-     * @param string $type  ç±»å‹
+     * @param array $tag ±êÇ©ÊôĞÔ
+     * @param string $content  ±êÇ©ÄÚÈİ
+     * @param boolean $isFile  ÊÇ·ñÎÄ¼ş·½Ê½
+     * @param string $type  ÀàĞÍ
      * @return string
      */
     public function _import($tag,$content,$isFile=false,$type='') {
         $file       =   isset($tag['file'])?$tag['file']:$tag['href'];
         $parseStr   =   '';
         $endStr     =   '';
-        // åˆ¤æ–­æ˜¯å¦å­˜åœ¨åŠ è½½æ¡ä»¶ å…è®¸ä½¿ç”¨å‡½æ•°åˆ¤æ–­(é»˜è®¤ä¸ºisset)
+        // ÅĞ¶ÏÊÇ·ñ´æÔÚ¼ÓÔØÌõ¼ş ÔÊĞíÊ¹ÓÃº¯ÊıÅĞ¶Ï(Ä¬ÈÏÎªisset)
         if (isset($tag['value'])) {
             $varArray  =    explode('|',$tag['value']);
             $name      =    array_shift($varArray);
@@ -464,9 +464,9 @@ class Cx extends TagLib {
             $endStr    =    '<?php endif; ?>';
         }
         if($isFile) {
-            // æ ¹æ®æ–‡ä»¶ååç¼€è‡ªåŠ¨è¯†åˆ«
+            // ¸ù¾İÎÄ¼şÃûºó×º×Ô¶¯Ê¶±ğ
             $type  = $type?$type:(!empty($tag['type'])?strtolower($tag['type']):null);
-            // æ–‡ä»¶æ–¹å¼å¯¼å…¥
+            // ÎÄ¼ş·½Ê½µ¼Èë
             $array =  explode(',',$file);
             foreach ($array as $val){
                 if (!$type || isset($reset)) {
@@ -485,10 +485,10 @@ class Cx extends TagLib {
                 }
             }
         }else{
-            // å‘½åç©ºé—´å¯¼å…¥æ¨¡å¼ é»˜è®¤æ˜¯js
+            // ÃüÃû¿Õ¼äµ¼ÈëÄ£Ê½ Ä¬ÈÏÊÇjs
             $type       =   $type?$type:(!empty($tag['type'])?strtolower($tag['type']):'js');
             $basepath   =   !empty($tag['basepath'])?$tag['basepath']:__ROOT__.'/Public';
-            // å‘½åç©ºé—´æ–¹å¼å¯¼å…¥å¤–éƒ¨æ–‡ä»¶
+            // ÃüÃû¿Õ¼ä·½Ê½µ¼ÈëÍâ²¿ÎÄ¼ş
             $array      =   explode(',',$file);
             foreach ($array as $val){
                 list($val,$version) =   explode('?',$val);
@@ -508,28 +508,28 @@ class Cx extends TagLib {
         return $parseStr.$endStr;
     }
 
-    // importåˆ«å é‡‡ç”¨æ–‡ä»¶æ–¹å¼åŠ è½½(è¦ä½¿ç”¨å‘½åç©ºé—´å¿…é¡»ç”¨import) ä¾‹å¦‚ <load file="__PUBLIC__/Js/Base.js" />
+    // import±ğÃû ²ÉÓÃÎÄ¼ş·½Ê½¼ÓÔØ(ÒªÊ¹ÓÃÃüÃû¿Õ¼ä±ØĞëÓÃimport) ÀıÈç <load file="__PUBLIC__/Js/Base.js" />
     public function _load($tag,$content) {
         return $this->_import($tag,$content,true);
     }
 
-    // importåˆ«åä½¿ç”¨ å¯¼å…¥cssæ–‡ä»¶ <css file="__PUBLIC__/Css/Base.css" />
+    // import±ğÃûÊ¹ÓÃ µ¼ÈëcssÎÄ¼ş <css file="__PUBLIC__/Css/Base.css" />
     public function _css($tag,$content) {
         return $this->_import($tag,$content,true,'css');
     }
 
-    // importåˆ«åä½¿ç”¨ å¯¼å…¥jsæ–‡ä»¶ <js file="__PUBLIC__/Js/Base.js" />
+    // import±ğÃûÊ¹ÓÃ µ¼ÈëjsÎÄ¼ş <js file="__PUBLIC__/Js/Base.js" />
     public function _js($tag,$content) {
         return $this->_import($tag,$content,true,'js');
     }
 
     /**
-     * assignæ ‡ç­¾è§£æ
-     * åœ¨æ¨¡æ¿ä¸­ç»™æŸä¸ªå˜é‡èµ‹å€¼ æ”¯æŒå˜é‡èµ‹å€¼
-     * æ ¼å¼ï¼š <assign name="" value="" />
+     * assign±êÇ©½âÎö
+     * ÔÚÄ£°åÖĞ¸øÄ³¸ö±äÁ¿¸³Öµ Ö§³Ö±äÁ¿¸³Öµ
+     * ¸ñÊ½£º <assign name="" value="" />
      * @access public
-     * @param array $tag æ ‡ç­¾å±æ€§
-     * @param string $content  æ ‡ç­¾å†…å®¹
+     * @param array $tag ±êÇ©ÊôĞÔ
+     * @param string $content  ±êÇ©ÄÚÈİ
      * @return string
      */
     public function _assign($tag,$content) {
@@ -544,12 +544,12 @@ class Cx extends TagLib {
     }
 
     /**
-     * defineæ ‡ç­¾è§£æ
-     * åœ¨æ¨¡æ¿ä¸­å®šä¹‰å¸¸é‡ æ”¯æŒå˜é‡èµ‹å€¼
-     * æ ¼å¼ï¼š <define name="" value="" />
+     * define±êÇ©½âÎö
+     * ÔÚÄ£°åÖĞ¶¨Òå³£Á¿ Ö§³Ö±äÁ¿¸³Öµ
+     * ¸ñÊ½£º <define name="" value="" />
      * @access public
-     * @param array $tag æ ‡ç­¾å±æ€§
-     * @param string $content  æ ‡ç­¾å†…å®¹
+     * @param array $tag ±êÇ©ÊôĞÔ
+     * @param string $content  ±êÇ©ÄÚÈİ
      * @return string
      */
     public function _define($tag,$content) {
@@ -564,22 +564,22 @@ class Cx extends TagLib {
     }
     
     /**
-     * foræ ‡ç­¾è§£æ
-     * æ ¼å¼ï¼š <for start="" end="" comparison="" step="" name="" />
+     * for±êÇ©½âÎö
+     * ¸ñÊ½£º <for start="" end="" comparison="" step="" name="" />
      * @access public
-     * @param array $tag æ ‡ç­¾å±æ€§
-     * @param string $content  æ ‡ç­¾å†…å®¹
+     * @param array $tag ±êÇ©ÊôĞÔ
+     * @param string $content  ±êÇ©ÄÚÈİ
      * @return string
      */
     public function _for($tag, $content){
-        //è®¾ç½®é»˜è®¤å€¼
+        //ÉèÖÃÄ¬ÈÏÖµ
         $start 		= 0;
         $end   		= 0;
         $step 		= 1;
         $comparison = 'lt';
         $name		= 'i';
-        $rand       = rand(); //æ·»åŠ éšæœºæ•°ï¼Œé˜²æ­¢åµŒå¥—å˜é‡å†²çª
-        //è·å–å±æ€§
+        $rand       = rand(); //Ìí¼ÓËæ»úÊı£¬·ÀÖ¹Ç¶Ì×±äÁ¿³åÍ»
+        //»ñÈ¡ÊôĞÔ
         foreach ($tag as $key => $value){
             $value = trim($value);
             if(':'==substr($value,0,1))

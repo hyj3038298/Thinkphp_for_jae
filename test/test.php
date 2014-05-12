@@ -7,17 +7,17 @@ function appError($errno, $errstr, $errfile, $errline) {
       case E_COMPILE_ERROR:
       case E_USER_ERROR:
         ob_end_clean();
-        $errorStr = "$errstr ".$errfile." ç¬¬ $errline è¡Œ.";
+        $errorStr = "$errstr ".$errfile." µÚ $errline ĞĞ.";
         echo ($errstr);
         break;
       default:
-        $errorStr = "[$errno] $errstr ".$errfile." ç¬¬ $errline è¡Œ.";
+        $errorStr = "[$errno] $errstr ".$errfile." µÚ $errline ĞĞ.";
         echo "NOTICE:" . $errstr;
         break;
   }
 }
 
-// è‡´å‘½é”™è¯¯æ•è·
+// ÖÂÃü´íÎó²¶»ñ
 function fatalError() {
     if ($e = error_get_last()) {
         switch($e['type']){

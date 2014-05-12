@@ -10,18 +10,18 @@
 // +----------------------------------------------------------------------
 
 /**
- * ThinkPHP é»˜è®¤çš„è°ƒè¯•æ¨¡å¼é…ç½®æ–‡ä»¶
+ * ThinkPHP Ä¬ÈÏµÄµ÷ÊÔÄ£Ê½ÅäÖÃÎÄ¼ş
  */
 defined('THINK_PATH') or exit();
-// è°ƒè¯•æ¨¡å¼ä¸‹é¢é»˜è®¤è®¾ç½® å¯ä»¥åœ¨åº”ç”¨é…ç½®ç›®å½•ä¸‹é‡æ–°å®šä¹‰ debug.php è¦†ç›–
+// µ÷ÊÔÄ£Ê½ÏÂÃæÄ¬ÈÏÉèÖÃ ¿ÉÒÔÔÚÓ¦ÓÃÅäÖÃÄ¿Â¼ÏÂÖØĞÂ¶¨Òå debug.php ¸²¸Ç
 return  array(
-    'LOG_RECORD'            =>  true,  // è¿›è¡Œæ—¥å¿—è®°å½•
-    'LOG_EXCEPTION_RECORD'  =>  true,    // æ˜¯å¦è®°å½•å¼‚å¸¸ä¿¡æ¯æ—¥å¿—
-    'LOG_LEVEL'             =>  'EMERG,ALERT,CRIT,ERR,WARN,NOTIC,INFO,DEBUG,SQL',  // å…è®¸è®°å½•çš„æ—¥å¿—çº§åˆ«
-    'DB_FIELDS_CACHE'       =>  false, // å­—æ®µç¼“å­˜ä¿¡æ¯
-    'DB_SQL_LOG'            =>  true, // è®°å½•SQLä¿¡æ¯
-    'TMPL_CACHE_ON'         =>  false,        // æ˜¯å¦å¼€å¯æ¨¡æ¿ç¼–è¯‘ç¼“å­˜,è®¾ä¸ºfalseåˆ™æ¯æ¬¡éƒ½ä¼šé‡æ–°ç¼–è¯‘
-    'TMPL_STRIP_SPACE'      =>  false,       // æ˜¯å¦å»é™¤æ¨¡æ¿æ–‡ä»¶é‡Œé¢çš„htmlç©ºæ ¼ä¸æ¢è¡Œ
-    'SHOW_ERROR_MSG'        =>  true,    // æ˜¾ç¤ºé”™è¯¯ä¿¡æ¯
-    'URL_CASE_INSENSITIVE'  =>  false,  // URLåŒºåˆ†å¤§å°å†™
+    'LOG_RECORD'            =>  true,  // ½øĞĞÈÕÖ¾¼ÇÂ¼
+    'LOG_EXCEPTION_RECORD'  =>  true,    // ÊÇ·ñ¼ÇÂ¼Òì³£ĞÅÏ¢ÈÕÖ¾
+    'LOG_LEVEL'             =>  'EMERG,ALERT,CRIT,ERR,WARN,NOTIC,INFO,DEBUG,SQL',  // ÔÊĞí¼ÇÂ¼µÄÈÕÖ¾¼¶±ğ
+    'DB_FIELDS_CACHE'       =>  false, // ×Ö¶Î»º´æĞÅÏ¢
+    'DB_SQL_LOG'            =>  true, // ¼ÇÂ¼SQLĞÅÏ¢
+    'TMPL_CACHE_ON'         =>  false,        // ÊÇ·ñ¿ªÆôÄ£°å±àÒë»º´æ,ÉèÎªfalseÔòÃ¿´Î¶¼»áÖØĞÂ±àÒë
+    'TMPL_STRIP_SPACE'      =>  false,       // ÊÇ·ñÈ¥³ıÄ£°åÎÄ¼şÀïÃæµÄhtml¿Õ¸ñÓë»»ĞĞ
+    'SHOW_ERROR_MSG'        =>  true,    // ÏÔÊ¾´íÎóĞÅÏ¢
+    'URL_CASE_INSENSITIVE'  =>  false,  // URLÇø·Ö´óĞ¡Ğ´
 );

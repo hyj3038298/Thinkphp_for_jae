@@ -10,7 +10,7 @@
 // +----------------------------------------------------------------------
 namespace Think;
 /**
- * ç”¨äºThinkPHPçš„è‡ªåŠ¨ç”Ÿæˆ
+ * ÓÃÓÚThinkPHPµÄ×Ô¶¯Éú³É
  */
 class Build {
 
@@ -19,7 +19,7 @@ namespace [MODULE]\Controller;
 use Think\Controller;
 class [CONTROLLER]Controller extends Controller {
     public function index(){
-        $this->show(\'<style type="text/css">*{ padding: 0; margin: 0; } div{ padding: 4px 48px;} body{ background: #fff; font-family: "å¾®è½¯é›…é»‘"; color: #333;font-size:24px} h1{ font-size: 100px; font-weight: normal; margin-bottom: 12px; } p{ line-height: 1.8em; font-size: 36px }</style><div style="padding: 24px 48px;"> <h1>:)</h1><p>æ¬¢è¿ä½¿ç”¨ <b>ThinkPHP</b>ï¼</p><br/>[ æ‚¨ç°åœ¨è®¿é—®çš„æ˜¯[MODULE]æ¨¡å—çš„[CONTROLLER]æ§åˆ¶å™¨ ]</div><script type="text/javascript" src="http://tajs.qq.com/stats?sId=9347272" charset="UTF-8"></script>\',\'utf-8\');
+        $this->show(\'<style type="text/css">*{ padding: 0; margin: 0; } div{ padding: 4px 48px;} body{ background: #fff; font-family: "Î¢ÈíÑÅºÚ"; color: #333;font-size:24px} h1{ font-size: 100px; font-weight: normal; margin-bottom: 12px; } p{ line-height: 1.8em; font-size: 36px }</style><div style="padding: 24px 48px;"> <h1>:)</h1><p>»¶Ó­Ê¹ÓÃ <b>ThinkPHP</b>£¡</p><br/>[ ÄúÏÖÔÚ·ÃÎÊµÄÊÇ[MODULE]Ä£¿éµÄ[CONTROLLER]¿ØÖÆÆ÷ ]</div><script type="text/javascript" src="http://tajs.qq.com/stats?sId=9347272" charset="UTF-8"></script>\',\'utf-8\');
     }
 }';
 
@@ -29,20 +29,20 @@ use Think\Model;
 class [MODEL]Model extends Model {
 
 }';
-    // æ£€æµ‹åº”ç”¨ç›®å½•æ˜¯å¦éœ€è¦è‡ªåŠ¨åˆ›å»º
+    // ¼ì²âÓ¦ÓÃÄ¿Â¼ÊÇ·ñĞèÒª×Ô¶¯´´½¨
     static public function checkDir($module){
         if(!is_dir(APP_PATH.$module)) {
-            // åˆ›å»ºæ¨¡å—çš„ç›®å½•ç»“æ„
+            // ´´½¨Ä£¿éµÄÄ¿Â¼½á¹¹
             self::buildAppDir($module);
         }elseif(!is_dir(LOG_PATH)){
-            // æ£€æŸ¥ç¼“å­˜ç›®å½•
+            // ¼ì²é»º´æÄ¿Â¼
             self::buildRuntime();
         }
     }
 
-    // åˆ›å»ºåº”ç”¨å’Œæ¨¡å—çš„ç›®å½•ç»“æ„
+    // ´´½¨Ó¦ÓÃºÍÄ£¿éµÄÄ¿Â¼½á¹¹
     static public function buildAppDir($module) {
-        // æ²¡æœ‰åˆ›å»ºçš„è¯è‡ªåŠ¨åˆ›å»º
+        // Ã»ÓĞ´´½¨µÄ»°×Ô¶¯´´½¨
         if(!is_dir(APP_PATH)) mkdir(APP_PATH,0755,true);
         if(is_writeable(APP_PATH)) {
             $dirs  = array(
@@ -64,28 +64,28 @@ class [MODEL]Model extends Model {
             foreach ($dirs as $dir){
                 if(!is_dir($dir))  mkdir($dir,0755,true);
             }
-            // å†™å…¥ç›®å½•å®‰å…¨æ–‡ä»¶
+            // Ğ´ÈëÄ¿Â¼°²È«ÎÄ¼ş
             self::buildDirSecure($dirs);
-            // å†™å…¥åº”ç”¨é…ç½®æ–‡ä»¶
+            // Ğ´ÈëÓ¦ÓÃÅäÖÃÎÄ¼ş
             if(!is_file(CONF_PATH.'config.php'))
-                file_put_contents(CONF_PATH.'config.php',"<?php\nreturn array(\n\t//'é…ç½®é¡¹'=>'é…ç½®å€¼'\n);");
-            // å†™å…¥æ¨¡å—é…ç½®æ–‡ä»¶
+                file_put_contents(CONF_PATH.'config.php',"<?php\nreturn array(\n\t//'ÅäÖÃÏî'=>'ÅäÖÃÖµ'\n);");
+            // Ğ´ÈëÄ£¿éÅäÖÃÎÄ¼ş
             if(!is_file(APP_PATH.$module.'/Conf/config.php'))
-                file_put_contents(APP_PATH.$module.'/Conf/config.php',"<?php\nreturn array(\n\t//'é…ç½®é¡¹'=>'é…ç½®å€¼'\n);");
-            // ç”Ÿæˆæ¨¡å—çš„æµ‹è¯•æ§åˆ¶å™¨
+                file_put_contents(APP_PATH.$module.'/Conf/config.php',"<?php\nreturn array(\n\t//'ÅäÖÃÏî'=>'ÅäÖÃÖµ'\n);");
+            // Éú³ÉÄ£¿éµÄ²âÊÔ¿ØÖÆÆ÷
             if(defined('BUILD_CONTROLLER_LIST')){
-                // è‡ªåŠ¨ç”Ÿæˆçš„æ§åˆ¶å™¨åˆ—è¡¨ï¼ˆæ³¨æ„å¤§å°å†™ï¼‰
+                // ×Ô¶¯Éú³ÉµÄ¿ØÖÆÆ÷ÁĞ±í£¨×¢Òâ´óĞ¡Ğ´£©
                 $list = explode(',',BUILD_CONTROLLER_LIST);
                 foreach($list as $controller){
                     self::buildController($module,$controller);
                 }
             }else{
-                // ç”Ÿæˆé»˜è®¤çš„æ§åˆ¶å™¨
+                // Éú³ÉÄ¬ÈÏµÄ¿ØÖÆÆ÷
                 self::buildController($module);
             }
-            // ç”Ÿæˆæ¨¡å—çš„æ¨¡å‹
+            // Éú³ÉÄ£¿éµÄÄ£ĞÍ
             if(defined('BUILD_MODEL_LIST')){
-                // è‡ªåŠ¨ç”Ÿæˆçš„æ§åˆ¶å™¨åˆ—è¡¨ï¼ˆæ³¨æ„å¤§å°å†™ï¼‰
+                // ×Ô¶¯Éú³ÉµÄ¿ØÖÆÆ÷ÁĞ±í£¨×¢Òâ´óĞ¡Ğ´£©
                 $list = explode(',',BUILD_MODEL_LIST);
                 foreach($list as $model){
                     self::buildModel($module,$model);
@@ -93,26 +93,26 @@ class [MODEL]Model extends Model {
             }            
         }else{
             header('Content-Type:text/html; charset=utf-8');
-            exit('åº”ç”¨ç›®å½•['.APP_PATH.']ä¸å¯å†™ï¼Œç›®å½•æ— æ³•è‡ªåŠ¨ç”Ÿæˆï¼<BR>è¯·æ‰‹åŠ¨ç”Ÿæˆé¡¹ç›®ç›®å½•~');
+            exit('Ó¦ÓÃÄ¿Â¼['.APP_PATH.']²»¿ÉĞ´£¬Ä¿Â¼ÎŞ·¨×Ô¶¯Éú³É£¡<BR>ÇëÊÖ¶¯Éú³ÉÏîÄ¿Ä¿Â¼~');
         }
     }
 
-    // æ£€æŸ¥ç¼“å­˜ç›®å½•(Runtime) å¦‚æœä¸å­˜åœ¨åˆ™è‡ªåŠ¨åˆ›å»º
+    // ¼ì²é»º´æÄ¿Â¼(Runtime) Èç¹û²»´æÔÚÔò×Ô¶¯´´½¨
     static public function buildRuntime() {
         if(!is_dir(RUNTIME_PATH)) {
             mkdir(RUNTIME_PATH);
         }elseif(!is_writeable(RUNTIME_PATH)) {
             header('Content-Type:text/html; charset=utf-8');
-            exit('ç›®å½• [ '.RUNTIME_PATH.' ] ä¸å¯å†™ï¼');
+            exit('Ä¿Â¼ [ '.RUNTIME_PATH.' ] ²»¿ÉĞ´£¡');
         }
-        mkdir(CACHE_PATH);  // æ¨¡æ¿ç¼“å­˜ç›®å½•
-        if(!is_dir(LOG_PATH))   mkdir(LOG_PATH);    // æ—¥å¿—ç›®å½•
-        if(!is_dir(TEMP_PATH))  mkdir(TEMP_PATH);   // æ•°æ®ç¼“å­˜ç›®å½•
-        if(!is_dir(DATA_PATH))  mkdir(DATA_PATH);   // æ•°æ®æ–‡ä»¶ç›®å½•
+        mkdir(CACHE_PATH);  // Ä£°å»º´æÄ¿Â¼
+        if(!is_dir(LOG_PATH))   mkdir(LOG_PATH);    // ÈÕÖ¾Ä¿Â¼
+        if(!is_dir(TEMP_PATH))  mkdir(TEMP_PATH);   // Êı¾İ»º´æÄ¿Â¼
+        if(!is_dir(DATA_PATH))  mkdir(DATA_PATH);   // Êı¾İÎÄ¼şÄ¿Â¼
         return true;
     }
 
-    // åˆ›å»ºæ§åˆ¶å™¨ç±»
+    // ´´½¨¿ØÖÆÆ÷Àà
     static public function buildController($module,$controller='Index') {
         $file   =   APP_PATH.$module.'/Controller/'.$controller.'Controller'.EXT;
         if(!is_file($file)){
@@ -124,7 +124,7 @@ class [MODEL]Model extends Model {
         }
     }
 
-    // åˆ›å»ºæ¨¡å‹ç±»
+    // ´´½¨Ä£ĞÍÀà
     static public function buildModel($module,$model) {
         $file   =   APP_PATH.$module.'/Model/'.$model.'Model'.EXT;
         if(!is_file($file)){
@@ -136,14 +136,14 @@ class [MODEL]Model extends Model {
         }
     }
 
-    // ç”Ÿæˆç›®å½•å®‰å…¨æ–‡ä»¶
+    // Éú³ÉÄ¿Â¼°²È«ÎÄ¼ş
     static public function buildDirSecure($dirs=array()) {
-        // ç›®å½•å®‰å…¨å†™å…¥ï¼ˆé»˜è®¤å¼€å¯ï¼‰
+        // Ä¿Â¼°²È«Ğ´Èë£¨Ä¬ÈÏ¿ªÆô£©
         defined('BUILD_DIR_SECURE')  or define('BUILD_DIR_SECURE',    true);
         if(BUILD_DIR_SECURE) {
             defined('DIR_SECURE_FILENAME')  or define('DIR_SECURE_FILENAME',    'index.html');
             defined('DIR_SECURE_CONTENT')   or define('DIR_SECURE_CONTENT',     ' ');
-            // è‡ªåŠ¨å†™å…¥ç›®å½•å®‰å…¨æ–‡ä»¶
+            // ×Ô¶¯Ğ´ÈëÄ¿Â¼°²È«ÎÄ¼ş
             $content = DIR_SECURE_CONTENT;
             $files = explode(',', DIR_SECURE_FILENAME);
             foreach ($files as $filename){

@@ -10,160 +10,160 @@
 // +----------------------------------------------------------------------
 
 /**
- * ThinkPHPæƒ¯ä¾‹é…ç½®æ–‡ä»¶
- * è¯¥æ–‡ä»¶è¯·ä¸è¦ä¿®æ”¹ï¼Œå¦‚æœè¦è¦†ç›–æƒ¯ä¾‹é…ç½®çš„å€¼ï¼Œå¯åœ¨åº”ç”¨é…ç½®æ–‡ä»¶ä¸­è®¾å®šå’Œæƒ¯ä¾‹ä¸ç¬¦çš„é…ç½®é¡¹
- * é…ç½®åç§°å¤§å°å†™ä»»æ„ï¼Œç³»ç»Ÿä¼šç»Ÿä¸€è½¬æ¢æˆå°å†™
- * æ‰€æœ‰é…ç½®å‚æ•°éƒ½å¯ä»¥åœ¨ç”Ÿæ•ˆå‰åŠ¨æ€æ”¹å˜
+ * ThinkPHP¹ßÀıÅäÖÃÎÄ¼ş
+ * ¸ÃÎÄ¼şÇë²»ÒªĞŞ¸Ä£¬Èç¹ûÒª¸²¸Ç¹ßÀıÅäÖÃµÄÖµ£¬¿ÉÔÚÓ¦ÓÃÅäÖÃÎÄ¼şÖĞÉè¶¨ºÍ¹ßÀı²»·ûµÄÅäÖÃÏî
+ * ÅäÖÃÃû³Æ´óĞ¡Ğ´ÈÎÒâ£¬ÏµÍ³»áÍ³Ò»×ª»»³ÉĞ¡Ğ´
+ * ËùÓĞÅäÖÃ²ÎÊı¶¼¿ÉÒÔÔÚÉúĞ§Ç°¶¯Ì¬¸Ä±ä
  */
 defined('THINK_PATH') or exit();
 return  array(
-    /* åº”ç”¨è®¾å®š */
-    'APP_USE_NAMESPACE'     =>  true,    // åº”ç”¨ç±»åº“æ˜¯å¦ä½¿ç”¨å‘½åç©ºé—´
-    'APP_SUB_DOMAIN_DEPLOY' =>  false,   // æ˜¯å¦å¼€å¯å­åŸŸåéƒ¨ç½²
-    'APP_SUB_DOMAIN_RULES'  =>  array(), // å­åŸŸåéƒ¨ç½²è§„åˆ™
-    'APP_DOMAIN_SUFFIX'     =>  '', // åŸŸååç¼€ å¦‚æœæ˜¯com.cn net.cn ä¹‹ç±»çš„åç¼€å¿…é¡»è®¾ç½®    
-    'ACTION_SUFFIX'         =>  '', // æ“ä½œæ–¹æ³•åç¼€
-    'MULTI_MODULE'          =>  true, // æ˜¯å¦å…è®¸å¤šæ¨¡å— å¦‚æœä¸ºfalse åˆ™å¿…é¡»è®¾ç½® DEFAULT_MODULE
+    /* Ó¦ÓÃÉè¶¨ */
+    'APP_USE_NAMESPACE'     =>  true,    // Ó¦ÓÃÀà¿âÊÇ·ñÊ¹ÓÃÃüÃû¿Õ¼ä
+    'APP_SUB_DOMAIN_DEPLOY' =>  false,   // ÊÇ·ñ¿ªÆô×ÓÓòÃû²¿Êğ
+    'APP_SUB_DOMAIN_RULES'  =>  array(), // ×ÓÓòÃû²¿Êğ¹æÔò
+    'APP_DOMAIN_SUFFIX'     =>  '', // ÓòÃûºó×º Èç¹ûÊÇcom.cn net.cn Ö®ÀàµÄºó×º±ØĞëÉèÖÃ    
+    'ACTION_SUFFIX'         =>  '', // ²Ù×÷·½·¨ºó×º
+    'MULTI_MODULE'          =>  true, // ÊÇ·ñÔÊĞí¶àÄ£¿é Èç¹ûÎªfalse Ôò±ØĞëÉèÖÃ DEFAULT_MODULE
     'MODULE_DENY_LIST'      =>  array('Common','Runtime'),
     'CONTROLLER_LEVEL'      =>  1,
-    'APP_AUTOLOAD_LAYER'    =>  'Controller,Model', // è‡ªåŠ¨åŠ è½½çš„åº”ç”¨ç±»åº“å±‚ å…³é—­APP_USE_NAMESPACEåæœ‰æ•ˆ
-    'APP_AUTOLOAD_PATH'     =>  '', // è‡ªåŠ¨åŠ è½½çš„è·¯å¾„ å…³é—­APP_USE_NAMESPACEåæœ‰æ•ˆ
+    'APP_AUTOLOAD_LAYER'    =>  'Controller,Model', // ×Ô¶¯¼ÓÔØµÄÓ¦ÓÃÀà¿â²ã ¹Ø±ÕAPP_USE_NAMESPACEºóÓĞĞ§
+    'APP_AUTOLOAD_PATH'     =>  '', // ×Ô¶¯¼ÓÔØµÄÂ·¾¶ ¹Ø±ÕAPP_USE_NAMESPACEºóÓĞĞ§
 
-    /* Cookieè®¾ç½® */
-    'COOKIE_EXPIRE'         =>  0,    // Cookieæœ‰æ•ˆæœŸ
-    'COOKIE_DOMAIN'         =>  '',      // Cookieæœ‰æ•ˆåŸŸå
-    'COOKIE_PATH'           =>  '/',     // Cookieè·¯å¾„
-    'COOKIE_PREFIX'         =>  '',      // Cookieå‰ç¼€ é¿å…å†²çª
-    'COOKIE_HTTPONLY'       =>  '',      // Cookie httponlyè®¾ç½®
+    /* CookieÉèÖÃ */
+    'COOKIE_EXPIRE'         =>  0,    // CookieÓĞĞ§ÆÚ
+    'COOKIE_DOMAIN'         =>  '',      // CookieÓĞĞ§ÓòÃû
+    'COOKIE_PATH'           =>  '/',     // CookieÂ·¾¶
+    'COOKIE_PREFIX'         =>  '',      // CookieÇ°×º ±ÜÃâ³åÍ»
+    'COOKIE_HTTPONLY'       =>  '',      // Cookie httponlyÉèÖÃ
 
-    /* é»˜è®¤è®¾å®š */
-    'DEFAULT_M_LAYER'       =>  'Model', // é»˜è®¤çš„æ¨¡å‹å±‚åç§°
-    'DEFAULT_C_LAYER'       =>  'Controller', // é»˜è®¤çš„æ§åˆ¶å™¨å±‚åç§°
-    'DEFAULT_V_LAYER'       =>  'View', // é»˜è®¤çš„è§†å›¾å±‚åç§°
-    'DEFAULT_LANG'          =>  'zh-cn', // é»˜è®¤è¯­è¨€
-    'DEFAULT_THEME'         =>  '',	// é»˜è®¤æ¨¡æ¿ä¸»é¢˜åç§°
-    'DEFAULT_MODULE'        =>  'Home',  // é»˜è®¤æ¨¡å—
-    'DEFAULT_CONTROLLER'    =>  'Index', // é»˜è®¤æ§åˆ¶å™¨åç§°
-    'DEFAULT_ACTION'        =>  'index', // é»˜è®¤æ“ä½œåç§°
-    'DEFAULT_CHARSET'       =>  'utf-8', // é»˜è®¤è¾“å‡ºç¼–ç 
-    'DEFAULT_TIMEZONE'      =>  'PRC',	// é»˜è®¤æ—¶åŒº
-    'DEFAULT_AJAX_RETURN'   =>  'JSON',  // é»˜è®¤AJAX æ•°æ®è¿”å›æ ¼å¼,å¯é€‰JSON XML ...
-    'DEFAULT_JSONP_HANDLER' =>  'jsonpReturn', // é»˜è®¤JSONPæ ¼å¼è¿”å›çš„å¤„ç†æ–¹æ³•
-    'DEFAULT_FILTER'        =>  'htmlspecialchars', // é»˜è®¤å‚æ•°è¿‡æ»¤æ–¹æ³• ç”¨äºIå‡½æ•°...
+    /* Ä¬ÈÏÉè¶¨ */
+    'DEFAULT_M_LAYER'       =>  'Model', // Ä¬ÈÏµÄÄ£ĞÍ²ãÃû³Æ
+    'DEFAULT_C_LAYER'       =>  'Controller', // Ä¬ÈÏµÄ¿ØÖÆÆ÷²ãÃû³Æ
+    'DEFAULT_V_LAYER'       =>  'View', // Ä¬ÈÏµÄÊÓÍ¼²ãÃû³Æ
+    'DEFAULT_LANG'          =>  'zh-cn', // Ä¬ÈÏÓïÑÔ
+    'DEFAULT_THEME'         =>  '',	// Ä¬ÈÏÄ£°åÖ÷ÌâÃû³Æ
+    'DEFAULT_MODULE'        =>  'Home',  // Ä¬ÈÏÄ£¿é
+    'DEFAULT_CONTROLLER'    =>  'Index', // Ä¬ÈÏ¿ØÖÆÆ÷Ãû³Æ
+    'DEFAULT_ACTION'        =>  'index', // Ä¬ÈÏ²Ù×÷Ãû³Æ
+    'DEFAULT_CHARSET'       =>  'utf-8', // Ä¬ÈÏÊä³ö±àÂë
+    'DEFAULT_TIMEZONE'      =>  'PRC',	// Ä¬ÈÏÊ±Çø
+    'DEFAULT_AJAX_RETURN'   =>  'JSON',  // Ä¬ÈÏAJAX Êı¾İ·µ»Ø¸ñÊ½,¿ÉÑ¡JSON XML ...
+    'DEFAULT_JSONP_HANDLER' =>  'jsonpReturn', // Ä¬ÈÏJSONP¸ñÊ½·µ»ØµÄ´¦Àí·½·¨
+    'DEFAULT_FILTER'        =>  'htmlspecialchars', // Ä¬ÈÏ²ÎÊı¹ıÂË·½·¨ ÓÃÓÚIº¯Êı...
 
-    /* æ•°æ®åº“è®¾ç½® */
-    'DB_TYPE'               =>  '',     // æ•°æ®åº“ç±»å‹
-    'DB_HOST'               =>  '', // æœåŠ¡å™¨åœ°å€
-    'DB_NAME'               =>  '',          // æ•°æ®åº“å
-    'DB_USER'               =>  '',      // ç”¨æˆ·å
-    'DB_PWD'                =>  '',          // å¯†ç 
-    'DB_PORT'               =>  '',        // ç«¯å£
-    'DB_PREFIX'             =>  '',    // æ•°æ®åº“è¡¨å‰ç¼€
-    'DB_FIELDTYPE_CHECK'    =>  false,       // æ˜¯å¦è¿›è¡Œå­—æ®µç±»å‹æ£€æŸ¥
-    'DB_FIELDS_CACHE'       =>  true,        // å¯ç”¨å­—æ®µç¼“å­˜
-    'DB_CHARSET'            =>  'utf8',      // æ•°æ®åº“ç¼–ç é»˜è®¤é‡‡ç”¨utf8
-    'DB_DEPLOY_TYPE'        =>  0, // æ•°æ®åº“éƒ¨ç½²æ–¹å¼:0 é›†ä¸­å¼(å•ä¸€æœåŠ¡å™¨),1 åˆ†å¸ƒå¼(ä¸»ä»æœåŠ¡å™¨)
-    'DB_RW_SEPARATE'        =>  false,       // æ•°æ®åº“è¯»å†™æ˜¯å¦åˆ†ç¦» ä¸»ä»å¼æœ‰æ•ˆ
-    'DB_MASTER_NUM'         =>  1, // è¯»å†™åˆ†ç¦»å ä¸»æœåŠ¡å™¨æ•°é‡
-    'DB_SLAVE_NO'           =>  '', // æŒ‡å®šä»æœåŠ¡å™¨åºå·
-    'DB_SQL_BUILD_CACHE'    =>  false, // æ•°æ®åº“æŸ¥è¯¢çš„SQLåˆ›å»ºç¼“å­˜
-    'DB_SQL_BUILD_QUEUE'    =>  'file',   // SQLç¼“å­˜é˜Ÿåˆ—çš„ç¼“å­˜æ–¹å¼ æ”¯æŒ file xcacheå’Œapc
-    'DB_SQL_BUILD_LENGTH'   =>  20, // SQLç¼“å­˜çš„é˜Ÿåˆ—é•¿åº¦
-    'DB_SQL_LOG'            =>  false, // SQLæ‰§è¡Œæ—¥å¿—è®°å½•
-    'DB_BIND_PARAM'         =>  false, // æ•°æ®åº“å†™å…¥æ•°æ®è‡ªåŠ¨å‚æ•°ç»‘å®š
+    /* Êı¾İ¿âÉèÖÃ */
+    'DB_TYPE'               =>  '',     // Êı¾İ¿âÀàĞÍ
+    'DB_HOST'               =>  '', // ·şÎñÆ÷µØÖ·
+    'DB_NAME'               =>  '',          // Êı¾İ¿âÃû
+    'DB_USER'               =>  '',      // ÓÃ»§Ãû
+    'DB_PWD'                =>  '',          // ÃÜÂë
+    'DB_PORT'               =>  '',        // ¶Ë¿Ú
+    'DB_PREFIX'             =>  '',    // Êı¾İ¿â±íÇ°×º
+    'DB_FIELDTYPE_CHECK'    =>  false,       // ÊÇ·ñ½øĞĞ×Ö¶ÎÀàĞÍ¼ì²é
+    'DB_FIELDS_CACHE'       =>  true,        // ÆôÓÃ×Ö¶Î»º´æ
+    'DB_CHARSET'            =>  'utf8',      // Êı¾İ¿â±àÂëÄ¬ÈÏ²ÉÓÃutf8
+    'DB_DEPLOY_TYPE'        =>  0, // Êı¾İ¿â²¿Êğ·½Ê½:0 ¼¯ÖĞÊ½(µ¥Ò»·şÎñÆ÷),1 ·Ö²¼Ê½(Ö÷´Ó·şÎñÆ÷)
+    'DB_RW_SEPARATE'        =>  false,       // Êı¾İ¿â¶ÁĞ´ÊÇ·ñ·ÖÀë Ö÷´ÓÊ½ÓĞĞ§
+    'DB_MASTER_NUM'         =>  1, // ¶ÁĞ´·ÖÀëºó Ö÷·şÎñÆ÷ÊıÁ¿
+    'DB_SLAVE_NO'           =>  '', // Ö¸¶¨´Ó·şÎñÆ÷ĞòºÅ
+    'DB_SQL_BUILD_CACHE'    =>  false, // Êı¾İ¿â²éÑ¯µÄSQL´´½¨»º´æ
+    'DB_SQL_BUILD_QUEUE'    =>  'file',   // SQL»º´æ¶ÓÁĞµÄ»º´æ·½Ê½ Ö§³Ö file xcacheºÍapc
+    'DB_SQL_BUILD_LENGTH'   =>  20, // SQL»º´æµÄ¶ÓÁĞ³¤¶È
+    'DB_SQL_LOG'            =>  false, // SQLÖ´ĞĞÈÕÖ¾¼ÇÂ¼
+    'DB_BIND_PARAM'         =>  false, // Êı¾İ¿âĞ´ÈëÊı¾İ×Ô¶¯²ÎÊı°ó¶¨
 
-    /* æ•°æ®ç¼“å­˜è®¾ç½® */
-    'DATA_CACHE_TIME'       =>  0,      // æ•°æ®ç¼“å­˜æœ‰æ•ˆæœŸ 0è¡¨ç¤ºæ°¸ä¹…ç¼“å­˜
-    'DATA_CACHE_COMPRESS'   =>  false,   // æ•°æ®ç¼“å­˜æ˜¯å¦å‹ç¼©ç¼“å­˜
-    'DATA_CACHE_CHECK'      =>  false,   // æ•°æ®ç¼“å­˜æ˜¯å¦æ ¡éªŒç¼“å­˜
-    'DATA_CACHE_PREFIX'     =>  '',     // ç¼“å­˜å‰ç¼€
-    'DATA_CACHE_TYPE'       =>  'File',  // æ•°æ®ç¼“å­˜ç±»å‹,æ”¯æŒ:File|Db|Apc|Memcache|Shmop|Sqlite|Xcache|Apachenote|Eaccelerator
-    'DATA_CACHE_PATH'       =>  TEMP_PATH,// ç¼“å­˜è·¯å¾„è®¾ç½® (ä»…å¯¹Fileæ–¹å¼ç¼“å­˜æœ‰æ•ˆ)
-    'DATA_CACHE_SUBDIR'     =>  false,    // ä½¿ç”¨å­ç›®å½•ç¼“å­˜ (è‡ªåŠ¨æ ¹æ®ç¼“å­˜æ ‡è¯†çš„å“ˆå¸Œåˆ›å»ºå­ç›®å½•)
-    'DATA_PATH_LEVEL'       =>  1,        // å­ç›®å½•ç¼“å­˜çº§åˆ«
+    /* Êı¾İ»º´æÉèÖÃ */
+    'DATA_CACHE_TIME'       =>  0,      // Êı¾İ»º´æÓĞĞ§ÆÚ 0±íÊ¾ÓÀ¾Ã»º´æ
+    'DATA_CACHE_COMPRESS'   =>  false,   // Êı¾İ»º´æÊÇ·ñÑ¹Ëõ»º´æ
+    'DATA_CACHE_CHECK'      =>  false,   // Êı¾İ»º´æÊÇ·ñĞ£Ñé»º´æ
+    'DATA_CACHE_PREFIX'     =>  '',     // »º´æÇ°×º
+    'DATA_CACHE_TYPE'       =>  'File',  // Êı¾İ»º´æÀàĞÍ,Ö§³Ö:File|Db|Apc|Memcache|Shmop|Sqlite|Xcache|Apachenote|Eaccelerator
+    'DATA_CACHE_PATH'       =>  TEMP_PATH,// »º´æÂ·¾¶ÉèÖÃ (½ö¶ÔFile·½Ê½»º´æÓĞĞ§)
+    'DATA_CACHE_SUBDIR'     =>  false,    // Ê¹ÓÃ×ÓÄ¿Â¼»º´æ (×Ô¶¯¸ù¾İ»º´æ±êÊ¶µÄ¹şÏ£´´½¨×ÓÄ¿Â¼)
+    'DATA_PATH_LEVEL'       =>  1,        // ×ÓÄ¿Â¼»º´æ¼¶±ğ
 
-    /* é”™è¯¯è®¾ç½® */
-    'ERROR_MESSAGE'         =>  'é¡µé¢é”™è¯¯ï¼è¯·ç¨åå†è¯•ï½',//é”™è¯¯æ˜¾ç¤ºä¿¡æ¯,éè°ƒè¯•æ¨¡å¼æœ‰æ•ˆ
-    'ERROR_PAGE'            =>  '',	// é”™è¯¯å®šå‘é¡µé¢
-    'SHOW_ERROR_MSG'        =>  false,    // æ˜¾ç¤ºé”™è¯¯ä¿¡æ¯
-    'TRACE_MAX_RECORD'      =>  100,    // æ¯ä¸ªçº§åˆ«çš„é”™è¯¯ä¿¡æ¯ æœ€å¤§è®°å½•æ•°
+    /* ´íÎóÉèÖÃ */
+    'ERROR_MESSAGE'         =>  'Ò³Ãæ´íÎó£¡ÇëÉÔºóÔÙÊÔ¡«',//´íÎóÏÔÊ¾ĞÅÏ¢,·Çµ÷ÊÔÄ£Ê½ÓĞĞ§
+    'ERROR_PAGE'            =>  '',	// ´íÎó¶¨ÏòÒ³Ãæ
+    'SHOW_ERROR_MSG'        =>  false,    // ÏÔÊ¾´íÎóĞÅÏ¢
+    'TRACE_MAX_RECORD'      =>  100,    // Ã¿¸ö¼¶±ğµÄ´íÎóĞÅÏ¢ ×î´ó¼ÇÂ¼Êı
 
-    /* æ—¥å¿—è®¾ç½® */
-    'LOG_RECORD'            =>  false,   // é»˜è®¤ä¸è®°å½•æ—¥å¿—
-    'LOG_TYPE'              =>  'File', // æ—¥å¿—è®°å½•ç±»å‹ é»˜è®¤ä¸ºæ–‡ä»¶æ–¹å¼
-    'LOG_LEVEL'             =>  'EMERG,ALERT,CRIT,ERR',// å…è®¸è®°å½•çš„æ—¥å¿—çº§åˆ«
-    'LOG_FILE_SIZE'         =>  2097152,	// æ—¥å¿—æ–‡ä»¶å¤§å°é™åˆ¶
-    'LOG_EXCEPTION_RECORD'  =>  false,    // æ˜¯å¦è®°å½•å¼‚å¸¸ä¿¡æ¯æ—¥å¿—
+    /* ÈÕÖ¾ÉèÖÃ */
+    'LOG_RECORD'            =>  false,   // Ä¬ÈÏ²»¼ÇÂ¼ÈÕÖ¾
+    'LOG_TYPE'              =>  'File', // ÈÕÖ¾¼ÇÂ¼ÀàĞÍ Ä¬ÈÏÎªÎÄ¼ş·½Ê½
+    'LOG_LEVEL'             =>  'EMERG,ALERT,CRIT,ERR',// ÔÊĞí¼ÇÂ¼µÄÈÕÖ¾¼¶±ğ
+    'LOG_FILE_SIZE'         =>  2097152,	// ÈÕÖ¾ÎÄ¼ş´óĞ¡ÏŞÖÆ
+    'LOG_EXCEPTION_RECORD'  =>  false,    // ÊÇ·ñ¼ÇÂ¼Òì³£ĞÅÏ¢ÈÕÖ¾
 
-    /* SESSIONè®¾ç½® */
-    'SESSION_AUTO_START'    =>  true,    // æ˜¯å¦è‡ªåŠ¨å¼€å¯Session
-    'SESSION_OPTIONS'       =>  array(), // session é…ç½®æ•°ç»„ æ”¯æŒtype name id path expire domain ç­‰å‚æ•°
-    'SESSION_TYPE'          =>  '', // session handerç±»å‹ é»˜è®¤æ— éœ€è®¾ç½® é™¤éæ‰©å±•äº†session handeré©±åŠ¨
-    'SESSION_PREFIX'        =>  '', // session å‰ç¼€
-    //'VAR_SESSION_ID'      =>  'session_id',     //sessionIDçš„æäº¤å˜é‡
+    /* SESSIONÉèÖÃ */
+    'SESSION_AUTO_START'    =>  true,    // ÊÇ·ñ×Ô¶¯¿ªÆôSession
+    'SESSION_OPTIONS'       =>  array(), // session ÅäÖÃÊı×é Ö§³Ötype name id path expire domain µÈ²ÎÊı
+    'SESSION_TYPE'          =>  '', // session handerÀàĞÍ Ä¬ÈÏÎŞĞèÉèÖÃ ³ı·ÇÀ©Õ¹ÁËsession handerÇı¶¯
+    'SESSION_PREFIX'        =>  '', // session Ç°×º
+    //'VAR_SESSION_ID'      =>  'session_id',     //sessionIDµÄÌá½»±äÁ¿
 
-    /* æ¨¡æ¿å¼•æ“è®¾ç½® */
-    'TMPL_CONTENT_TYPE'     =>  'text/html', // é»˜è®¤æ¨¡æ¿è¾“å‡ºç±»å‹
-    'TMPL_ACTION_ERROR'     =>  THINK_PATH.'Tpl/dispatch_jump.tpl', // é»˜è®¤é”™è¯¯è·³è½¬å¯¹åº”çš„æ¨¡æ¿æ–‡ä»¶
-    'TMPL_ACTION_SUCCESS'   =>  THINK_PATH.'Tpl/dispatch_jump.tpl', // é»˜è®¤æˆåŠŸè·³è½¬å¯¹åº”çš„æ¨¡æ¿æ–‡ä»¶
-    'TMPL_EXCEPTION_FILE'   =>  THINK_PATH.'Tpl/think_exception.tpl',// å¼‚å¸¸é¡µé¢çš„æ¨¡æ¿æ–‡ä»¶
-    'TMPL_DETECT_THEME'     =>  false,       // è‡ªåŠ¨ä¾¦æµ‹æ¨¡æ¿ä¸»é¢˜
-    'TMPL_TEMPLATE_SUFFIX'  =>  '.html',     // é»˜è®¤æ¨¡æ¿æ–‡ä»¶åç¼€
-    'TMPL_FILE_DEPR'        =>  '/', //æ¨¡æ¿æ–‡ä»¶CONTROLLER_NAMEä¸ACTION_NAMEä¹‹é—´çš„åˆ†å‰²ç¬¦
-    // å¸ƒå±€è®¾ç½®
-    'TMPL_ENGINE_TYPE'      =>  'Think',     // é»˜è®¤æ¨¡æ¿å¼•æ“ ä»¥ä¸‹è®¾ç½®ä»…å¯¹ä½¿ç”¨Thinkæ¨¡æ¿å¼•æ“æœ‰æ•ˆ
-    'TMPL_CACHFILE_SUFFIX'  =>  '.php',      // é»˜è®¤æ¨¡æ¿ç¼“å­˜åç¼€
-    'TMPL_DENY_FUNC_LIST'   =>  'echo,exit',    // æ¨¡æ¿å¼•æ“ç¦ç”¨å‡½æ•°
-    'TMPL_DENY_PHP'         =>  false, // é»˜è®¤æ¨¡æ¿å¼•æ“æ˜¯å¦ç¦ç”¨PHPåŸç”Ÿä»£ç 
-    'TMPL_L_DELIM'          =>  '{',            // æ¨¡æ¿å¼•æ“æ™®é€šæ ‡ç­¾å¼€å§‹æ ‡è®°
-    'TMPL_R_DELIM'          =>  '}',            // æ¨¡æ¿å¼•æ“æ™®é€šæ ‡ç­¾ç»“æŸæ ‡è®°
-    'TMPL_VAR_IDENTIFY'     =>  'array',     // æ¨¡æ¿å˜é‡è¯†åˆ«ã€‚ç•™ç©ºè‡ªåŠ¨åˆ¤æ–­,å‚æ•°ä¸º'obj'åˆ™è¡¨ç¤ºå¯¹è±¡
-    'TMPL_STRIP_SPACE'      =>  true,       // æ˜¯å¦å»é™¤æ¨¡æ¿æ–‡ä»¶é‡Œé¢çš„htmlç©ºæ ¼ä¸æ¢è¡Œ
-    'TMPL_CACHE_ON'         =>  true,        // æ˜¯å¦å¼€å¯æ¨¡æ¿ç¼–è¯‘ç¼“å­˜,è®¾ä¸ºfalseåˆ™æ¯æ¬¡éƒ½ä¼šé‡æ–°ç¼–è¯‘
-    'TMPL_CACHE_PREFIX'     =>  '',         // æ¨¡æ¿ç¼“å­˜å‰ç¼€æ ‡è¯†ï¼Œå¯ä»¥åŠ¨æ€æ”¹å˜
-    'TMPL_CACHE_TIME'       =>  0,         // æ¨¡æ¿ç¼“å­˜æœ‰æ•ˆæœŸ 0 ä¸ºæ°¸ä¹…ï¼Œ(ä»¥æ•°å­—ä¸ºå€¼ï¼Œå•ä½:ç§’)
-    'TMPL_LAYOUT_ITEM'      =>  '{__CONTENT__}', // å¸ƒå±€æ¨¡æ¿çš„å†…å®¹æ›¿æ¢æ ‡è¯†
-    'LAYOUT_ON'             =>  false, // æ˜¯å¦å¯ç”¨å¸ƒå±€
-    'LAYOUT_NAME'           =>  'layout', // å½“å‰å¸ƒå±€åç§° é»˜è®¤ä¸ºlayout
+    /* Ä£°åÒıÇæÉèÖÃ */
+    'TMPL_CONTENT_TYPE'     =>  'text/html', // Ä¬ÈÏÄ£°åÊä³öÀàĞÍ
+    'TMPL_ACTION_ERROR'     =>  THINK_PATH.'Tpl/dispatch_jump.tpl', // Ä¬ÈÏ´íÎóÌø×ª¶ÔÓ¦µÄÄ£°åÎÄ¼ş
+    'TMPL_ACTION_SUCCESS'   =>  THINK_PATH.'Tpl/dispatch_jump.tpl', // Ä¬ÈÏ³É¹¦Ìø×ª¶ÔÓ¦µÄÄ£°åÎÄ¼ş
+    'TMPL_EXCEPTION_FILE'   =>  THINK_PATH.'Tpl/think_exception.tpl',// Òì³£Ò³ÃæµÄÄ£°åÎÄ¼ş
+    'TMPL_DETECT_THEME'     =>  false,       // ×Ô¶¯Õì²âÄ£°åÖ÷Ìâ
+    'TMPL_TEMPLATE_SUFFIX'  =>  '.html',     // Ä¬ÈÏÄ£°åÎÄ¼şºó×º
+    'TMPL_FILE_DEPR'        =>  '/', //Ä£°åÎÄ¼şCONTROLLER_NAMEÓëACTION_NAMEÖ®¼äµÄ·Ö¸î·û
+    // ²¼¾ÖÉèÖÃ
+    'TMPL_ENGINE_TYPE'      =>  'Think',     // Ä¬ÈÏÄ£°åÒıÇæ ÒÔÏÂÉèÖÃ½ö¶ÔÊ¹ÓÃThinkÄ£°åÒıÇæÓĞĞ§
+    'TMPL_CACHFILE_SUFFIX'  =>  '.php',      // Ä¬ÈÏÄ£°å»º´æºó×º
+    'TMPL_DENY_FUNC_LIST'   =>  'echo,exit',    // Ä£°åÒıÇæ½ûÓÃº¯Êı
+    'TMPL_DENY_PHP'         =>  false, // Ä¬ÈÏÄ£°åÒıÇæÊÇ·ñ½ûÓÃPHPÔ­Éú´úÂë
+    'TMPL_L_DELIM'          =>  '{',            // Ä£°åÒıÇæÆÕÍ¨±êÇ©¿ªÊ¼±ê¼Ç
+    'TMPL_R_DELIM'          =>  '}',            // Ä£°åÒıÇæÆÕÍ¨±êÇ©½áÊø±ê¼Ç
+    'TMPL_VAR_IDENTIFY'     =>  'array',     // Ä£°å±äÁ¿Ê¶±ğ¡£Áô¿Õ×Ô¶¯ÅĞ¶Ï,²ÎÊıÎª'obj'Ôò±íÊ¾¶ÔÏó
+    'TMPL_STRIP_SPACE'      =>  true,       // ÊÇ·ñÈ¥³ıÄ£°åÎÄ¼şÀïÃæµÄhtml¿Õ¸ñÓë»»ĞĞ
+    'TMPL_CACHE_ON'         =>  true,        // ÊÇ·ñ¿ªÆôÄ£°å±àÒë»º´æ,ÉèÎªfalseÔòÃ¿´Î¶¼»áÖØĞÂ±àÒë
+    'TMPL_CACHE_PREFIX'     =>  '',         // Ä£°å»º´æÇ°×º±êÊ¶£¬¿ÉÒÔ¶¯Ì¬¸Ä±ä
+    'TMPL_CACHE_TIME'       =>  0,         // Ä£°å»º´æÓĞĞ§ÆÚ 0 ÎªÓÀ¾Ã£¬(ÒÔÊı×ÖÎªÖµ£¬µ¥Î»:Ãë)
+    'TMPL_LAYOUT_ITEM'      =>  '{__CONTENT__}', // ²¼¾ÖÄ£°åµÄÄÚÈİÌæ»»±êÊ¶
+    'LAYOUT_ON'             =>  false, // ÊÇ·ñÆôÓÃ²¼¾Ö
+    'LAYOUT_NAME'           =>  'layout', // µ±Ç°²¼¾ÖÃû³Æ Ä¬ÈÏÎªlayout
 
-    // Thinkæ¨¡æ¿å¼•æ“æ ‡ç­¾åº“ç›¸å…³è®¾å®š
-    'TAGLIB_BEGIN'          =>  '<',  // æ ‡ç­¾åº“æ ‡ç­¾å¼€å§‹æ ‡è®°
-    'TAGLIB_END'            =>  '>',  // æ ‡ç­¾åº“æ ‡ç­¾ç»“æŸæ ‡è®°
-    'TAGLIB_LOAD'           =>  true, // æ˜¯å¦ä½¿ç”¨å†…ç½®æ ‡ç­¾åº“ä¹‹å¤–çš„å…¶å®ƒæ ‡ç­¾åº“ï¼Œé»˜è®¤è‡ªåŠ¨æ£€æµ‹
-    'TAGLIB_BUILD_IN'       =>  'cx', // å†…ç½®æ ‡ç­¾åº“åç§°(æ ‡ç­¾ä½¿ç”¨ä¸å¿…æŒ‡å®šæ ‡ç­¾åº“åç§°),ä»¥é€—å·åˆ†éš” æ³¨æ„è§£æé¡ºåº
-    'TAGLIB_PRE_LOAD'       =>  '',   // éœ€è¦é¢å¤–åŠ è½½çš„æ ‡ç­¾åº“(é¡»æŒ‡å®šæ ‡ç­¾åº“åç§°)ï¼Œå¤šä¸ªä»¥é€—å·åˆ†éš” 
+    // ThinkÄ£°åÒıÇæ±êÇ©¿âÏà¹ØÉè¶¨
+    'TAGLIB_BEGIN'          =>  '<',  // ±êÇ©¿â±êÇ©¿ªÊ¼±ê¼Ç
+    'TAGLIB_END'            =>  '>',  // ±êÇ©¿â±êÇ©½áÊø±ê¼Ç
+    'TAGLIB_LOAD'           =>  true, // ÊÇ·ñÊ¹ÓÃÄÚÖÃ±êÇ©¿âÖ®ÍâµÄÆäËü±êÇ©¿â£¬Ä¬ÈÏ×Ô¶¯¼ì²â
+    'TAGLIB_BUILD_IN'       =>  'cx', // ÄÚÖÃ±êÇ©¿âÃû³Æ(±êÇ©Ê¹ÓÃ²»±ØÖ¸¶¨±êÇ©¿âÃû³Æ),ÒÔ¶ººÅ·Ö¸ô ×¢Òâ½âÎöË³Ğò
+    'TAGLIB_PRE_LOAD'       =>  '',   // ĞèÒª¶îÍâ¼ÓÔØµÄ±êÇ©¿â(ĞëÖ¸¶¨±êÇ©¿âÃû³Æ)£¬¶à¸öÒÔ¶ººÅ·Ö¸ô 
     
-    /* URLè®¾ç½® */
-    'URL_CASE_INSENSITIVE'  =>  true,   // é»˜è®¤false è¡¨ç¤ºURLåŒºåˆ†å¤§å°å†™ trueåˆ™è¡¨ç¤ºä¸åŒºåˆ†å¤§å°å†™
-    'URL_MODEL'             =>  1,       // URLè®¿é—®æ¨¡å¼,å¯é€‰å‚æ•°0ã€1ã€2ã€3,ä»£è¡¨ä»¥ä¸‹å››ç§æ¨¡å¼ï¼š
-    // 0 (æ™®é€šæ¨¡å¼); 1 (PATHINFO æ¨¡å¼); 2 (REWRITE  æ¨¡å¼); 3 (å…¼å®¹æ¨¡å¼)  é»˜è®¤ä¸ºPATHINFO æ¨¡å¼
-    'URL_PATHINFO_DEPR'     =>  '/',	// PATHINFOæ¨¡å¼ä¸‹ï¼Œå„å‚æ•°ä¹‹é—´çš„åˆ†å‰²ç¬¦å·
-    'URL_PATHINFO_FETCH'    =>  'ORIG_PATH_INFO,REDIRECT_PATH_INFO,REDIRECT_URL', // ç”¨äºå…¼å®¹åˆ¤æ–­PATH_INFO å‚æ•°çš„SERVERæ›¿ä»£å˜é‡åˆ—è¡¨
-    'URL_REQUEST_URI'       =>  'REQUEST_URI', // è·å–å½“å‰é¡µé¢åœ°å€çš„ç³»ç»Ÿå˜é‡ é»˜è®¤ä¸ºREQUEST_URI
-    'URL_HTML_SUFFIX'       =>  'html',  // URLä¼ªé™æ€åç¼€è®¾ç½®
-    'URL_DENY_SUFFIX'       =>  'ico|png|gif|jpg', // URLç¦æ­¢è®¿é—®çš„åç¼€è®¾ç½®
-    'URL_PARAMS_BIND'       =>  true, // URLå˜é‡ç»‘å®šåˆ°Actionæ–¹æ³•å‚æ•°
-    'URL_PARAMS_BIND_TYPE'  =>  0, // URLå˜é‡ç»‘å®šçš„ç±»å‹ 0 æŒ‰å˜é‡åç»‘å®š 1 æŒ‰å˜é‡é¡ºåºç»‘å®š
-    'URL_PARAMS_FILTER'     =>  false, // URLå˜é‡ç»‘å®šè¿‡æ»¤
-    'URL_PARAMS_FILTER_TYPE'=>  '', // URLå˜é‡ç»‘å®šè¿‡æ»¤æ–¹æ³• å¦‚æœä¸ºç©º è°ƒç”¨DEFAULT_FILTER
-    'URL_404_REDIRECT'      =>  '', // 404 è·³è½¬é¡µé¢ éƒ¨ç½²æ¨¡å¼æœ‰æ•ˆ
-    'URL_ROUTER_ON'         =>  false,   // æ˜¯å¦å¼€å¯URLè·¯ç”±
-    'URL_ROUTE_RULES'       =>  array(), // é»˜è®¤è·¯ç”±è§„åˆ™ é’ˆå¯¹æ¨¡å—
-    'URL_MAP_RULES'         =>  array(), // URLæ˜ å°„å®šä¹‰è§„åˆ™
+    /* URLÉèÖÃ */
+    'URL_CASE_INSENSITIVE'  =>  true,   // Ä¬ÈÏfalse ±íÊ¾URLÇø·Ö´óĞ¡Ğ´ trueÔò±íÊ¾²»Çø·Ö´óĞ¡Ğ´
+    'URL_MODEL'             =>  1,       // URL·ÃÎÊÄ£Ê½,¿ÉÑ¡²ÎÊı0¡¢1¡¢2¡¢3,´ú±íÒÔÏÂËÄÖÖÄ£Ê½£º
+    // 0 (ÆÕÍ¨Ä£Ê½); 1 (PATHINFO Ä£Ê½); 2 (REWRITE  Ä£Ê½); 3 (¼æÈİÄ£Ê½)  Ä¬ÈÏÎªPATHINFO Ä£Ê½
+    'URL_PATHINFO_DEPR'     =>  '/',	// PATHINFOÄ£Ê½ÏÂ£¬¸÷²ÎÊıÖ®¼äµÄ·Ö¸î·ûºÅ
+    'URL_PATHINFO_FETCH'    =>  'ORIG_PATH_INFO,REDIRECT_PATH_INFO,REDIRECT_URL', // ÓÃÓÚ¼æÈİÅĞ¶ÏPATH_INFO ²ÎÊıµÄSERVERÌæ´ú±äÁ¿ÁĞ±í
+    'URL_REQUEST_URI'       =>  'REQUEST_URI', // »ñÈ¡µ±Ç°Ò³ÃæµØÖ·µÄÏµÍ³±äÁ¿ Ä¬ÈÏÎªREQUEST_URI
+    'URL_HTML_SUFFIX'       =>  'html',  // URLÎ±¾²Ì¬ºó×ºÉèÖÃ
+    'URL_DENY_SUFFIX'       =>  'ico|png|gif|jpg', // URL½ûÖ¹·ÃÎÊµÄºó×ºÉèÖÃ
+    'URL_PARAMS_BIND'       =>  true, // URL±äÁ¿°ó¶¨µ½Action·½·¨²ÎÊı
+    'URL_PARAMS_BIND_TYPE'  =>  0, // URL±äÁ¿°ó¶¨µÄÀàĞÍ 0 °´±äÁ¿Ãû°ó¶¨ 1 °´±äÁ¿Ë³Ğò°ó¶¨
+    'URL_PARAMS_FILTER'     =>  false, // URL±äÁ¿°ó¶¨¹ıÂË
+    'URL_PARAMS_FILTER_TYPE'=>  '', // URL±äÁ¿°ó¶¨¹ıÂË·½·¨ Èç¹ûÎª¿Õ µ÷ÓÃDEFAULT_FILTER
+    'URL_404_REDIRECT'      =>  '', // 404 Ìø×ªÒ³Ãæ ²¿ÊğÄ£Ê½ÓĞĞ§
+    'URL_ROUTER_ON'         =>  false,   // ÊÇ·ñ¿ªÆôURLÂ·ÓÉ
+    'URL_ROUTE_RULES'       =>  array(), // Ä¬ÈÏÂ·ÓÉ¹æÔò Õë¶ÔÄ£¿é
+    'URL_MAP_RULES'         =>  array(), // URLÓ³Éä¶¨Òå¹æÔò
 
-    /* ç³»ç»Ÿå˜é‡åç§°è®¾ç½® */
-    'VAR_MODULE'            =>  'm',     // é»˜è®¤æ¨¡å—è·å–å˜é‡
-    'VAR_ADDON'             =>  'addon',     // é»˜è®¤çš„æ’ä»¶æ§åˆ¶å™¨å‘½åç©ºé—´å˜é‡
-    'VAR_CONTROLLER'        =>  'c',    // é»˜è®¤æ§åˆ¶å™¨è·å–å˜é‡
-    'VAR_ACTION'            =>  'a',    // é»˜è®¤æ“ä½œè·å–å˜é‡
-    'VAR_AJAX_SUBMIT'       =>  'ajax',  // é»˜è®¤çš„AJAXæäº¤å˜é‡
+    /* ÏµÍ³±äÁ¿Ãû³ÆÉèÖÃ */
+    'VAR_MODULE'            =>  'm',     // Ä¬ÈÏÄ£¿é»ñÈ¡±äÁ¿
+    'VAR_ADDON'             =>  'addon',     // Ä¬ÈÏµÄ²å¼ş¿ØÖÆÆ÷ÃüÃû¿Õ¼ä±äÁ¿
+    'VAR_CONTROLLER'        =>  'c',    // Ä¬ÈÏ¿ØÖÆÆ÷»ñÈ¡±äÁ¿
+    'VAR_ACTION'            =>  'a',    // Ä¬ÈÏ²Ù×÷»ñÈ¡±äÁ¿
+    'VAR_AJAX_SUBMIT'       =>  'ajax',  // Ä¬ÈÏµÄAJAXÌá½»±äÁ¿
     'VAR_JSONP_HANDLER'     =>  'callback',
-    'VAR_PATHINFO'          =>  's',    // å…¼å®¹æ¨¡å¼PATHINFOè·å–å˜é‡ä¾‹å¦‚ ?s=/module/action/id/1 åé¢çš„å‚æ•°å–å†³äºURL_PATHINFO_DEPR
-    'VAR_TEMPLATE'          =>  't',    // é»˜è®¤æ¨¡æ¿åˆ‡æ¢å˜é‡
+    'VAR_PATHINFO'          =>  's',    // ¼æÈİÄ£Ê½PATHINFO»ñÈ¡±äÁ¿ÀıÈç ?s=/module/action/id/1 ºóÃæµÄ²ÎÊıÈ¡¾öÓÚURL_PATHINFO_DEPR
+    'VAR_TEMPLATE'          =>  't',    // Ä¬ÈÏÄ£°åÇĞ»»±äÁ¿
 
-    'HTTP_CACHE_CONTROL'    =>  'private',  // ç½‘é¡µç¼“å­˜æ§åˆ¶
-    'CHECK_APP_DIR'         =>  true,       // æ˜¯å¦æ£€æŸ¥åº”ç”¨ç›®å½•æ˜¯å¦åˆ›å»º
-    'FILE_UPLOAD_TYPE'      =>  'Local',    // æ–‡ä»¶ä¸Šä¼ æ–¹å¼
-    'DATA_CRYPT_TYPE'       =>  'Think',    // æ•°æ®åŠ å¯†æ–¹å¼
+    'HTTP_CACHE_CONTROL'    =>  'private',  // ÍøÒ³»º´æ¿ØÖÆ
+    'CHECK_APP_DIR'         =>  true,       // ÊÇ·ñ¼ì²éÓ¦ÓÃÄ¿Â¼ÊÇ·ñ´´½¨
+    'FILE_UPLOAD_TYPE'      =>  'Local',    // ÎÄ¼şÉÏ´«·½Ê½
+    'DATA_CRYPT_TYPE'       =>  'Think',    // Êı¾İ¼ÓÃÜ·½Ê½
 
 );

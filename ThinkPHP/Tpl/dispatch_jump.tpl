@@ -7,10 +7,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>è·³è½¬æç¤º</title>
+<title>Ìø×ªÌáÊ¾</title>
 <style type="text/css">
 *{ padding: 0; margin: 0; }
-body{ background: #fff; font-family: 'å¾®è½¯é›…é»‘'; color: #333; font-size: 16px; }
+body{ background: #fff; font-family: 'Î¢ÈíÑÅºÚ'; color: #333; font-size: 16px; }
 .system-message{ padding: 24px 48px; }
 .system-message h1{ font-size: 100px; font-weight: normal; line-height: 120px; margin-bottom: 12px; }
 .system-message .jump{ padding-top: 10px}
@@ -30,7 +30,7 @@ body{ background: #fff; font-family: 'å¾®è½¯é›…é»‘'; color: #333; font-size: 16p
 </present>
 <p class="detail"></p>
 <p class="jump">
-é¡µé¢è‡ªåŠ¨ <a id="href" href="<?php echo($jumpUrl); ?>">è·³è½¬</a> ç­‰å¾…æ—¶é—´ï¼š <b id="wait"><?php echo($waitSecond); ?></b>
+Ò³Ãæ×Ô¶¯ <a id="href" href="<?php echo($jumpUrl); ?>">Ìø×ª</a> µÈ´ıÊ±¼ä£º <b id="wait"><?php echo($waitSecond); ?></b>
 </p>
 </div>
 <script type="text/javascript">

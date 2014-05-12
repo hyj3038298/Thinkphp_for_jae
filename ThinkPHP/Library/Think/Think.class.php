@@ -11,30 +11,30 @@
 
 namespace Think;
 /**
- * ThinkPHP å¼•å¯¼ç±»
+ * ThinkPHP Òıµ¼Àà
  */
 class Think {
 
-    // ç±»æ˜ å°„
+    // ÀàÓ³Éä
     private static $_map      = array();
 
-    // å®ä¾‹åŒ–å¯¹è±¡
+    // ÊµÀı»¯¶ÔÏó
     private static $_instance = array();
 
     /**
-     * åº”ç”¨ç¨‹åºåˆå§‹åŒ–
+     * Ó¦ÓÃ³ÌĞò³õÊ¼»¯
      * @access public
      * @return void
      */
     static public function start() {
-      // æ³¨å†ŒAUTOLOADæ–¹æ³•
+      // ×¢²áAUTOLOAD·½·¨
       spl_autoload_register('Think\Think::autoload');      
-      // è®¾å®šé”™è¯¯å’Œå¼‚å¸¸å¤„ç†
+      // Éè¶¨´íÎóºÍÒì³£´¦Àí
       register_shutdown_function('Think\Think::fatalError');
       set_error_handler('Think\Think::appError');
       set_exception_handler('Think\Think::appException');
 
-      // åˆå§‹åŒ–æ–‡ä»¶å­˜å‚¨æ–¹å¼
+      // ³õÊ¼»¯ÎÄ¼ş´æ´¢·½Ê½
       Storage::connect(STORAGE_TYPE);
       $runtimefile  = RUNTIME_PATH.APP_MODE.'~runtime.php';
       if(!APP_DEBUG && Storage::has($runtimefile)){
@@ -43,44 +43,44 @@ class Think {
           if(Storage::has($runtimefile))
               Storage::unlink($runtimefile);
           $content =  '';
-          // è¯»å–åº”ç”¨æ¨¡å¼
+          // ¶ÁÈ¡Ó¦ÓÃÄ£Ê½
           $mode   =   include is_file(CONF_PATH.'core.php')?CONF_PATH.'core.php':MODE_PATH.APP_MODE.'.php';
-          // åŠ è½½æ ¸å¿ƒæ–‡ä»¶
+          // ¼ÓÔØºËĞÄÎÄ¼ş
           foreach ($mode['core'] as $file){
               if(is_file($file)) {
                 include $file;
                 if(!APP_DEBUG) $content   .= compile($file);
               }
           }
-          // åŠ è½½åº”ç”¨æ¨¡å¼é…ç½®æ–‡ä»¶
+          // ¼ÓÔØÓ¦ÓÃÄ£Ê½ÅäÖÃÎÄ¼ş
           foreach ($mode['config'] as $key=>$file){
               is_numeric($key)?C(load_config($file)):C($key,load_config($file));
           }
 
-          // è¯»å–å½“å‰åº”ç”¨æ¨¡å¼å¯¹åº”çš„é…ç½®æ–‡ä»¶
+          // ¶ÁÈ¡µ±Ç°Ó¦ÓÃÄ£Ê½¶ÔÓ¦µÄÅäÖÃÎÄ¼ş
           if('common' != APP_MODE && is_file(CONF_PATH.'config_'.APP_MODE.CONF_EXT))
               C(load_config(CONF_PATH.'config_'.APP_MODE.CONF_EXT));  
 
-          // åŠ è½½æ¨¡å¼åˆ«åå®šä¹‰
+          // ¼ÓÔØÄ£Ê½±ğÃû¶¨Òå
           if(isset($mode['alias'])){
               self::addMap(is_array($mode['alias'])?$mode['alias']:include $mode['alias']);
           }
 
-          // åŠ è½½åº”ç”¨åˆ«åå®šä¹‰æ–‡ä»¶
+          // ¼ÓÔØÓ¦ÓÃ±ğÃû¶¨ÒåÎÄ¼ş
           if(is_file(CONF_PATH.'alias.php'))
               self::addMap(include CONF_PATH.'alias.php');
 
-          // åŠ è½½æ¨¡å¼è¡Œä¸ºå®šä¹‰
+          // ¼ÓÔØÄ£Ê½ĞĞÎª¶¨Òå
           if(isset($mode['tags'])) {
               Hook::import(is_array($mode['tags'])?$mode['tags']:include $mode['tags']);
           }
 
-          // åŠ è½½åº”ç”¨è¡Œä¸ºå®šä¹‰
+          // ¼ÓÔØÓ¦ÓÃĞĞÎª¶¨Òå
           if(is_file(CONF_PATH.'tags.php'))
-              // å…è®¸åº”ç”¨å¢åŠ å¼€å‘æ¨¡å¼é…ç½®å®šä¹‰
+              // ÔÊĞíÓ¦ÓÃÔö¼Ó¿ª·¢Ä£Ê½ÅäÖÃ¶¨Òå
               Hook::import(include CONF_PATH.'tags.php');   
 
-          // åŠ è½½æ¡†æ¶åº•å±‚è¯­è¨€åŒ…
+          // ¼ÓÔØ¿ò¼Üµ×²ãÓïÑÔ°ü
           L(include THINK_PATH.'Lang/'.strtolower(C('DEFAULT_LANG')).'.php');
 
           if(!APP_DEBUG){
@@ -88,37 +88,37 @@ class Think {
               $content  .=  "\nL(".var_export(L(),true).");\nC(".var_export(C(),true).');Think\Hook::import('.var_export(Hook::get(),true).');}';
               Storage::put($runtimefile,strip_whitespace('<?php '.$content));
           }else{
-            // è°ƒè¯•æ¨¡å¼åŠ è½½ç³»ç»Ÿé»˜è®¤çš„é…ç½®æ–‡ä»¶
+            // µ÷ÊÔÄ£Ê½¼ÓÔØÏµÍ³Ä¬ÈÏµÄÅäÖÃÎÄ¼ş
             C(include THINK_PATH.'Conf/debug.php');
-            // è¯»å–åº”ç”¨è°ƒè¯•é…ç½®æ–‡ä»¶
+            // ¶ÁÈ¡Ó¦ÓÃµ÷ÊÔÅäÖÃÎÄ¼ş
             if(is_file(CONF_PATH.'debug'.CONF_EXT))
                 C(include CONF_PATH.'debug'.CONF_EXT);           
           }
       }
 
-      // è¯»å–å½“å‰åº”ç”¨çŠ¶æ€å¯¹åº”çš„é…ç½®æ–‡ä»¶
+      // ¶ÁÈ¡µ±Ç°Ó¦ÓÃ×´Ì¬¶ÔÓ¦µÄÅäÖÃÎÄ¼ş
       if(APP_STATUS && is_file(CONF_PATH.APP_STATUS.CONF_EXT))
           C(include CONF_PATH.APP_STATUS.CONF_EXT);   
 
-      // è®¾ç½®ç³»ç»Ÿæ—¶åŒº
+      // ÉèÖÃÏµÍ³Ê±Çø
       date_default_timezone_set(C('DEFAULT_TIMEZONE'));
 
-      // æ£€æŸ¥åº”ç”¨ç›®å½•ç»“æ„ å¦‚æœä¸å­˜åœ¨åˆ™è‡ªåŠ¨åˆ›å»º
+      // ¼ì²éÓ¦ÓÃÄ¿Â¼½á¹¹ Èç¹û²»´æÔÚÔò×Ô¶¯´´½¨
       if(C('CHECK_APP_DIR')) {
           $module     =   defined('BIND_MODULE') ? BIND_MODULE : C('DEFAULT_MODULE');
           if(!is_dir(APP_PATH.$module) || !is_dir(LOG_PATH)){
-              // æ£€æµ‹åº”ç”¨ç›®å½•ç»“æ„
+              // ¼ì²âÓ¦ÓÃÄ¿Â¼½á¹¹
               Build::checkDir($module);
           }
       }
 
-      // è®°å½•åŠ è½½æ–‡ä»¶æ—¶é—´
+      // ¼ÇÂ¼¼ÓÔØÎÄ¼şÊ±¼ä
       G('loadTime');
-      // è¿è¡Œåº”ç”¨
+      // ÔËĞĞÓ¦ÓÃ
       App::run();
     }
 
-    // æ³¨å†Œclassmap
+    // ×¢²áclassmap
     static public function addMap($class, $map=''){
         if(is_array($class)){
             self::$_map = array_merge(self::$_map, $class);
@@ -127,7 +127,7 @@ class Think {
         }        
     }
 
-    // è·å–classmap
+    // »ñÈ¡classmap
     static public function getMap($class=''){
         if(''===$class){
             return self::$_map;
@@ -139,12 +139,12 @@ class Think {
     }
 
     /**
-     * ç±»åº“è‡ªåŠ¨åŠ è½½
-     * @param string $class å¯¹è±¡ç±»å
+     * Àà¿â×Ô¶¯¼ÓÔØ
+     * @param string $class ¶ÔÏóÀàÃû
      * @return void
      */
     public static function autoload($class) {
-        // æ£€æŸ¥æ˜¯å¦å­˜åœ¨æ˜ å°„
+        // ¼ì²éÊÇ·ñ´æÔÚÓ³Éä
         //echo "<p> class=".$class ." name=$name filename=$filename  false need to load</p>";
         
         if(isset(self::$_map[$class])) {
@@ -154,25 +154,25 @@ class Think {
           $name           =   strstr($class, '\\', true);
           
           if(in_array($name,array('Think','Org','Behavior','Com','Vendor')) || is_dir(LIB_PATH.$name)){ 
-              // Libraryç›®å½•ä¸‹é¢çš„å‘½åç©ºé—´è‡ªåŠ¨å®šä½
+              // LibraryÄ¿Â¼ÏÂÃæµÄÃüÃû¿Õ¼ä×Ô¶¯¶¨Î»
 
               $path       =   LIB_PATH;
           }else{
-              // æ£€æµ‹è‡ªå®šä¹‰å‘½åç©ºé—´ å¦åˆ™å°±ä»¥æ¨¡å—ä¸ºå‘½åç©ºé—´
+              // ¼ì²â×Ô¶¨ÒåÃüÃû¿Õ¼ä ·ñÔò¾ÍÒÔÄ£¿éÎªÃüÃû¿Õ¼ä
               $namespace  =   C('AUTOLOAD_NAMESPACE');
               $path       =   isset($namespace[$name])? dirname($namespace[$name]).'/' : APP_PATH;
           }
           $filename       =   $path . str_replace('\\', '/', $class) . EXT;
           //echo "<p> class=".$class ." name=$name filename=$filename  false need to load</p>";
           if(is_file($filename)) {
-              // Winç¯å¢ƒä¸‹é¢ä¸¥æ ¼åŒºåˆ†å¤§å°å†™
+              // Win»·¾³ÏÂÃæÑÏ¸ñÇø·Ö´óĞ¡Ğ´
               if (IS_WIN && false === strpos(str_replace('/', '\\', realpath($filename)), $class . EXT)){
                   return ;
               }
               include $filename;
           }
         }elseif (!C('APP_USE_NAMESPACE')) {
-            // è‡ªåŠ¨åŠ è½½çš„ç±»åº“å±‚
+            // ×Ô¶¯¼ÓÔØµÄÀà¿â²ã
             foreach(explode(',',C('APP_AUTOLOAD_LAYER')) as $layer){
                 if(substr($class,-strlen($layer))==$layer){
                     if(require_cache(MODULE_PATH.$layer.'/'.$class.EXT)) {
@@ -180,19 +180,19 @@ class Think {
                     }
                 }            
             }
-            // æ ¹æ®è‡ªåŠ¨åŠ è½½è·¯å¾„è®¾ç½®è¿›è¡Œå°è¯•æœç´¢
+            // ¸ù¾İ×Ô¶¯¼ÓÔØÂ·¾¶ÉèÖÃ½øĞĞ³¢ÊÔËÑË÷
             foreach (explode(',',C('APP_AUTOLOAD_PATH')) as $path){
                 if(import($path.'.'.$class))
-                    // å¦‚æœåŠ è½½ç±»æˆåŠŸåˆ™è¿”å›
+                    // Èç¹û¼ÓÔØÀà³É¹¦Ôò·µ»Ø
                     return ;
             }
         }
     }
 
     /**
-     * å–å¾—å¯¹è±¡å®ä¾‹ æ”¯æŒè°ƒç”¨ç±»çš„é™æ€æ–¹æ³•
-     * @param string $class å¯¹è±¡ç±»å
-     * @param string $method ç±»çš„é™æ€æ–¹æ³•å
+     * È¡µÃ¶ÔÏóÊµÀı Ö§³Öµ÷ÓÃÀàµÄ¾²Ì¬·½·¨
+     * @param string $class ¶ÔÏóÀàÃû
+     * @param string $method ÀàµÄ¾²Ì¬·½·¨Ãû
      * @return object
      */
     static public function instance($class,$method='') {
@@ -212,9 +212,9 @@ class Think {
     }
 
     /**
-     * è‡ªå®šä¹‰å¼‚å¸¸å¤„ç†
+     * ×Ô¶¨ÒåÒì³£´¦Àí
      * @access public
-     * @param mixed $e å¼‚å¸¸å¯¹è±¡
+     * @param mixed $e Òì³£¶ÔÏó
      */
     static public function appException($e) {
         $error = array();
@@ -229,19 +229,19 @@ class Think {
         }
         $error['trace']     =   $e->getTraceAsString();
         Log::record($error['message'],Log::ERR);
-        // å‘é€404ä¿¡æ¯
+        // ·¢ËÍ404ĞÅÏ¢
         header('HTTP/1.1 404 Not Found');
         header('Status:404 Not Found');
         self::halt($error);
     }
 
     /**
-     * è‡ªå®šä¹‰é”™è¯¯å¤„ç†
+     * ×Ô¶¨Òå´íÎó´¦Àí
      * @access public
-     * @param int $errno é”™è¯¯ç±»å‹
-     * @param string $errstr é”™è¯¯ä¿¡æ¯
-     * @param string $errfile é”™è¯¯æ–‡ä»¶
-     * @param int $errline é”™è¯¯è¡Œæ•°
+     * @param int $errno ´íÎóÀàĞÍ
+     * @param string $errstr ´íÎóĞÅÏ¢
+     * @param string $errfile ´íÎóÎÄ¼ş
+     * @param int $errline ´íÎóĞĞÊı
      * @return void
      */
     static public function appError($errno, $errstr, $errfile, $errline) {
@@ -252,18 +252,18 @@ class Think {
           case E_COMPILE_ERROR:
           case E_USER_ERROR:
             ob_end_clean();
-            $errorStr = "$errstr ".$errfile." ç¬¬ $errline è¡Œ.";
-//            if(C('LOG_RECORD')) Log::write("[$errno] ".$errorStr,Log::ERR);
+            $errorStr = "$errstr ".$errfile." µÚ $errline ĞĞ.";
+            if(C('LOG_RECORD')) Log::write("[$errno] ".$errorStr,Log::ERR);
             self::halt($errorStr);
             break;
           default:
-            $errorStr = "[$errno] $errstr ".$errfile." ç¬¬ $errline è¡Œ.";
+            $errorStr = "[$errno] $errstr ".$errfile." µÚ $errline ĞĞ.";
             self::trace($errorStr,'','NOTIC');
             break;
       }
     }
     
-    // è‡´å‘½é”™è¯¯æ•è·
+    // ÖÂÃü´íÎó²¶»ñ
     static public function fatalError() {
         Log::save();
         if ($e = error_get_last()) {
@@ -281,14 +281,14 @@ class Think {
     }
 
     /**
-     * é”™è¯¯è¾“å‡º
-     * @param mixed $error é”™è¯¯
+     * ´íÎóÊä³ö
+     * @param mixed $error ´íÎó
      * @return void
      */
     static public function halt($error) {
         $e = array();
         if (APP_DEBUG || IS_CLI) {
-            //è°ƒè¯•æ¨¡å¼ä¸‹è¾“å‡ºé”™è¯¯ä¿¡æ¯
+            //µ÷ÊÔÄ£Ê½ÏÂÊä³ö´íÎóĞÅÏ¢
             if (!is_array($error)) {
                 $trace          = debug_backtrace();
                 $e['message']   = $error;
@@ -304,7 +304,7 @@ class Think {
                 exit(iconv('UTF-8','gbk',$e['message']).PHP_EOL.'FILE: '.$e['file'].'('.$e['line'].')'.PHP_EOL.$e['trace']);
             }
         } else {
-            //å¦åˆ™å®šå‘åˆ°é”™è¯¯é¡µé¢
+            //·ñÔò¶¨Ïòµ½´íÎóÒ³Ãæ
             $error_page         = C('ERROR_PAGE');
             if (!empty($error_page)) {
                 redirect($error_page);
@@ -313,24 +313,24 @@ class Think {
                 $e['message']   = C('SHOW_ERROR_MSG')? $message : C('ERROR_MESSAGE');
             }
         }
-        // åŒ…å«å¼‚å¸¸é¡µé¢æ¨¡æ¿
-        echo "<p>".$e['message']. " " .$e['file']." on ".$e['line']."</p>";
+        // °üº¬Òì³£Ò³ÃæÄ£°å
+        echo "<p>error ".$error['message']. " " .$error['file']." on ".$error['line']."</p>";
         //$exceptionFile =  C('TMPL_EXCEPTION_FILE',null,THINK_PATH.'Tpl/think_exception.tpl');
         //include $exceptionFile;
         exit;
     }
 
     /**
-     * æ·»åŠ å’Œè·å–é¡µé¢Traceè®°å½•
-     * @param string $value å˜é‡
-     * @param string $label æ ‡ç­¾
-     * @param string $level æ—¥å¿—çº§åˆ«(æˆ–è€…é¡µé¢Traceçš„é€‰é¡¹å¡)
-     * @param boolean $record æ˜¯å¦è®°å½•æ—¥å¿—
+     * Ìí¼ÓºÍ»ñÈ¡Ò³ÃæTrace¼ÇÂ¼
+     * @param string $value ±äÁ¿
+     * @param string $label ±êÇ©
+     * @param string $level ÈÕÖ¾¼¶±ğ(»òÕßÒ³ÃæTraceµÄÑ¡Ïî¿¨)
+     * @param boolean $record ÊÇ·ñ¼ÇÂ¼ÈÕÖ¾
      * @return void
      */
     static public function trace($value='[think]',$label='',$level='DEBUG',$record=false) {
         static $_trace =  array();
-        if('[think]' === $value){ // è·å–traceä¿¡æ¯
+        if('[think]' === $value){ // »ñÈ¡traceĞÅÏ¢
             return $_trace;
         }else{
             $info   =   ($label?$label.':':'').print_r($value,true);

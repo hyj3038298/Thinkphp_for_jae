@@ -12,7 +12,7 @@ namespace Think\Db\Driver;
 use Think\Db;
 defined('THINK_PATH') or exit();
 /**
- * PDOæ•°æ®åº“é©±åŠ¨ 
+ * PDOÊı¾İ¿âÇı¶¯ 
  */
 class Pdo extends Db{
 
@@ -20,9 +20,9 @@ class Pdo extends Db{
     private   $table        = '';
 
     /**
-     * æ¶æ„å‡½æ•° è¯»å–æ•°æ®åº“é…ç½®ä¿¡æ¯
+     * ¼Ü¹¹º¯Êı ¶ÁÈ¡Êı¾İ¿âÅäÖÃĞÅÏ¢
      * @access public
-     * @param array $config æ•°æ®åº“é…ç½®æ•°ç»„
+     * @param array $config Êı¾İ¿âÅäÖÃÊı×é
      */
     public function __construct($config=''){
         if(!empty($config)) {
@@ -35,7 +35,7 @@ class Pdo extends Db{
     }
 
     /**
-     * è¿æ¥æ•°æ®åº“æ–¹æ³•
+     * Á¬½ÓÊı¾İ¿â·½·¨
      * @access public
      */
     public function connect($config='',$linkNum=0) {
@@ -44,7 +44,7 @@ class Pdo extends Db{
             if($this->pconnect) {
                 $config['params'][\PDO::ATTR_PERSISTENT] = true;
             }
-            if(version_compare(PHP_VERSION,'5.3.6','<=')){ //ç¦ç”¨æ¨¡æ‹Ÿé¢„å¤„ç†è¯­å¥
+            if(version_compare(PHP_VERSION,'5.3.6','<=')){ //½ûÓÃÄ£ÄâÔ¤´¦ÀíÓï¾ä
                 $config['params'][\PDO::ATTR_EMULATE_PREPARES]  =   false;
             }
             //$config['params'][PDO::ATTR_CASE] = C("DB_CASE_LOWER")?PDO::CASE_LOWER:PDO::CASE_UPPER;
@@ -53,23 +53,23 @@ class Pdo extends Db{
             }catch (\PDOException $e) {
                 E($e->getMessage());
             }
-            // å› ä¸ºPDOçš„è¿æ¥åˆ‡æ¢å¯èƒ½å¯¼è‡´æ•°æ®åº“ç±»å‹ä¸åŒï¼Œå› æ­¤é‡æ–°è·å–ä¸‹å½“å‰çš„æ•°æ®åº“ç±»å‹
+            // ÒòÎªPDOµÄÁ¬½ÓÇĞ»»¿ÉÄÜµ¼ÖÂÊı¾İ¿âÀàĞÍ²»Í¬£¬Òò´ËÖØĞÂ»ñÈ¡ÏÂµ±Ç°µÄÊı¾İ¿âÀàĞÍ
             $this->dbType = $this->_getDsnType($config['dsn']);
             if(in_array($this->dbType,array('MSSQL','ORACLE','IBASE','OCI'))) {
-                // ç”±äºPDOå¯¹äºä»¥ä¸Šçš„æ•°æ®åº“æ”¯æŒä¸å¤Ÿå®Œç¾ï¼Œæ‰€ä»¥å±è”½äº† å¦‚æœä»ç„¶å¸Œæœ›ä½¿ç”¨PDO å¯ä»¥æ³¨é‡Šä¸‹é¢ä¸€è¡Œä»£ç 
-                E('ç”±äºç›®å‰PDOæš‚æ—¶ä¸èƒ½å®Œç¾æ”¯æŒ'.$this->dbType.' è¯·ä½¿ç”¨å®˜æ–¹çš„'.$this->dbType.'é©±åŠ¨');
+                // ÓÉÓÚPDO¶ÔÓÚÒÔÉÏµÄÊı¾İ¿âÖ§³Ö²»¹»ÍêÃÀ£¬ËùÒÔÆÁ±ÎÁË Èç¹ûÈÔÈ»Ï£ÍûÊ¹ÓÃPDO ¿ÉÒÔ×¢ÊÍÏÂÃæÒ»ĞĞ´úÂë
+                E('ÓÉÓÚÄ¿Ç°PDOÔİÊ±²»ÄÜÍêÃÀÖ§³Ö'.$this->dbType.' ÇëÊ¹ÓÃ¹Ù·½µÄ'.$this->dbType.'Çı¶¯');
             }
             $this->linkID[$linkNum]->exec('SET NAMES '.$config['charset']);
-            // æ ‡è®°è¿æ¥æˆåŠŸ
+            // ±ê¼ÇÁ¬½Ó³É¹¦
             $this->connected    =   true;
-            // æ³¨é”€æ•°æ®åº“è¿æ¥é…ç½®ä¿¡æ¯
+            // ×¢ÏúÊı¾İ¿âÁ¬½ÓÅäÖÃĞÅÏ¢
             if(1 != C('DB_DEPLOY_TYPE')) unset($this->config);
         }
         return $this->linkID[$linkNum];
     }
 
     /**
-     * é‡Šæ”¾æŸ¥è¯¢ç»“æœ
+     * ÊÍ·Å²éÑ¯½á¹û
      * @access public
      */
     public function free() {
@@ -77,10 +77,10 @@ class Pdo extends Db{
     }
 
     /**
-     * æ‰§è¡ŒæŸ¥è¯¢ è¿”å›æ•°æ®é›†
+     * Ö´ĞĞ²éÑ¯ ·µ»ØÊı¾İ¼¯
      * @access public
-     * @param string $str  sqlæŒ‡ä»¤
-     * @param array $bind å‚æ•°ç»‘å®š
+     * @param string $str  sqlÖ¸Áî
+     * @param array $bind ²ÎÊı°ó¶¨
      * @return mixed
      */
     public function query($str,$bind=array()) {
@@ -90,15 +90,15 @@ class Pdo extends Db{
         if(!empty($bind)){
             $this->queryStr     .=   '[ '.print_r($bind,true).' ]';
         }        
-        //é‡Šæ”¾å‰æ¬¡çš„æŸ¥è¯¢ç»“æœ
+        //ÊÍ·ÅÇ°´ÎµÄ²éÑ¯½á¹û
         if ( !empty($this->PDOStatement) ) $this->free();
         N('db_query',1);
-        // è®°å½•å¼€å§‹æ‰§è¡Œæ—¶é—´
+        // ¼ÇÂ¼¿ªÊ¼Ö´ĞĞÊ±¼ä
         G('queryStartTime');
         $this->PDOStatement = $this->_linkID->prepare($str);
         if(false === $this->PDOStatement)
             E($this->error());
-        // å‚æ•°ç»‘å®š
+        // ²ÎÊı°ó¶¨
         $this->bindPdoParam($bind);
         $result =   $this->PDOStatement->execute();
         $this->debug();
@@ -111,10 +111,10 @@ class Pdo extends Db{
     }
 
     /**
-     * æ‰§è¡Œè¯­å¥
+     * Ö´ĞĞÓï¾ä
      * @access public
-     * @param string $str  sqlæŒ‡ä»¤
-     * @param array $bind å‚æ•°ç»‘å®š
+     * @param string $str  sqlÖ¸Áî
+     * @param array $bind ²ÎÊı°ó¶¨
      * @return integer
      */
     public function execute($str,$bind=array()) {
@@ -131,16 +131,16 @@ class Pdo extends Db{
                 $flag = (boolean)$this->query("SELECT * FROM user_sequences WHERE sequence_name='" . strtoupper($this->table) . "'");
             }
         }
-        //é‡Šæ”¾å‰æ¬¡çš„æŸ¥è¯¢ç»“æœ
+        //ÊÍ·ÅÇ°´ÎµÄ²éÑ¯½á¹û
         if ( !empty($this->PDOStatement) ) $this->free();
         N('db_write',1);
-        // è®°å½•å¼€å§‹æ‰§è¡Œæ—¶é—´
+        // ¼ÇÂ¼¿ªÊ¼Ö´ĞĞÊ±¼ä
         G('queryStartTime');
         $this->PDOStatement = $this->_linkID->prepare($str);
         if(false === $this->PDOStatement) {
             E($this->error());
         }
-        // å‚æ•°ç»‘å®š
+        // ²ÎÊı°ó¶¨
         $this->bindPdoParam($bind);        
         $result = $this->PDOStatement->execute();
         $this->debug();
@@ -157,12 +157,12 @@ class Pdo extends Db{
     }
 
     /**
-     * å‚æ•°ç»‘å®š
+     * ²ÎÊı°ó¶¨
      * @access protected
      * @return void
      */
     protected function bindPdoParam($bind){
-        // å‚æ•°ç»‘å®š
+        // ²ÎÊı°ó¶¨
         foreach($bind as $key=>$val){
             if(is_array($val)){
               array_unshift($val,$key);
@@ -174,14 +174,14 @@ class Pdo extends Db{
     }
 
     /**
-     * å¯åŠ¨äº‹åŠ¡
+     * Æô¶¯ÊÂÎñ
      * @access public
      * @return void
      */
     public function startTrans() {
         $this->initConnect(true);
         if ( !$this->_linkID ) return false;
-        //æ•°æ®rollback æ”¯æŒ
+        //Êı¾İrollback Ö§³Ö
         if ($this->transTimes == 0) {
             $this->_linkID->beginTransaction();
         }
@@ -190,7 +190,7 @@ class Pdo extends Db{
     }
 
     /**
-     * ç”¨äºéè‡ªåŠ¨æäº¤çŠ¶æ€ä¸‹é¢çš„æŸ¥è¯¢æäº¤
+     * ÓÃÓÚ·Ç×Ô¶¯Ìá½»×´Ì¬ÏÂÃæµÄ²éÑ¯Ìá½»
      * @access public
      * @return boolen
      */
@@ -207,7 +207,7 @@ class Pdo extends Db{
     }
 
     /**
-     * äº‹åŠ¡å›æ»š
+     * ÊÂÎñ»Ø¹ö
      * @access public
      * @return boolen
      */
@@ -224,25 +224,25 @@ class Pdo extends Db{
     }
 
     /**
-     * è·å¾—æ‰€æœ‰çš„æŸ¥è¯¢æ•°æ®
+     * »ñµÃËùÓĞµÄ²éÑ¯Êı¾İ
      * @access private
      * @return array
      */
     private function getAll() {
-        //è¿”å›æ•°æ®é›†
+        //·µ»ØÊı¾İ¼¯
         $result =   $this->PDOStatement->fetchAll(\PDO::FETCH_ASSOC);
         $this->numRows = count( $result );
         return $result;
     }
 
     /**
-     * å–å¾—æ•°æ®è¡¨çš„å­—æ®µä¿¡æ¯
+     * È¡µÃÊı¾İ±íµÄ×Ö¶ÎĞÅÏ¢
      * @access public
      */
     public function getFields($tableName) {
         $this->initConnect(true);
         if(C('DB_DESCRIBE_TABLE_SQL')) {
-            // å®šä¹‰ç‰¹æ®Šçš„å­—æ®µæŸ¥è¯¢SQL
+            // ¶¨ÒåÌØÊâµÄ×Ö¶Î²éÑ¯SQL
             $sql   = str_replace('%table%',$tableName,C('DB_DESCRIBE_TABLE_SQL'));
         }else{
             switch($this->dbType) {
@@ -273,7 +273,7 @@ class Pdo extends Db{
                     break;
                 case 'MYSQL':
                 default:
-                    $sql   = 'DESCRIBE '.$tableName;//å¤‡æ³¨: é©±åŠ¨ç±»ä¸åªé’ˆå¯¹mysqlï¼Œä¸èƒ½åŠ ``
+                    $sql   = 'DESCRIBE '.$tableName;//±¸×¢: Çı¶¯Àà²»Ö»Õë¶Ômysql£¬²»ÄÜ¼Ó``
             }
         }
         $result = $this->query($sql);
@@ -298,12 +298,12 @@ class Pdo extends Db{
     }
 
     /**
-     * å–å¾—æ•°æ®åº“çš„è¡¨ä¿¡æ¯
+     * È¡µÃÊı¾İ¿âµÄ±íĞÅÏ¢
      * @access public
      */
     public function getTables($dbName='') {
         if(C('DB_FETCH_TABLES_SQL')) {
-            // å®šä¹‰ç‰¹æ®Šçš„è¡¨æŸ¥è¯¢SQL
+            // ¶¨ÒåÌØÊâµÄ±í²éÑ¯SQL
             $sql   = str_replace('%db%',$dbName,C('DB_FETCH_TABLES_SQL'));
         }else{
             switch($this->dbType) {
@@ -319,7 +319,7 @@ class Pdo extends Db{
                 $sql   = "select tablename as Tables_in_test from pg_tables where  schemaname ='public'";
                 break;
             case 'IBASE':
-                // æš‚æ—¶ä¸æ”¯æŒ
+                // ÔİÊ±²»Ö§³Ö
                 E(L('_NOT_SUPPORT_DB_').':IBASE');
                 break;
             case 'SQLITE':
@@ -345,7 +345,7 @@ class Pdo extends Db{
     }
 
     /**
-     * limitåˆ†æ
+     * limit·ÖÎö
      * @access protected
      * @param mixed $lmit
      * @return string
@@ -367,7 +367,7 @@ class Pdo extends Db{
                 case 'SQLSRV':
                     break;
                 case 'IBASE':
-                    // æš‚æ—¶ä¸æ”¯æŒ
+                    // ÔİÊ±²»Ö§³Ö
                     break;
                 case 'ORACLE':
                 case 'OCI':
@@ -381,7 +381,7 @@ class Pdo extends Db{
     }
 
     /**
-     * å­—æ®µå’Œè¡¨åå¤„ç†
+     * ×Ö¶ÎºÍ±íÃû´¦Àí
      * @access protected
      * @param string $key
      * @return string
@@ -400,7 +400,7 @@ class Pdo extends Db{
     }
 
     /**
-     * å…³é—­æ•°æ®åº“
+     * ¹Ø±ÕÊı¾İ¿â
      * @access public
      */
     public function close() {
@@ -408,8 +408,8 @@ class Pdo extends Db{
     }
 
     /**
-     * æ•°æ®åº“é”™è¯¯ä¿¡æ¯
-     * å¹¶æ˜¾ç¤ºå½“å‰çš„SQLè¯­å¥
+     * Êı¾İ¿â´íÎóĞÅÏ¢
+     * ²¢ÏÔÊ¾µ±Ç°µÄSQLÓï¾ä
      * @access public
      * @return string
      */
@@ -421,16 +421,16 @@ class Pdo extends Db{
             $this->error = '';
         }
         if('' != $this->queryStr){
-            $this->error .= "\n [ SQLè¯­å¥ ] : ".$this->queryStr;
+            $this->error .= "\n [ SQLÓï¾ä ] : ".$this->queryStr;
         }
         trace($this->error,'','ERR');
         return $this->error;
     }
 
     /**
-     * SQLæŒ‡ä»¤å®‰å…¨è¿‡æ»¤
+     * SQLÖ¸Áî°²È«¹ıÂË
      * @access public
-     * @param string $str  SQLæŒ‡ä»¤
+     * @param string $str  SQLÖ¸Áî
      * @return string
      */
     public function escapeString($str) {
@@ -449,7 +449,7 @@ class Pdo extends Db{
     }
 
     /**
-     * valueåˆ†æ
+     * value·ÖÎö
      * @access protected
      * @param mixed $value
      * @return string
@@ -470,7 +470,7 @@ class Pdo extends Db{
     }
 
     /**
-     * è·å–æœ€åæ’å…¥id
+     * »ñÈ¡×îºó²åÈëid
      * @access public
      * @return integer
      */

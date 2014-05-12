@@ -10,13 +10,13 @@
 // +----------------------------------------------------------------------
 namespace Think;
 /**
- * ThinkPHPå†…ç½®çš„Dispatcherç±»
- * å®ŒæˆURLè§£æã€è·¯ç”±å’Œè°ƒåº¦
+ * ThinkPHPÄÚÖÃµÄDispatcherÀà
+ * Íê³ÉURL½âÎö¡¢Â·ÓÉºÍµ÷¶È
  */
 class Dispatcher {
 
     /**
-     * URLæ˜ å°„åˆ°æ§åˆ¶å™¨
+     * URLÓ³Éäµ½¿ØÖÆÆ÷
      * @access public
      * @return void
      */
@@ -27,18 +27,18 @@ class Dispatcher {
         $varController  =   C('VAR_CONTROLLER');
         $varAction      =   C('VAR_ACTION');
         $urlCase        =   C('URL_CASE_INSENSITIVE');
-        if(isset($_GET[$varPath])) { // åˆ¤æ–­URLé‡Œé¢æ˜¯å¦æœ‰å…¼å®¹æ¨¡å¼å‚æ•°
+        if(isset($_GET[$varPath])) { // ÅĞ¶ÏURLÀïÃæÊÇ·ñÓĞ¼æÈİÄ£Ê½²ÎÊı
             $_SERVER['PATH_INFO'] = $_GET[$varPath];
             unset($_GET[$varPath]);
-        }elseif(IS_CLI){ // CLIæ¨¡å¼ä¸‹ index.php module/controller/action/params/...
+        }elseif(IS_CLI){ // CLIÄ£Ê½ÏÂ index.php module/controller/action/params/...
             $_SERVER['PATH_INFO'] = isset($_SERVER['argv'][1]) ? $_SERVER['argv'][1] : '';
         }
 
-        // å¼€å¯å­åŸŸåéƒ¨ç½²
+        // ¿ªÆô×ÓÓòÃû²¿Êğ
         if(C('APP_SUB_DOMAIN_DEPLOY')) {
             $rules      = C('APP_SUB_DOMAIN_RULES');
-            if(isset($rules[$_SERVER['HTTP_HOST']])) { // å®Œæ•´åŸŸåæˆ–è€…IPé…ç½®
-                define('APP_DOMAIN',$_SERVER['HTTP_HOST']); // å½“å‰å®Œæ•´åŸŸå
+            if(isset($rules[$_SERVER['HTTP_HOST']])) { // ÍêÕûÓòÃû»òÕßIPÅäÖÃ
+                define('APP_DOMAIN',$_SERVER['HTTP_HOST']); // µ±Ç°ÍêÕûÓòÃû
                 $rule = $rules[APP_DOMAIN];
             }else{
                 if(strpos(C('APP_DOMAIN_SUFFIX'),'.')){ // com.cn net.cn 
@@ -48,17 +48,17 @@ class Dispatcher {
                 }
                 if(!empty($domain)) {
                     $subDomain = implode('.', $domain);
-                    define('SUB_DOMAIN',$subDomain); // å½“å‰å®Œæ•´å­åŸŸå
-                    $domain2   = array_pop($domain); // äºŒçº§åŸŸå
-                    if($domain) { // å­˜åœ¨ä¸‰çº§åŸŸå
+                    define('SUB_DOMAIN',$subDomain); // µ±Ç°ÍêÕû×ÓÓòÃû
+                    $domain2   = array_pop($domain); // ¶ş¼¶ÓòÃû
+                    if($domain) { // ´æÔÚÈı¼¶ÓòÃû
                         $domain3 = array_pop($domain);
                     }
-                    if(isset($rules[$subDomain])) { // å­åŸŸå
+                    if(isset($rules[$subDomain])) { // ×ÓÓòÃû
                         $rule = $rules[$subDomain];
-                    }elseif(isset($rules['*.' . $domain2]) && !empty($domain3)){ // æ³›ä¸‰çº§åŸŸå
+                    }elseif(isset($rules['*.' . $domain2]) && !empty($domain3)){ // ·ºÈı¼¶ÓòÃû
                         $rule = $rules['*.' . $domain2];
                         $panDomain = $domain3;
-                    }elseif(isset($rules['*']) && !empty($domain2) && 'www' != $domain2 ){ // æ³›äºŒçº§åŸŸå
+                    }elseif(isset($rules['*']) && !empty($domain2) && 'www' != $domain2 ){ // ·º¶ş¼¶ÓòÃû
                         $rule      = $rules['*'];
                         $panDomain = $domain2;
                     }
@@ -66,26 +66,26 @@ class Dispatcher {
             }
 
             if(!empty($rule)) {
-                // å­åŸŸåéƒ¨ç½²è§„åˆ™ 'å­åŸŸå'=>array('æ¨¡å—å[/æ§åˆ¶å™¨å]','var1=a&var2=b');
+                // ×ÓÓòÃû²¿Êğ¹æÔò '×ÓÓòÃû'=>array('Ä£¿éÃû[/¿ØÖÆÆ÷Ãû]','var1=a&var2=b');
                 if(is_array($rule)){
                     list($rule,$vars) = $rule;
                 }
                 $array      =   explode('/',$rule);
-                // æ¨¡å—ç»‘å®š
+                // Ä£¿é°ó¶¨
                 define('BIND_MODULE',array_shift($array));
-                // æ§åˆ¶å™¨ç»‘å®š         
+                // ¿ØÖÆÆ÷°ó¶¨         
                 if(!empty($array)) {
                     $controller  =   array_shift($array);
                     if($controller){
                         define('BIND_CONTROLLER',$controller);
                     }
                 }
-                if(isset($vars)) { // ä¼ å…¥å‚æ•°
+                if(isset($vars)) { // ´«Èë²ÎÊı
                     parse_str($vars,$parms);
                     if(isset($panDomain)){
                         $pos = array_search('*', $parms);
                         if(false !== $pos) {
-                            // æ³›åŸŸåä½œä¸ºå‚æ•°
+                            // ·ºÓòÃû×÷Îª²ÎÊı
                             $parms[$pos] = $panDomain;
                         }                         
                     }                   
@@ -93,11 +93,11 @@ class Dispatcher {
                 }
             }
         }
-        // åˆ†æPATHINFOä¿¡æ¯
+        // ·ÖÎöPATHINFOĞÅÏ¢
         if(!isset($_SERVER['PATH_INFO'])) {
             $types   =  explode(',',C('URL_PATHINFO_FETCH'));
             foreach ($types as $type){
-                if(0===strpos($type,':')) {// æ”¯æŒå‡½æ•°åˆ¤æ–­
+                if(0===strpos($type,':')) {// Ö§³Öº¯ÊıÅĞ¶Ï
                     $_SERVER['PATH_INFO'] =   call_user_func(substr($type,1));
                     break;
                 }elseif(!empty($_SERVER[$type])) {
@@ -117,12 +117,12 @@ class Dispatcher {
             define('__EXT__','');
         }else{
             define('__INFO__',trim($_SERVER['PATH_INFO'],'/'));
-            // URLåç¼€
+            // URLºó×º
             define('__EXT__', strtolower(pathinfo($_SERVER['PATH_INFO'],PATHINFO_EXTENSION)));
             $_SERVER['PATH_INFO'] = __INFO__;     
-            if (__INFO__ && !defined('BIND_MODULE') && C('MULTI_MODULE')){ // è·å–æ¨¡å—å
+            if (__INFO__ && !defined('BIND_MODULE') && C('MULTI_MODULE')){ // »ñÈ¡Ä£¿éÃû
                 $paths      =   explode($depr,__INFO__,2);
-                $allowList  =   C('MODULE_ALLOW_LIST'); // å…è®¸çš„æ¨¡å—åˆ—è¡¨
+                $allowList  =   C('MODULE_ALLOW_LIST'); // ÔÊĞíµÄÄ£¿éÁĞ±í
                 $module     =   preg_replace('/\.' . __EXT__ . '$/i', '',$paths[0]);
                 if( empty($allowList) || (is_array($allowList) && in_array_case($module, $allowList))){
                     $_GET[$varModule]       =   $module;
@@ -131,49 +131,49 @@ class Dispatcher {
             }                   
         }
 
-        // URLå¸¸é‡
+        // URL³£Á¿
         define('__SELF__',strip_tags($_SERVER[C('URL_REQUEST_URI')]));
 
-        // è·å–æ¨¡å—åç§°
+        // »ñÈ¡Ä£¿éÃû³Æ
         define('MODULE_NAME', defined('BIND_MODULE')? BIND_MODULE : self::getModule($varModule));
         
-        // æ£€æµ‹æ¨¡å—æ˜¯å¦å­˜åœ¨
+        // ¼ì²âÄ£¿éÊÇ·ñ´æÔÚ
         if( MODULE_NAME && (defined('BIND_MODULE') || !in_array_case(MODULE_NAME,C('MODULE_DENY_LIST')) ) && is_dir(APP_PATH.MODULE_NAME)){
-            // å®šä¹‰å½“å‰æ¨¡å—è·¯å¾„
+            // ¶¨Òåµ±Ç°Ä£¿éÂ·¾¶
             define('MODULE_PATH', APP_PATH.MODULE_NAME.'/');
-            // å®šä¹‰å½“å‰æ¨¡å—çš„æ¨¡ç‰ˆç¼“å­˜è·¯å¾„
+            // ¶¨Òåµ±Ç°Ä£¿éµÄÄ£°æ»º´æÂ·¾¶
             C('CACHE_PATH',CACHE_PATH.MODULE_NAME.'/');
 
-            // æ¨¡å—æ£€æµ‹
+            // Ä£¿é¼ì²â
             Hook::listen('module_check');
 
-            // åŠ è½½æ¨¡å—é…ç½®æ–‡ä»¶
+            // ¼ÓÔØÄ£¿éÅäÖÃÎÄ¼ş
             if(is_file(MODULE_PATH.'Conf/config'.CONF_EXT))
                 C(load_config(MODULE_PATH.'Conf/config'.CONF_EXT));
-            // åŠ è½½åº”ç”¨æ¨¡å¼å¯¹åº”çš„é…ç½®æ–‡ä»¶
+            // ¼ÓÔØÓ¦ÓÃÄ£Ê½¶ÔÓ¦µÄÅäÖÃÎÄ¼ş
             if('common' != APP_MODE && is_file(MODULE_PATH.'Conf/config_'.APP_MODE.CONF_EXT))
                 C(load_config(MODULE_PATH.'Conf/config_'.APP_MODE.CONF_EXT));
-            // å½“å‰åº”ç”¨çŠ¶æ€å¯¹åº”çš„é…ç½®æ–‡ä»¶
+            // µ±Ç°Ó¦ÓÃ×´Ì¬¶ÔÓ¦µÄÅäÖÃÎÄ¼ş
             if(APP_STATUS && is_file(MODULE_PATH.'Conf/'.APP_STATUS.CONF_EXT))
                 C(load_config(MODULE_PATH.'Conf/'.APP_STATUS.CONF_EXT));
 
-            // åŠ è½½æ¨¡å—åˆ«åå®šä¹‰
+            // ¼ÓÔØÄ£¿é±ğÃû¶¨Òå
             if(is_file(MODULE_PATH.'Conf/alias.php'))
                 Think::addMap(include MODULE_PATH.'Conf/alias.php');
-            // åŠ è½½æ¨¡å—tagsæ–‡ä»¶å®šä¹‰
+            // ¼ÓÔØÄ£¿étagsÎÄ¼ş¶¨Òå
             if(is_file(MODULE_PATH.'Conf/tags.php'))
                 Hook::import(include MODULE_PATH.'Conf/tags.php');
-            // åŠ è½½æ¨¡å—å‡½æ•°æ–‡ä»¶
+            // ¼ÓÔØÄ£¿éº¯ÊıÎÄ¼ş
             if(is_file(MODULE_PATH.'Common/function.php'))
                 include MODULE_PATH.'Common/function.php';
-            // åŠ è½½æ¨¡å—çš„æ‰©å±•é…ç½®æ–‡ä»¶
+            // ¼ÓÔØÄ£¿éµÄÀ©Õ¹ÅäÖÃÎÄ¼ş
             load_ext_file(MODULE_PATH);
         }else{
             E(L('_MODULE_NOT_EXIST_').':'.MODULE_NAME);
         }
 
         $urlMode        =   C('URL_MODEL');
-        if($urlMode == URL_COMPAT ){// å…¼å®¹æ¨¡å¼åˆ¤æ–­
+        if($urlMode == URL_COMPAT ){// ¼æÈİÄ£Ê½ÅĞ¶Ï
             define('PHP_FILE',_PHP_FILE_.'?'.$varPath.'=');
         }elseif($urlMode == URL_REWRITE ) {
             $url    =   dirname(_PHP_FILE_);
@@ -183,67 +183,67 @@ class Dispatcher {
         }else {
             define('PHP_FILE',_PHP_FILE_);
         }
-        // å½“å‰åº”ç”¨åœ°å€
+        // µ±Ç°Ó¦ÓÃµØÖ·
         define('__APP__',strip_tags(PHP_FILE));
-        // æ¨¡å—URLåœ°å€
+        // Ä£¿éURLµØÖ·
         $moduleName    =   defined('MODULE_ALIAS')? MODULE_ALIAS : MODULE_NAME;
         define('__MODULE__',(defined('BIND_MODULE') || !C('MULTI_MODULE'))? __APP__ : __APP__.'/'.($urlCase ? strtolower($moduleName) : $moduleName));
 
-        if('' != $_SERVER['PATH_INFO'] && (!C('URL_ROUTER_ON') ||  !Route::check()) ){   // æ£€æµ‹è·¯ç”±è§„åˆ™ å¦‚æœæ²¡æœ‰åˆ™æŒ‰é»˜è®¤è§„åˆ™è°ƒåº¦URL
+        if('' != $_SERVER['PATH_INFO'] && (!C('URL_ROUTER_ON') ||  !Route::check()) ){   // ¼ì²âÂ·ÓÉ¹æÔò Èç¹ûÃ»ÓĞÔò°´Ä¬ÈÏ¹æÔòµ÷¶ÈURL
             Hook::listen('path_info');
-            // æ£€æŸ¥ç¦æ­¢è®¿é—®çš„URLåç¼€
+            // ¼ì²é½ûÖ¹·ÃÎÊµÄURLºó×º
             if(C('URL_DENY_SUFFIX') && preg_match('/\.('.trim(C('URL_DENY_SUFFIX'),'.').')$/i', $_SERVER['PATH_INFO'])){
                 send_http_status(404);
                 exit;
             }
             
-            // å»é™¤URLåç¼€
+            // È¥³ıURLºó×º
             $_SERVER['PATH_INFO'] = preg_replace(C('URL_HTML_SUFFIX')? '/\.('.trim(C('URL_HTML_SUFFIX'),'.').')$/i' : '/\.'.__EXT__.'$/i', '', $_SERVER['PATH_INFO']);
 
             $depr   =   C('URL_PATHINFO_DEPR');
             $paths  =   explode($depr,trim($_SERVER['PATH_INFO'],$depr));
 
-            if(!defined('BIND_CONTROLLER')) {// è·å–æ§åˆ¶å™¨
-                if(C('CONTROLLER_LEVEL')>1){// æ§åˆ¶å™¨å±‚æ¬¡
+            if(!defined('BIND_CONTROLLER')) {// »ñÈ¡¿ØÖÆÆ÷
+                if(C('CONTROLLER_LEVEL')>1){// ¿ØÖÆÆ÷²ã´Î
                     $_GET[$varController]   =   implode('/',array_slice($paths,0,C('CONTROLLER_LEVEL')));
                     $paths  =   array_slice($paths, C('CONTROLLER_LEVEL'));
                 }else{
                     $_GET[$varController]   =   array_shift($paths);
                 }
             }
-            // è·å–æ“ä½œ
+            // »ñÈ¡²Ù×÷
             if(!defined('BIND_ACTION')){
                 $_GET[$varAction]  =   array_shift($paths);
             }
-            // è§£æå‰©ä½™çš„URLå‚æ•°
+            // ½âÎöÊ£ÓàµÄURL²ÎÊı
             $var  =  array();
             if(C('URL_PARAMS_BIND') && 1 == C('URL_PARAMS_BIND_TYPE')){
-                // URLå‚æ•°æŒ‰é¡ºåºç»‘å®šå˜é‡
+                // URL²ÎÊı°´Ë³Ğò°ó¶¨±äÁ¿
                 $var    =   $paths;
             }else{
                 preg_replace_callback('/(\w+)\/([^\/]+)/', function($match) use(&$var){$var[$match[1]]=strip_tags($match[2]);}, implode('/',$paths));
             }
             $_GET   =  array_merge($var,$_GET);
         }
-        // è·å–æ§åˆ¶å™¨çš„å‘½åç©ºé—´ï¼ˆè·¯å¾„ï¼‰
+        // »ñÈ¡¿ØÖÆÆ÷µÄÃüÃû¿Õ¼ä£¨Â·¾¶£©
         define('CONTROLLER_PATH',   self::getSpace($varAddon,$urlCase));
-        // è·å–æ§åˆ¶å™¨å’Œæ“ä½œå
+        // »ñÈ¡¿ØÖÆÆ÷ºÍ²Ù×÷Ãû
         define('CONTROLLER_NAME',   defined('BIND_CONTROLLER')? BIND_CONTROLLER : self::getController($varController,$urlCase));
         define('ACTION_NAME',       defined('BIND_ACTION')? BIND_ACTION : self::getAction($varAction,$urlCase));
 
-        // å½“å‰æ§åˆ¶å™¨çš„URåœ°å€
+        // µ±Ç°¿ØÖÆÆ÷µÄURµØÖ·
         $controllerName    =   defined('CONTROLLER_ALIAS')? CONTROLLER_ALIAS : CONTROLLER_NAME;
         define('__CONTROLLER__',__MODULE__.$depr.(defined('BIND_CONTROLLER')? '': ( $urlCase ? parse_name($controllerName) : $controllerName )) );
 
-        // å½“å‰æ“ä½œçš„URLåœ°å€
+        // µ±Ç°²Ù×÷µÄURLµØÖ·
         define('__ACTION__',__CONTROLLER__.$depr.(defined('ACTION_ALIAS')?ACTION_ALIAS:ACTION_NAME));
 
-        //ä¿è¯$_REQUESTæ­£å¸¸å–å€¼
+        //±£Ö¤$_REQUESTÕı³£È¡Öµ
         $_REQUEST = array_merge($_POST,$_GET);
     }
 
     /**
-     * è·å¾—æ§åˆ¶å™¨çš„å‘½åç©ºé—´è·¯å¾„ ä¾¿äºæ’ä»¶æœºåˆ¶è®¿é—®
+     * »ñµÃ¿ØÖÆÆ÷µÄÃüÃû¿Õ¼äÂ·¾¶ ±ãÓÚ²å¼ş»úÖÆ·ÃÎÊ
      */
     static private function getSpace($var,$urlCase) {
         $space  =   !empty($_GET[$var])?ucfirst($var).'\\'.strip_tags($_GET[$var]):'';
@@ -252,32 +252,32 @@ class Dispatcher {
     }
 
     /**
-     * è·å¾—å®é™…çš„æ§åˆ¶å™¨åç§°
+     * »ñµÃÊµ¼ÊµÄ¿ØÖÆÆ÷Ãû³Æ
      */
     static private function getController($var,$urlCase) {
         $controller = (!empty($_GET[$var])? $_GET[$var]:C('DEFAULT_CONTROLLER'));
         unset($_GET[$var]);
         if($maps = C('URL_CONTROLLER_MAP')) {
             if(isset($maps[strtolower($controller)])) {
-                // è®°å½•å½“å‰åˆ«å
+                // ¼ÇÂ¼µ±Ç°±ğÃû
                 define('CONTROLLER_ALIAS',strtolower($controller));
-                // è·å–å®é™…çš„æ§åˆ¶å™¨å
+                // »ñÈ¡Êµ¼ÊµÄ¿ØÖÆÆ÷Ãû
                 return   ucfirst($maps[CONTROLLER_ALIAS]);
             }elseif(array_search(strtolower($controller),$maps)){
-                // ç¦æ­¢è®¿é—®åŸå§‹æ§åˆ¶å™¨
+                // ½ûÖ¹·ÃÎÊÔ­Ê¼¿ØÖÆÆ÷
                 return   '';
             }
         }
         if($urlCase) {
-            // URLåœ°å€ä¸åŒºåˆ†å¤§å°å†™
-            // æ™ºèƒ½è¯†åˆ«æ–¹å¼ user_type è¯†åˆ«åˆ° UserTypeController æ§åˆ¶å™¨
+            // URLµØÖ·²»Çø·Ö´óĞ¡Ğ´
+            // ÖÇÄÜÊ¶±ğ·½Ê½ user_type Ê¶±ğµ½ UserTypeController ¿ØÖÆÆ÷
             $controller = parse_name($controller,1);
         }
         return strip_tags(ucfirst($controller));
     }
 
     /**
-     * è·å¾—å®é™…çš„æ“ä½œåç§°
+     * »ñµÃÊµ¼ÊµÄ²Ù×÷Ãû³Æ
      */
     static private function getAction($var,$urlCase) {
         $action   = !empty($_POST[$var]) ?
@@ -288,9 +288,9 @@ class Dispatcher {
             if(isset($maps[strtolower(CONTROLLER_NAME)])) {
                 $maps =   $maps[strtolower(CONTROLLER_NAME)];
                 if(isset($maps[strtolower($action)])) {
-                    // è®°å½•å½“å‰åˆ«å
+                    // ¼ÇÂ¼µ±Ç°±ğÃû
                     define('ACTION_ALIAS',strtolower($action));
-                    // è·å–å®é™…çš„æ“ä½œå
+                    // »ñÈ¡Êµ¼ÊµÄ²Ù×÷Ãû
                     if(is_array($maps[ACTION_ALIAS])){
                         parse_str($maps[ACTION_ALIAS][1],$vars);
                         $_GET   =   array_merge($_GET,$vars);
@@ -300,7 +300,7 @@ class Dispatcher {
                     }
                     
                 }elseif(array_search(strtolower($action),$maps)){
-                    // ç¦æ­¢è®¿é—®åŸå§‹æ“ä½œ
+                    // ½ûÖ¹·ÃÎÊÔ­Ê¼²Ù×÷
                     return   '';
                 }
             }
@@ -309,19 +309,19 @@ class Dispatcher {
     }
 
     /**
-     * è·å¾—å®é™…çš„æ¨¡å—åç§°
+     * »ñµÃÊµ¼ÊµÄÄ£¿éÃû³Æ
      */
     static private function getModule($var) {
         $module   = (!empty($_GET[$var])?$_GET[$var]:C('DEFAULT_MODULE'));
         unset($_GET[$var]);
         if($maps = C('URL_MODULE_MAP')) {
             if(isset($maps[strtolower($module)])) {
-                // è®°å½•å½“å‰åˆ«å
+                // ¼ÇÂ¼µ±Ç°±ğÃû
                 define('MODULE_ALIAS',strtolower($module));
-                // è·å–å®é™…çš„æ¨¡å—å
+                // »ñÈ¡Êµ¼ÊµÄÄ£¿éÃû
                 return   ucfirst($maps[MODULE_ALIAS]);
             }elseif(array_search(strtolower($module),$maps)){
-                // ç¦æ­¢è®¿é—®åŸå§‹æ¨¡å—
+                // ½ûÖ¹·ÃÎÊÔ­Ê¼Ä£¿é
                 return   '';
             }
         }

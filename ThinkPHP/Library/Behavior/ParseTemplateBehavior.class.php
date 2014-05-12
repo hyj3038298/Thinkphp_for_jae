@@ -12,27 +12,27 @@ namespace Behavior;
 use Think\Storage;
 use Think\Think;
 /**
- * ç³»ç»Ÿè¡Œä¸ºæ‰©å±•ï¼šæ¨¡æ¿è§£æ
+ * ÏµÍ³ĞĞÎªÀ©Õ¹£ºÄ£°å½âÎö
  */
 class ParseTemplateBehavior {
 
-    // è¡Œä¸ºæ‰©å±•çš„æ‰§è¡Œå…¥å£å¿…é¡»æ˜¯run
+    // ĞĞÎªÀ©Õ¹µÄÖ´ĞĞÈë¿Ú±ØĞëÊÇrun
     public function run(&$_data){
         $engine             =   strtolower(C('TMPL_ENGINE_TYPE'));
         $_content           =   empty($_data['content'])?$_data['file']:$_data['content'];
         $_data['prefix']    =   !empty($_data['prefix'])?$_data['prefix']:C('TMPL_CACHE_PREFIX');
-        if('think'==$engine){ // é‡‡ç”¨Thinkæ¨¡æ¿å¼•æ“
+        if('think'==$engine){ // ²ÉÓÃThinkÄ£°åÒıÇæ
             if((!empty($_data['content']) && $this->checkContentCache($_data['content'],$_data['prefix'])) 
-                ||  $this->checkCache($_data['file'],$_data['prefix'])) { // ç¼“å­˜æœ‰æ•ˆ
-                //è½½å…¥æ¨¡ç‰ˆç¼“å­˜æ–‡ä»¶
+                ||  $this->checkCache($_data['file'],$_data['prefix'])) { // »º´æÓĞĞ§
+                //ÔØÈëÄ£°æ»º´æÎÄ¼ş
                 Storage::load(C('CACHE_PATH').$_data['prefix'].md5($_content).C('TMPL_CACHFILE_SUFFIX'),$_data['var']);
             }else{
                 $tpl = Think::instance('Think\\Template');
-                // ç¼–è¯‘å¹¶åŠ è½½æ¨¡æ¿æ–‡ä»¶
+                // ±àÒë²¢¼ÓÔØÄ£°åÎÄ¼ş
                 $tpl->fetch($_content,$_data['var'],$_data['prefix']);
             }
         }else{
-            // è°ƒç”¨ç¬¬ä¸‰æ–¹æ¨¡æ¿å¼•æ“è§£æå’Œè¾“å‡º
+            // µ÷ÓÃµÚÈı·½Ä£°åÒıÇæ½âÎöºÍÊä³ö
             if(strpos($engine,'\\')){
                 $class  =   $engine;
             }else{
@@ -41,48 +41,48 @@ class ParseTemplateBehavior {
             if(class_exists($class)) {
                 $tpl   =  new $class;
                 $tpl->fetch($_content,$_data['var']);
-            }else {  // ç±»æ²¡æœ‰å®šä¹‰
+            }else {  // ÀàÃ»ÓĞ¶¨Òå
                 E(L('_NOT_SUPPERT_').': ' . $class);
             }
         }
     }
 
     /**
-     * æ£€æŸ¥ç¼“å­˜æ–‡ä»¶æ˜¯å¦æœ‰æ•ˆ
-     * å¦‚æœæ— æ•ˆåˆ™éœ€è¦é‡æ–°ç¼–è¯‘
+     * ¼ì²é»º´æÎÄ¼şÊÇ·ñÓĞĞ§
+     * Èç¹ûÎŞĞ§ÔòĞèÒªÖØĞÂ±àÒë
      * @access public
-     * @param string $tmplTemplateFile  æ¨¡æ¿æ–‡ä»¶å
+     * @param string $tmplTemplateFile  Ä£°åÎÄ¼şÃû
      * @return boolean
      */
     protected function checkCache($tmplTemplateFile,$prefix='') {
-        if (!C('TMPL_CACHE_ON')) // ä¼˜å…ˆå¯¹é…ç½®è®¾å®šæ£€æµ‹
+        if (!C('TMPL_CACHE_ON')) // ÓÅÏÈ¶ÔÅäÖÃÉè¶¨¼ì²â
             return false;
         $tmplCacheFile = C('CACHE_PATH').$prefix.md5($tmplTemplateFile).C('TMPL_CACHFILE_SUFFIX');
         if(!Storage::has($tmplCacheFile)){
             return false;
         }elseif (filemtime($tmplTemplateFile) > Storage::get($tmplCacheFile,'mtime')) {
-            // æ¨¡æ¿æ–‡ä»¶å¦‚æœæœ‰æ›´æ–°åˆ™ç¼“å­˜éœ€è¦æ›´æ–°
+            // Ä£°åÎÄ¼şÈç¹ûÓĞ¸üĞÂÔò»º´æĞèÒª¸üĞÂ
             return false;
         }elseif (C('TMPL_CACHE_TIME') != 0 && time() > Storage::get($tmplCacheFile,'mtime')+C('TMPL_CACHE_TIME')) {
-            // ç¼“å­˜æ˜¯å¦åœ¨æœ‰æ•ˆæœŸ
+            // »º´æÊÇ·ñÔÚÓĞĞ§ÆÚ
             return false;
         }
-        // å¼€å¯å¸ƒå±€æ¨¡æ¿
+        // ¿ªÆô²¼¾ÖÄ£°å
         if(C('LAYOUT_ON')) {
             $layoutFile  =  THEME_PATH.C('LAYOUT_NAME').C('TMPL_TEMPLATE_SUFFIX');
             if(filemtime($layoutFile) > Storage::get($tmplCacheFile,'mtime')) {
                 return false;
             }
         }
-        // ç¼“å­˜æœ‰æ•ˆ
+        // »º´æÓĞĞ§
         return true;
     }
 
     /**
-     * æ£€æŸ¥ç¼“å­˜å†…å®¹æ˜¯å¦æœ‰æ•ˆ
-     * å¦‚æœæ— æ•ˆåˆ™éœ€è¦é‡æ–°ç¼–è¯‘
+     * ¼ì²é»º´æÄÚÈİÊÇ·ñÓĞĞ§
+     * Èç¹ûÎŞĞ§ÔòĞèÒªÖØĞÂ±àÒë
      * @access public
-     * @param string $tmplContent  æ¨¡æ¿å†…å®¹
+     * @param string $tmplContent  Ä£°åÄÚÈİ
      * @return boolean
      */
     protected function checkContentCache($tmplContent,$prefix='') {

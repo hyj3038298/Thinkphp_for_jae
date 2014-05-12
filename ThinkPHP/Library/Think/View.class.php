@@ -10,25 +10,25 @@
 // +----------------------------------------------------------------------
 namespace Think;
 /**
- * ThinkPHP è§†å›¾ç±»
+ * ThinkPHP ÊÓÍ¼Àà
  */
 class View {
     /**
-     * æ¨¡æ¿è¾“å‡ºå˜é‡
+     * Ä£°åÊä³ö±äÁ¿
      * @var tVar
      * @access protected
      */ 
     protected $tVar     =   array();
 
     /**
-     * æ¨¡æ¿ä¸»é¢˜
+     * Ä£°åÖ÷Ìâ
      * @var theme
      * @access protected
      */ 
     protected $theme    =   '';
 
     /**
-     * æ¨¡æ¿å˜é‡èµ‹å€¼
+     * Ä£°å±äÁ¿¸³Öµ
      * @access public
      * @param mixed $name
      * @param mixed $value
@@ -42,7 +42,7 @@ class View {
     }
 
     /**
-     * å–å¾—æ¨¡æ¿å˜é‡çš„å€¼
+     * È¡µÃÄ£°å±äÁ¿µÄÖµ
      * @access public
      * @param string $name
      * @return mixed
@@ -55,85 +55,85 @@ class View {
     }
 
     /**
-     * åŠ è½½æ¨¡æ¿å’Œé¡µé¢è¾“å‡º å¯ä»¥è¿”å›è¾“å‡ºå†…å®¹
+     * ¼ÓÔØÄ£°åºÍÒ³ÃæÊä³ö ¿ÉÒÔ·µ»ØÊä³öÄÚÈİ
      * @access public
-     * @param string $templateFile æ¨¡æ¿æ–‡ä»¶å
-     * @param string $charset æ¨¡æ¿è¾“å‡ºå­—ç¬¦é›†
-     * @param string $contentType è¾“å‡ºç±»å‹
-     * @param string $content æ¨¡æ¿è¾“å‡ºå†…å®¹
-     * @param string $prefix æ¨¡æ¿ç¼“å­˜å‰ç¼€
+     * @param string $templateFile Ä£°åÎÄ¼şÃû
+     * @param string $charset Ä£°åÊä³ö×Ö·û¼¯
+     * @param string $contentType Êä³öÀàĞÍ
+     * @param string $content Ä£°åÊä³öÄÚÈİ
+     * @param string $prefix Ä£°å»º´æÇ°×º
      * @return mixed
      */
     public function display($templateFile='',$charset='',$contentType='',$content='',$prefix='') {
         G('viewStartTime');
-        // è§†å›¾å¼€å§‹æ ‡ç­¾
+        // ÊÓÍ¼¿ªÊ¼±êÇ©
         Hook::listen('view_begin',$templateFile);
-        // è§£æå¹¶è·å–æ¨¡æ¿å†…å®¹
+        // ½âÎö²¢»ñÈ¡Ä£°åÄÚÈİ
         $content = $this->fetch($templateFile,$content,$prefix);
-        // è¾“å‡ºæ¨¡æ¿å†…å®¹
+        // Êä³öÄ£°åÄÚÈİ
         $this->render($content,$charset,$contentType);
-        // è§†å›¾ç»“æŸæ ‡ç­¾
+        // ÊÓÍ¼½áÊø±êÇ©
         Hook::listen('view_end');
     }
 
     /**
-     * è¾“å‡ºå†…å®¹æ–‡æœ¬å¯ä»¥åŒ…æ‹¬Html
+     * Êä³öÄÚÈİÎÄ±¾¿ÉÒÔ°üÀ¨Html
      * @access private
-     * @param string $content è¾“å‡ºå†…å®¹
-     * @param string $charset æ¨¡æ¿è¾“å‡ºå­—ç¬¦é›†
-     * @param string $contentType è¾“å‡ºç±»å‹
+     * @param string $content Êä³öÄÚÈİ
+     * @param string $charset Ä£°åÊä³ö×Ö·û¼¯
+     * @param string $contentType Êä³öÀàĞÍ
      * @return mixed
      */
     private function render($content,$charset='',$contentType=''){
         if(empty($charset))  $charset = C('DEFAULT_CHARSET');
         if(empty($contentType)) $contentType = C('TMPL_CONTENT_TYPE');
-        // ç½‘é¡µå­—ç¬¦ç¼–ç 
+        // ÍøÒ³×Ö·û±àÂë
         header('Content-Type:'.$contentType.'; charset='.$charset);
-        header('Cache-control: '.C('HTTP_CACHE_CONTROL'));  // é¡µé¢ç¼“å­˜æ§åˆ¶
+        header('Cache-control: '.C('HTTP_CACHE_CONTROL'));  // Ò³Ãæ»º´æ¿ØÖÆ
         header('X-Powered-By:ThinkPHP');
-        // è¾“å‡ºæ¨¡æ¿æ–‡ä»¶
+        // Êä³öÄ£°åÎÄ¼ş
         echo $content;
     }
 
     /**
-     * è§£æå’Œè·å–æ¨¡æ¿å†…å®¹ ç”¨äºè¾“å‡º
+     * ½âÎöºÍ»ñÈ¡Ä£°åÄÚÈİ ÓÃÓÚÊä³ö
      * @access public
-     * @param string $templateFile æ¨¡æ¿æ–‡ä»¶å
-     * @param string $content æ¨¡æ¿è¾“å‡ºå†…å®¹
-     * @param string $prefix æ¨¡æ¿ç¼“å­˜å‰ç¼€
+     * @param string $templateFile Ä£°åÎÄ¼şÃû
+     * @param string $content Ä£°åÊä³öÄÚÈİ
+     * @param string $prefix Ä£°å»º´æÇ°×º
      * @return string
      */
     public function fetch($templateFile='',$content='',$prefix='') {
         if(empty($content)) {
             $templateFile   =   $this->parseTemplate($templateFile);
-            // æ¨¡æ¿æ–‡ä»¶ä¸å­˜åœ¨ç›´æ¥è¿”å›
+            // Ä£°åÎÄ¼ş²»´æÔÚÖ±½Ó·µ»Ø
             if(!is_file($templateFile)) E(L('_TEMPLATE_NOT_EXIST_').':'.$templateFile);
         }
-        // é¡µé¢ç¼“å­˜
+        // Ò³Ãæ»º´æ
         ob_start();
         ob_implicit_flush(0);
-        if('php' == strtolower(C('TMPL_ENGINE_TYPE'))) { // ä½¿ç”¨PHPåŸç”Ÿæ¨¡æ¿
-            // æ¨¡æ¿é˜µåˆ—å˜é‡åˆ†è§£æˆä¸ºç‹¬ç«‹å˜é‡
+        if('php' == strtolower(C('TMPL_ENGINE_TYPE'))) { // Ê¹ÓÃPHPÔ­ÉúÄ£°å
+            // Ä£°åÕóÁĞ±äÁ¿·Ö½â³ÉÎª¶ÀÁ¢±äÁ¿
             extract($this->tVar, EXTR_OVERWRITE);
-            // ç›´æ¥è½½å…¥PHPæ¨¡æ¿
+            // Ö±½ÓÔØÈëPHPÄ£°å
             empty($content)?include $templateFile:eval('?>'.$content);
         }else{
-            // è§†å›¾è§£ææ ‡ç­¾
+            // ÊÓÍ¼½âÎö±êÇ©
             $params = array('var'=>$this->tVar,'file'=>$templateFile,'content'=>$content,'prefix'=>$prefix);
             Hook::listen('view_parse',$params);
         }
-        // è·å–å¹¶æ¸…ç©ºç¼“å­˜
+        // »ñÈ¡²¢Çå¿Õ»º´æ
         $content = ob_get_clean();
-        // å†…å®¹è¿‡æ»¤æ ‡ç­¾
+        // ÄÚÈİ¹ıÂË±êÇ©
         Hook::listen('view_filter',$content);
-        // è¾“å‡ºæ¨¡æ¿æ–‡ä»¶
+        // Êä³öÄ£°åÎÄ¼ş
         return $content;
     }
 
     /**
-     * è‡ªåŠ¨å®šä½æ¨¡æ¿æ–‡ä»¶
+     * ×Ô¶¯¶¨Î»Ä£°åÎÄ¼ş
      * @access protected
-     * @param string $template æ¨¡æ¿æ–‡ä»¶è§„åˆ™
+     * @param string $template Ä£°åÎÄ¼ş¹æÔò
      * @return string
      */
     public function parseTemplate($template='') {
@@ -142,38 +142,38 @@ class View {
         }
         $depr       =   C('TMPL_FILE_DEPR');
         $template   =   str_replace(':', $depr, $template);
-        // è·å–å½“å‰ä¸»é¢˜åç§°
+        // »ñÈ¡µ±Ç°Ö÷ÌâÃû³Æ
         $theme = $this->getTemplateTheme();
 
-        // è·å–å½“å‰æ¨¡å—
+        // »ñÈ¡µ±Ç°Ä£¿é
         $module   =  MODULE_NAME;
-        if(strpos($template,'@')){ // è·¨æ¨¡å—è°ƒç”¨æ¨¡ç‰ˆæ–‡ä»¶
+        if(strpos($template,'@')){ // ¿çÄ£¿éµ÷ÓÃÄ£°æÎÄ¼ş
             list($module,$template)  =   explode('@',$template);
         }
-        // è·å–å½“å‰ä¸»é¢˜çš„æ¨¡ç‰ˆè·¯å¾„
+        // »ñÈ¡µ±Ç°Ö÷ÌâµÄÄ£°æÂ·¾¶
         if(!defined('THEME_PATH')){
             define('THEME_PATH', C('VIEW_PATH')? C('VIEW_PATH').$theme : APP_PATH.$module.'/'.C('DEFAULT_V_LAYER').'/'.$theme);
         }
 
-        // åˆ†ææ¨¡æ¿æ–‡ä»¶è§„åˆ™
+        // ·ÖÎöÄ£°åÎÄ¼ş¹æÔò
         if('' == $template) {
-            // å¦‚æœæ¨¡æ¿æ–‡ä»¶åä¸ºç©º æŒ‰ç…§é»˜è®¤è§„åˆ™å®šä½
+            // Èç¹ûÄ£°åÎÄ¼şÃûÎª¿Õ °´ÕÕÄ¬ÈÏ¹æÔò¶¨Î»
             $template = CONTROLLER_NAME . $depr . ACTION_NAME;
         }elseif(false === strpos($template, $depr)){
             $template = CONTROLLER_NAME . $depr . $template;
         }
         $file   =   THEME_PATH.$template.C('TMPL_TEMPLATE_SUFFIX');
         if(C('TMPL_LOAD_DEFAULTTHEME') && THEME_NAME != C('DEFAULT_THEME') && !is_file($file)){
-            // æ‰¾ä¸åˆ°å½“å‰ä¸»é¢˜æ¨¡æ¿çš„æ—¶å€™å®šä½é»˜è®¤ä¸»é¢˜ä¸­çš„æ¨¡æ¿
+            // ÕÒ²»µ½µ±Ç°Ö÷ÌâÄ£°åµÄÊ±ºò¶¨Î»Ä¬ÈÏÖ÷ÌâÖĞµÄÄ£°å
             $file   =   dirname(THEME_PATH).'/'.C('DEFAULT_THEME').'/'.$template.C('TMPL_TEMPLATE_SUFFIX');
         }
         return $file;
     }
 
     /**
-     * è®¾ç½®å½“å‰è¾“å‡ºçš„æ¨¡æ¿ä¸»é¢˜
+     * ÉèÖÃµ±Ç°Êä³öµÄÄ£°åÖ÷Ìâ
      * @access public
-     * @param  mixed $theme ä¸»é¢˜åç§°
+     * @param  mixed $theme Ö÷ÌâÃû³Æ
      * @return View
      */
     public function theme($theme){
@@ -182,17 +182,17 @@ class View {
     }
 
     /**
-     * è·å–å½“å‰çš„æ¨¡æ¿ä¸»é¢˜
+     * »ñÈ¡µ±Ç°µÄÄ£°åÖ÷Ìâ
      * @access private
      * @return string
      */
     private function getTemplateTheme() {
-        if($this->theme) { // æŒ‡å®šæ¨¡æ¿ä¸»é¢˜
+        if($this->theme) { // Ö¸¶¨Ä£°åÖ÷Ìâ
             $theme = $this->theme;
         }else{
-            /* è·å–æ¨¡æ¿ä¸»é¢˜åç§° */
+            /* »ñÈ¡Ä£°åÖ÷ÌâÃû³Æ */
             $theme =  C('DEFAULT_THEME');
-            if(C('TMPL_DETECT_THEME')) {// è‡ªåŠ¨ä¾¦æµ‹æ¨¡æ¿ä¸»é¢˜
+            if(C('TMPL_DETECT_THEME')) {// ×Ô¶¯Õì²âÄ£°åÖ÷Ìâ
                 $t = C('VAR_TEMPLATE');
                 if (isset($_GET[$t])){
                     $theme = $_GET[$t];
@@ -205,7 +205,7 @@ class View {
                 cookie('think_template',$theme,864000);
             }
         }
-        defined('THEME_NAME') || define('THEME_NAME',   $theme);                  // å½“å‰æ¨¡æ¿ä¸»é¢˜åç§°
+        defined('THEME_NAME') || define('THEME_NAME',   $theme);                  // µ±Ç°Ä£°åÖ÷ÌâÃû³Æ
         return $theme?$theme . '/':'';
     }
 

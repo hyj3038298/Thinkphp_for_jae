@@ -12,14 +12,14 @@ namespace Think\Db\Driver;
 use Think\Db;
 defined('THINK_PATH') or exit();
 /**
- * Mysqliæ•°æ®åº“é©±åŠ¨ç±»
+ * MysqliÊı¾İ¿âÇı¶¯Àà
  */
 class Mysqli extends Db{
 
     /**
-     * æ¶æ„å‡½æ•° è¯»å–æ•°æ®åº“é…ç½®ä¿¡æ¯
+     * ¼Ü¹¹º¯Êı ¶ÁÈ¡Êı¾İ¿âÅäÖÃĞÅÏ¢
      * @access public
-     * @param array $config æ•°æ®åº“é…ç½®æ•°ç»„
+     * @param array $config Êı¾İ¿âÅäÖÃÊı×é
      */
     public function __construct($config=''){
         if ( !extension_loaded('mysqli') ) {
@@ -34,7 +34,7 @@ class Mysqli extends Db{
     }
 
     /**
-     * è¿æ¥æ•°æ®åº“æ–¹æ³•
+     * Á¬½ÓÊı¾İ¿â·½·¨
      * @access public
      * @throws ThinkExecption
      */
@@ -45,22 +45,22 @@ class Mysqli extends Db{
             if (mysqli_connect_errno()) E(mysqli_connect_error());
             $dbVersion = $this->linkID[$linkNum]->server_version;
             
-            // è®¾ç½®æ•°æ®åº“ç¼–ç 
+            // ÉèÖÃÊı¾İ¿â±àÂë
             $this->linkID[$linkNum]->query("SET NAMES '".$config['charset']."'");
-            //è®¾ç½® sql_model
+            //ÉèÖÃ sql_model
             if($dbVersion >'5.0.1'){
                 $this->linkID[$linkNum]->query("SET sql_mode=''");
             }
-            // æ ‡è®°è¿æ¥æˆåŠŸ
+            // ±ê¼ÇÁ¬½Ó³É¹¦
             $this->connected    =   true;
-            //æ³¨é”€æ•°æ®åº“å®‰å…¨ä¿¡æ¯
+            //×¢ÏúÊı¾İ¿â°²È«ĞÅÏ¢
             if(1 != C('DB_DEPLOY_TYPE')) unset($this->config);
         }
         return $this->linkID[$linkNum];
     }
 
     /**
-     * é‡Šæ”¾æŸ¥è¯¢ç»“æœ
+     * ÊÍ·Å²éÑ¯½á¹û
      * @access public
      */
     public function free() {
@@ -71,22 +71,22 @@ class Mysqli extends Db{
     }
 
     /**
-     * æ‰§è¡ŒæŸ¥è¯¢ è¿”å›æ•°æ®é›†
+     * Ö´ĞĞ²éÑ¯ ·µ»ØÊı¾İ¼¯
      * @access public
-     * @param string $str  sqlæŒ‡ä»¤
+     * @param string $str  sqlÖ¸Áî
      * @return mixed
      */
     public function query($str) {
         $this->initConnect(false);
         if ( !$this->_linkID ) return false;
         $this->queryStr = $str;
-        //é‡Šæ”¾å‰æ¬¡çš„æŸ¥è¯¢ç»“æœ
+        //ÊÍ·ÅÇ°´ÎµÄ²éÑ¯½á¹û
         if ( $this->queryID ) $this->free();
         N('db_query',1);
-        // è®°å½•å¼€å§‹æ‰§è¡Œæ—¶é—´
+        // ¼ÇÂ¼¿ªÊ¼Ö´ĞĞÊ±¼ä
         G('queryStartTime');
         $this->queryID = $this->_linkID->query($str);
-        // å¯¹å­˜å‚¨è¿‡ç¨‹æ”¹è¿›
+        // ¶Ô´æ´¢¹ı³Ì¸Ä½ø
         if( $this->_linkID->more_results() ){
             while (($res = $this->_linkID->next_result()) != NULL) {
                 $res->free_result();
@@ -104,19 +104,19 @@ class Mysqli extends Db{
     }
 
     /**
-     * æ‰§è¡Œè¯­å¥
+     * Ö´ĞĞÓï¾ä
      * @access public
-     * @param string $str  sqlæŒ‡ä»¤
+     * @param string $str  sqlÖ¸Áî
      * @return integer
      */
     public function execute($str) {
         $this->initConnect(true);
         if ( !$this->_linkID ) return false;
         $this->queryStr = $str;
-        //é‡Šæ”¾å‰æ¬¡çš„æŸ¥è¯¢ç»“æœ
+        //ÊÍ·ÅÇ°´ÎµÄ²éÑ¯½á¹û
         if ( $this->queryID ) $this->free();
         N('db_write',1);
-        // è®°å½•å¼€å§‹æ‰§è¡Œæ—¶é—´
+        // ¼ÇÂ¼¿ªÊ¼Ö´ĞĞÊ±¼ä
         G('queryStartTime');
         $result =   $this->_linkID->query($str);
         $this->debug();
@@ -131,13 +131,13 @@ class Mysqli extends Db{
     }
 
     /**
-     * å¯åŠ¨äº‹åŠ¡
+     * Æô¶¯ÊÂÎñ
      * @access public
      * @return void
      */
     public function startTrans() {
         $this->initConnect(true);
-        //æ•°æ®rollback æ”¯æŒ
+        //Êı¾İrollback Ö§³Ö
         if ($this->transTimes == 0) {
             $this->_linkID->autocommit(false);
         }
@@ -146,7 +146,7 @@ class Mysqli extends Db{
     }
 
     /**
-     * ç”¨äºéè‡ªåŠ¨æäº¤çŠ¶æ€ä¸‹é¢çš„æŸ¥è¯¢æäº¤
+     * ÓÃÓÚ·Ç×Ô¶¯Ìá½»×´Ì¬ÏÂÃæµÄ²éÑ¯Ìá½»
      * @access public
      * @return boolen
      */
@@ -164,7 +164,7 @@ class Mysqli extends Db{
     }
 
     /**
-     * äº‹åŠ¡å›æ»š
+     * ÊÂÎñ»Ø¹ö
      * @access public
      * @return boolen
      */
@@ -182,16 +182,16 @@ class Mysqli extends Db{
     }
 
     /**
-     * è·å¾—æ‰€æœ‰çš„æŸ¥è¯¢æ•°æ®
+     * »ñµÃËùÓĞµÄ²éÑ¯Êı¾İ
      * @access private
-     * @param string $sql  sqlè¯­å¥
+     * @param string $sql  sqlÓï¾ä
      * @return array
      */
     private function getAll() {
-        //è¿”å›æ•°æ®é›†
+        //·µ»ØÊı¾İ¼¯
         $result = array();
         if($this->numRows>0) {
-            //è¿”å›æ•°æ®é›†
+            //·µ»ØÊı¾İ¼¯
             for($i=0;$i<$this->numRows ;$i++ ){
                 $result[$i] = $this->queryID->fetch_assoc();
             }
@@ -201,7 +201,7 @@ class Mysqli extends Db{
     }
 
     /**
-     * å–å¾—æ•°æ®è¡¨çš„å­—æ®µä¿¡æ¯
+     * È¡µÃÊı¾İ±íµÄ×Ö¶ÎĞÅÏ¢
      * @access public
      * @return array
      */
@@ -224,7 +224,7 @@ class Mysqli extends Db{
     }
 
     /**
-     * å–å¾—æ•°æ®è¡¨çš„å­—æ®µä¿¡æ¯
+     * È¡µÃÊı¾İ±íµÄ×Ö¶ÎĞÅÏ¢
      * @access public
      * @return array
      */
@@ -241,16 +241,16 @@ class Mysqli extends Db{
     }
 
     /**
-     * æ›¿æ¢è®°å½•
+     * Ìæ»»¼ÇÂ¼
      * @access public
-     * @param mixed $data æ•°æ®
-     * @param array $options å‚æ•°è¡¨è¾¾å¼
+     * @param mixed $data Êı¾İ
+     * @param array $options ²ÎÊı±í´ïÊ½
      * @return false | integer
      */
     public function replace($data,$options=array()) {
         foreach ($data as $key=>$val){
             $value   =  $this->parseValue($val);
-            if(is_scalar($value)) { // è¿‡æ»¤éæ ‡é‡æ•°æ®
+            if(is_scalar($value)) { // ¹ıÂË·Ç±êÁ¿Êı¾İ
                 $values[]   =  $value;
                 $fields[]   =  $this->parseKey($key);
             }
@@ -260,11 +260,11 @@ class Mysqli extends Db{
     }
 
     /**
-     * æ’å…¥è®°å½•
+     * ²åÈë¼ÇÂ¼
      * @access public
-     * @param mixed $datas æ•°æ®
-     * @param array $options å‚æ•°è¡¨è¾¾å¼
-     * @param boolean $replace æ˜¯å¦replace
+     * @param mixed $datas Êı¾İ
+     * @param array $options ²ÎÊı±í´ïÊ½
+     * @param boolean $replace ÊÇ·ñreplace
      * @return false | integer
      */
     public function insertAll($datas,$options=array(),$replace=false) {
@@ -276,7 +276,7 @@ class Mysqli extends Db{
             $value   =  array();
             foreach ($data as $key=>$val){
                 $val   =  $this->parseValue($val);
-                if(is_scalar($val)) { // è¿‡æ»¤éæ ‡é‡æ•°æ®
+                if(is_scalar($val)) { // ¹ıÂË·Ç±êÁ¿Êı¾İ
                     $value[]   =  $val;
                 }
             }
@@ -287,7 +287,7 @@ class Mysqli extends Db{
     }
 
     /**
-     * å…³é—­æ•°æ®åº“
+     * ¹Ø±ÕÊı¾İ¿â
      * @access public
      * @return volid
      */
@@ -299,8 +299,8 @@ class Mysqli extends Db{
     }
 
     /**
-     * æ•°æ®åº“é”™è¯¯ä¿¡æ¯
-     * å¹¶æ˜¾ç¤ºå½“å‰çš„SQLè¯­å¥
+     * Êı¾İ¿â´íÎóĞÅÏ¢
+     * ²¢ÏÔÊ¾µ±Ç°µÄSQLÓï¾ä
      * @static
      * @access public
      * @return string
@@ -308,17 +308,17 @@ class Mysqli extends Db{
     public function error() {
         $this->error = $this->_linkID->errno.':'.$this->_linkID->error;
         if('' != $this->queryStr){
-            $this->error .= "\n [ SQLè¯­å¥ ] : ".$this->queryStr;
+            $this->error .= "\n [ SQLÓï¾ä ] : ".$this->queryStr;
         }
         trace($this->error,'','ERR');
         return $this->error;
     }
 
     /**
-     * SQLæŒ‡ä»¤å®‰å…¨è¿‡æ»¤
+     * SQLÖ¸Áî°²È«¹ıÂË
      * @static
      * @access public
-     * @param string $str  SQLæŒ‡ä»¤
+     * @param string $str  SQLÖ¸Áî
      * @return string
      */
     public function escapeString($str) {
@@ -330,7 +330,7 @@ class Mysqli extends Db{
     }
 
     /**
-     * å­—æ®µå’Œè¡¨åå¤„ç†æ·»åŠ `
+     * ×Ö¶ÎºÍ±íÃû´¦ÀíÌí¼Ó`
      * @access protected
      * @param string $key
      * @return string

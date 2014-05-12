@@ -10,59 +10,56 @@
 // +----------------------------------------------------------------------
 
 //----------------------------------
-// ThinkPHPå…¬å…±å…¥å£æ–‡ä»¶
+// ThinkPHP¹«¹²Èë¿ÚÎÄ¼ş
 //----------------------------------
-
-// è®°å½•å¼€å§‹è¿è¡Œæ—¶é—´
+// ¼ÇÂ¼¿ªÊ¼ÔËĞĞÊ±¼ä
 $GLOBALS['_beginTime'] = microtime(TRUE);
-// è®°å½•å†…å­˜åˆå§‹ä½¿ç”¨
+// ¼ÇÂ¼ÄÚ´æ³õÊ¼Ê¹ÓÃ
 define('MEMORY_LIMIT_ON',function_exists('memory_get_usage'));
 if(MEMORY_LIMIT_ON) $GLOBALS['_startUseMems'] = memory_get_usage();
-
-// ç‰ˆæœ¬ä¿¡æ¯
+// °æ±¾ĞÅÏ¢
 const THINK_VERSION     =   '3.2.2';
 
-// URL æ¨¡å¼å®šä¹‰
-const URL_COMMON        =   0;  //æ™®é€šæ¨¡å¼
-const URL_PATHINFO      =   1;  //PATHINFOæ¨¡å¼
-const URL_REWRITE       =   2;  //REWRITEæ¨¡å¼
-const URL_COMPAT        =   3;  // å…¼å®¹æ¨¡å¼
-
-// ç±»æ–‡ä»¶åç¼€
+// URL Ä£Ê½¶¨Òå
+const URL_COMMON        =   0;  //ÆÕÍ¨Ä£Ê½
+const URL_PATHINFO      =   1;  //PATHINFOÄ£Ê½
+const URL_REWRITE       =   2;  //REWRITEÄ£Ê½
+const URL_COMPAT        =   3;  // ¼æÈİÄ£Ê½
+// ÀàÎÄ¼şºó×º
 const EXT               =   '.class.php'; 
 
-// ç³»ç»Ÿå¸¸é‡å®šä¹‰
+// ÏµÍ³³£Á¿¶¨Òå
 defined('THINK_PATH')   or define('THINK_PATH',     __DIR__.'/');
 defined('APP_PATH')     or define('APP_PATH',       dirname($_SERVER['SCRIPT_FILENAME']).'/');
-defined('APP_STATUS')   or define('APP_STATUS',     ''); // åº”ç”¨çŠ¶æ€ åŠ è½½å¯¹åº”çš„é…ç½®æ–‡ä»¶
-defined('APP_DEBUG')    or define('APP_DEBUG',      false); // æ˜¯å¦è°ƒè¯•æ¨¡å¼
+defined('APP_STATUS')   or define('APP_STATUS',     ''); // Ó¦ÓÃ×´Ì¬ ¼ÓÔØ¶ÔÓ¦µÄÅäÖÃÎÄ¼ş
+defined('APP_DEBUG')    or define('APP_DEBUG',      false); // ÊÇ·ñµ÷ÊÔÄ£Ê½
 
-if(function_exists('saeAutoLoader')){// è‡ªåŠ¨è¯†åˆ«SAEç¯å¢ƒ
+if(function_exists('saeAutoLoader')){// ×Ô¶¯Ê¶±ğSAE»·¾³
     defined('APP_MODE')     or define('APP_MODE',      'sae');
     defined('STORAGE_TYPE') or define('STORAGE_TYPE',  'Sae');
 }else{
-    defined('APP_MODE')     or define('APP_MODE',       'common'); // åº”ç”¨æ¨¡å¼ é»˜è®¤ä¸ºæ™®é€šæ¨¡å¼    
-    defined('STORAGE_TYPE') or define('STORAGE_TYPE',   'File'); // å­˜å‚¨ç±»å‹ é»˜è®¤ä¸ºFile    
+    defined('APP_MODE')     or define('APP_MODE',       'common'); // Ó¦ÓÃÄ£Ê½ Ä¬ÈÏÎªÆÕÍ¨Ä£Ê½    
+    defined('STORAGE_TYPE') or define('STORAGE_TYPE',   'File'); // ´æ´¢ÀàĞÍ Ä¬ÈÏÎªFile    
 }
 
-defined('RUNTIME_PATH') or define('RUNTIME_PATH',   APP_PATH.'Runtime/');   // ç³»ç»Ÿè¿è¡Œæ—¶ç›®å½•
-defined('LIB_PATH')     or define('LIB_PATH',       realpath(THINK_PATH.'Library').'/'); // ç³»ç»Ÿæ ¸å¿ƒç±»åº“ç›®å½•
-defined('CORE_PATH')    or define('CORE_PATH',      LIB_PATH.'Think/'); // Thinkç±»åº“ç›®å½•
-defined('BEHAVIOR_PATH')or define('BEHAVIOR_PATH',  LIB_PATH.'Behavior/'); // è¡Œä¸ºç±»åº“ç›®å½•
-defined('MODE_PATH')    or define('MODE_PATH',      THINK_PATH.'Mode/'); // ç³»ç»Ÿåº”ç”¨æ¨¡å¼ç›®å½•
-defined('VENDOR_PATH')  or define('VENDOR_PATH',    LIB_PATH.'Vendor/'); // ç¬¬ä¸‰æ–¹ç±»åº“ç›®å½•
-defined('COMMON_PATH')  or define('COMMON_PATH',    APP_PATH.'Common/'); // åº”ç”¨å…¬å…±ç›®å½•
-defined('CONF_PATH')    or define('CONF_PATH',      COMMON_PATH.'Conf/'); // åº”ç”¨é…ç½®ç›®å½•
-defined('LANG_PATH')    or define('LANG_PATH',      COMMON_PATH.'Lang/'); // åº”ç”¨è¯­è¨€ç›®å½•
-defined('HTML_PATH')    or define('HTML_PATH',      APP_PATH.'Html/'); // åº”ç”¨é™æ€ç›®å½•
-defined('LOG_PATH')     or define('LOG_PATH',       RUNTIME_PATH.'Logs/'); // åº”ç”¨æ—¥å¿—ç›®å½•
-defined('TEMP_PATH')    or define('TEMP_PATH',      RUNTIME_PATH.'Temp/'); // åº”ç”¨ç¼“å­˜ç›®å½•
-defined('DATA_PATH')    or define('DATA_PATH',      RUNTIME_PATH.'Data/'); // åº”ç”¨æ•°æ®ç›®å½•
-defined('CACHE_PATH')   or define('CACHE_PATH',     RUNTIME_PATH.'Cache/'); // åº”ç”¨æ¨¡æ¿ç¼“å­˜ç›®å½•
-defined('CONF_EXT')     or define('CONF_EXT',       '.php'); // é…ç½®æ–‡ä»¶åç¼€
-defined('CONF_PARSE')   or define('CONF_PARSE',     '');    // é…ç½®æ–‡ä»¶è§£ææ–¹æ³•
+defined('RUNTIME_PATH') or define('RUNTIME_PATH',   APP_PATH.'Runtime/');   // ÏµÍ³ÔËĞĞÊ±Ä¿Â¼
+defined('LIB_PATH')     or define('LIB_PATH',       realpath(THINK_PATH.'Library').'/'); // ÏµÍ³ºËĞÄÀà¿âÄ¿Â¼
+defined('CORE_PATH')    or define('CORE_PATH',      LIB_PATH.'Think/'); // ThinkÀà¿âÄ¿Â¼
+defined('BEHAVIOR_PATH')or define('BEHAVIOR_PATH',  LIB_PATH.'Behavior/'); // ĞĞÎªÀà¿âÄ¿Â¼
+defined('MODE_PATH')    or define('MODE_PATH',      THINK_PATH.'Mode/'); // ÏµÍ³Ó¦ÓÃÄ£Ê½Ä¿Â¼
+defined('VENDOR_PATH')  or define('VENDOR_PATH',    LIB_PATH.'Vendor/'); // µÚÈı·½Àà¿âÄ¿Â¼
+defined('COMMON_PATH')  or define('COMMON_PATH',    APP_PATH.'Common/'); // Ó¦ÓÃ¹«¹²Ä¿Â¼
+defined('CONF_PATH')    or define('CONF_PATH',      COMMON_PATH.'Conf/'); // Ó¦ÓÃÅäÖÃÄ¿Â¼
+defined('LANG_PATH')    or define('LANG_PATH',      COMMON_PATH.'Lang/'); // Ó¦ÓÃÓïÑÔÄ¿Â¼
+defined('HTML_PATH')    or define('HTML_PATH',      APP_PATH.'Html/'); // Ó¦ÓÃ¾²Ì¬Ä¿Â¼
+defined('LOG_PATH')     or define('LOG_PATH',       RUNTIME_PATH.'Logs/'); // Ó¦ÓÃÈÕÖ¾Ä¿Â¼
+defined('TEMP_PATH')    or define('TEMP_PATH',      RUNTIME_PATH.'Temp/'); // Ó¦ÓÃ»º´æÄ¿Â¼
+defined('DATA_PATH')    or define('DATA_PATH',      RUNTIME_PATH.'Data/'); // Ó¦ÓÃÊı¾İÄ¿Â¼
+defined('CACHE_PATH')   or define('CACHE_PATH',     RUNTIME_PATH.'Cache/'); // Ó¦ÓÃÄ£°å»º´æÄ¿Â¼
+defined('CONF_EXT')     or define('CONF_EXT',       '.php'); // ÅäÖÃÎÄ¼şºó×º
+defined('CONF_PARSE')   or define('CONF_PARSE',     '');    // ÅäÖÃÎÄ¼ş½âÎö·½·¨
 
-// ç³»ç»Ÿä¿¡æ¯
+// ÏµÍ³ĞÅÏ¢
 if(version_compare(PHP_VERSION,'5.4.0','<')) {
     ini_set('magic_quotes_runtime',0);
     define('MAGIC_QUOTES_GPC',get_magic_quotes_gpc()?True:False);
@@ -74,10 +71,10 @@ define('IS_WIN',strstr(PHP_OS, 'WIN') ? 1 : 0 );
 define('IS_CLI',PHP_SAPI=='cli'? 1   :   0);
 
 if(!IS_CLI) {
-    // å½“å‰æ–‡ä»¶å
+    // µ±Ç°ÎÄ¼şÃû
     if(!defined('_PHP_FILE_')) {
         if(IS_CGI) {
-            //CGI/FASTCGIæ¨¡å¼ä¸‹
+            //CGI/FASTCGIÄ£Ê½ÏÂ
             $_temp  = explode('.php',$_SERVER['PHP_SELF']);
             define('_PHP_FILE_',    rtrim(str_replace($_SERVER['HTTP_HOST'],'',$_temp[0].'.php'),'/'));
         }else {
@@ -90,7 +87,7 @@ if(!IS_CLI) {
     }
 }
 
-// åŠ è½½æ ¸å¿ƒThinkç±»
+// ¼ÓÔØºËĞÄThinkÀà
 require CORE_PATH.'Think'.EXT;
-// åº”ç”¨åˆå§‹åŒ– 
+// Ó¦ÓÃ³õÊ¼»¯ 
 Think\Think::start();

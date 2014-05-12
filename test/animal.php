@@ -10,7 +10,7 @@ class Animal {
 		echo "staticfun";
 	}
 	static public function __callStatic($method,$args){
-        //è°ƒç”¨ç¼“å­˜é©±åŠ¨çš„æ–¹æ³•
+        //µ÷ÓÃ»º´æÇý¶¯µÄ·½·¨
         print_r(self::$handler);
         echo " is trying to execute static method: $method";
         var_dump(method_exists(self::$handler, $method));

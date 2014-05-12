@@ -10,47 +10,47 @@
 // +----------------------------------------------------------------------
 namespace Think\Template;
 /**
- * ThinkPHPæ ‡ç­¾åº“TagLibè§£æåŸºç±»
+ * ThinkPHP±êÇ©¿âTagLib½âÎö»ùÀà
  */
 class TagLib {
 
     /**
-     * æ ‡ç­¾åº“å®šä¹‰XMLæ–‡ä»¶
+     * ±êÇ©¿â¶¨ÒåXMLÎÄ¼ş
      * @var string
      * @access protected
      */
     protected $xml      = '';
-    protected $tags     = array();// æ ‡ç­¾å®šä¹‰
+    protected $tags     = array();// ±êÇ©¶¨Òå
     /**
-     * æ ‡ç­¾åº“åç§°
+     * ±êÇ©¿âÃû³Æ
      * @var string
      * @access protected
      */
     protected $tagLib   ='';
 
     /**
-     * æ ‡ç­¾åº“æ ‡ç­¾åˆ—è¡¨
+     * ±êÇ©¿â±êÇ©ÁĞ±í
      * @var string
      * @access protected
      */
     protected $tagList  = array();
 
     /**
-     * æ ‡ç­¾åº“åˆ†ææ•°ç»„
+     * ±êÇ©¿â·ÖÎöÊı×é
      * @var string
      * @access protected
      */
     protected $parse    = array();
 
     /**
-     * æ ‡ç­¾åº“æ˜¯å¦æœ‰æ•ˆ
+     * ±êÇ©¿âÊÇ·ñÓĞĞ§
      * @var string
      * @access protected
      */
     protected $valid    = false;
 
     /**
-     * å½“å‰æ¨¡æ¿å¯¹è±¡
+     * µ±Ç°Ä£°å¶ÔÏó
      * @var object
      * @access protected
      */
@@ -59,7 +59,7 @@ class TagLib {
     protected $comparison = array(' nheq '=>' !== ',' heq '=>' === ',' neq '=>' != ',' eq '=>' == ',' egt '=>' >= ',' gt '=>' > ',' elt '=>' <= ',' lt '=>' < ');
 
     /**
-     * æ¶æ„å‡½æ•°
+     * ¼Ü¹¹º¯Êı
      * @access public
      */
     public function __construct() {
@@ -68,13 +68,13 @@ class TagLib {
     }
 
     /**
-     * TagLibæ ‡ç­¾å±æ€§åˆ†æ è¿”å›æ ‡ç­¾å±æ€§æ•°ç»„
+     * TagLib±êÇ©ÊôĞÔ·ÖÎö ·µ»Ø±êÇ©ÊôĞÔÊı×é
      * @access public
-     * @param string $tagStr æ ‡ç­¾å†…å®¹
+     * @param string $tagStr ±êÇ©ÄÚÈİ
      * @return array
      */
     public function parseXmlAttr($attr,$tag) {
-        //XMLè§£æå®‰å…¨è¿‡æ»¤
+        //XML½âÎö°²È«¹ıÂË
         $attr   =   str_replace('&','___', $attr);
         $xml    =   '<tpl><tag '.$attr.' /></tpl>';
         $xml    =   simplexml_load_string($xml);
@@ -87,7 +87,7 @@ class TagLib {
             if($array) {
                 $tag    =   strtolower($tag);
                 if(!isset($this->tags[$tag])){
-                    // æ£€æµ‹æ˜¯å¦å­˜åœ¨åˆ«åå®šä¹‰
+                    // ¼ì²âÊÇ·ñ´æÔÚ±ğÃû¶¨Òå
                     foreach($this->tags as $key=>$val){
                         if(isset($val['alias']) && in_array($tag,explode(',',$val['alias']))){
                             $item  =   $val;
@@ -118,22 +118,22 @@ class TagLib {
     }
 
     /**
-     * è§£ææ¡ä»¶è¡¨è¾¾å¼
+     * ½âÎöÌõ¼ş±í´ïÊ½
      * @access public
-     * @param string $condition è¡¨è¾¾å¼æ ‡ç­¾å†…å®¹
+     * @param string $condition ±í´ïÊ½±êÇ©ÄÚÈİ
      * @return array
      */
     public function parseCondition($condition) {
         $condition = str_ireplace(array_keys($this->comparison),array_values($this->comparison),$condition);
         $condition = preg_replace('/\$(\w+):(\w+)\s/is','$\\1->\\2 ',$condition);
         switch(strtolower(C('TMPL_VAR_IDENTIFY'))) {
-            case 'array': // è¯†åˆ«ä¸ºæ•°ç»„
+            case 'array': // Ê¶±ğÎªÊı×é
                 $condition  =   preg_replace('/\$(\w+)\.(\w+)\s/is','$\\1["\\2"] ',$condition);
                 break;
-            case 'obj':  // è¯†åˆ«ä¸ºå¯¹è±¡
+            case 'obj':  // Ê¶±ğÎª¶ÔÏó
                 $condition  =   preg_replace('/\$(\w+)\.(\w+)\s/is','$\\1->\\2 ',$condition);
                 break;
-            default:  // è‡ªåŠ¨åˆ¤æ–­æ•°ç»„æˆ–å¯¹è±¡ åªæ”¯æŒäºŒç»´
+            default:  // ×Ô¶¯ÅĞ¶ÏÊı×é»ò¶ÔÏó Ö»Ö§³Ö¶şÎ¬
                 $condition  =   preg_replace('/\$(\w+)\.(\w+)\s/is','(is_array($\\1)?$\\1["\\2"]:$\\1->\\2) ',$condition);
         }
         if(false !== strpos($condition, '$Think'))
@@ -142,20 +142,20 @@ class TagLib {
     }
 
     /**
-     * è‡ªåŠ¨è¯†åˆ«æ„å»ºå˜é‡
+     * ×Ô¶¯Ê¶±ğ¹¹½¨±äÁ¿
      * @access public
-     * @param string $name å˜é‡æè¿°
+     * @param string $name ±äÁ¿ÃèÊö
      * @return string
      */
     public function autoBuildVar($name) {
         if('Think.' == substr($name,0,6)){
-            // ç‰¹æ®Šå˜é‡
+            // ÌØÊâ±äÁ¿
             return $this->parseThinkVar($name);
         }elseif(strpos($name,'.')) {
             $vars = explode('.',$name);
             $var  =  array_shift($vars);
             switch(strtolower(C('TMPL_VAR_IDENTIFY'))) {
-                case 'array': // è¯†åˆ«ä¸ºæ•°ç»„
+                case 'array': // Ê¶±ğÎªÊı×é
                     $name = '$'.$var;
                     foreach ($vars as $key=>$val){
                         if(0===strpos($val,'$')) {
@@ -165,16 +165,16 @@ class TagLib {
                         }
                     }
                     break;
-                case 'obj':  // è¯†åˆ«ä¸ºå¯¹è±¡
+                case 'obj':  // Ê¶±ğÎª¶ÔÏó
                     $name = '$'.$var;
                     foreach ($vars as $key=>$val)
                         $name .= '->'.$val;
                     break;
-                default:  // è‡ªåŠ¨åˆ¤æ–­æ•°ç»„æˆ–å¯¹è±¡ åªæ”¯æŒäºŒç»´
+                default:  // ×Ô¶¯ÅĞ¶ÏÊı×é»ò¶ÔÏó Ö»Ö§³Ö¶şÎ¬
                     $name = 'is_array($'.$var.')?$'.$var.'["'.$vars[0].'"]:$'.$var.'->'.$vars[0];
             }
         }elseif(strpos($name,':')){
-            // é¢å¤–çš„å¯¹è±¡æ–¹å¼æ”¯æŒ
+            // ¶îÍâµÄ¶ÔÏó·½Ê½Ö§³Ö
             $name   =   '$'.str_replace(':','->',$name);
         }elseif(!defined($name)) {
             $name = '$'.$name;
@@ -183,14 +183,14 @@ class TagLib {
     }
 
     /**
-     * ç”¨äºæ ‡ç­¾å±æ€§é‡Œé¢çš„ç‰¹æ®Šæ¨¡æ¿å˜é‡è§£æ
-     * æ ¼å¼ ä»¥ Think. æ‰“å¤´çš„å˜é‡å±äºç‰¹æ®Šæ¨¡æ¿å˜é‡
+     * ÓÃÓÚ±êÇ©ÊôĞÔÀïÃæµÄÌØÊâÄ£°å±äÁ¿½âÎö
+     * ¸ñÊ½ ÒÔ Think. ´òÍ·µÄ±äÁ¿ÊôÓÚÌØÊâÄ£°å±äÁ¿
      * @access public
-     * @param string $varStr  å˜é‡å­—ç¬¦ä¸²
+     * @param string $varStr  ±äÁ¿×Ö·û´®
      * @return string
      */
     public function parseThinkVar($varStr){
-        if(is_array($varStr)){//ç”¨äºæ­£åˆ™æ›¿æ¢å›è°ƒå‡½æ•°
+        if(is_array($varStr)){//ÓÃÓÚÕıÔòÌæ»»»Øµ÷º¯Êı
             $varStr = $varStr[1]; 
         }
         $vars       = explode('.',$varStr);
@@ -239,7 +239,7 @@ class TagLib {
         return $parseStr;
     }
 
-    // è·å–æ ‡ç­¾å®šä¹‰
+    // »ñÈ¡±êÇ©¶¨Òå
     public function getTags(){
         return $this->tags;
     }

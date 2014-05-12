@@ -10,52 +10,52 @@
 // +----------------------------------------------------------------------
 namespace Think;
 /**
- * ThinkPHP æ•°æ®åº“ä¸­é—´å±‚å®žçŽ°ç±»
+ * ThinkPHP Êý¾Ý¿âÖÐ¼ä²ãÊµÏÖÀà
  */
 class Db {
-    // æ•°æ®åº“ç±»åž‹
+    // Êý¾Ý¿âÀàÐÍ
     protected $dbType     = null;
-    // æ˜¯å¦è‡ªåŠ¨é‡Šæ”¾æŸ¥è¯¢ç»“æžœ
+    // ÊÇ·ñ×Ô¶¯ÊÍ·Å²éÑ¯½á¹û
     protected $autoFree   = false;
-    // å½“å‰æ“ä½œæ‰€å±žçš„æ¨¡åž‹å
+    // µ±Ç°²Ù×÷ËùÊôµÄÄ£ÐÍÃû
     protected $model      = '_think_';
-    // æ˜¯å¦ä½¿ç”¨æ°¸ä¹…è¿žæŽ¥
+    // ÊÇ·ñÊ¹ÓÃÓÀ¾ÃÁ¬½Ó
     protected $pconnect   = false;
-    // å½“å‰SQLæŒ‡ä»¤
+    // µ±Ç°SQLÖ¸Áî
     protected $queryStr   = '';
     protected $modelSql   = array();
-    // æœ€åŽæ’å…¥ID
+    // ×îºó²åÈëID
     protected $lastInsID  = null;
-    // è¿”å›žæˆ–è€…å½±å“è®°å½•æ•°
+    // ·µ»Ø»òÕßÓ°Ïì¼ÇÂ¼Êý
     protected $numRows    = 0;
-    // è¿”å›žå­—æ®µæ•°
+    // ·µ»Ø×Ö¶ÎÊý
     protected $numCols    = 0;
-    // äº‹åŠ¡æŒ‡ä»¤æ•°
+    // ÊÂÎñÖ¸ÁîÊý
     protected $transTimes = 0;
-    // é”™è¯¯ä¿¡æ¯
+    // ´íÎóÐÅÏ¢
     protected $error      = '';
-    // æ•°æ®åº“è¿žæŽ¥ID æ”¯æŒå¤šä¸ªè¿žæŽ¥
+    // Êý¾Ý¿âÁ¬½ÓID Ö§³Ö¶à¸öÁ¬½Ó
     protected $linkID     = array();
-    // å½“å‰è¿žæŽ¥ID
+    // µ±Ç°Á¬½ÓID
     protected $_linkID    = null;
-    // å½“å‰æŸ¥è¯¢ID
+    // µ±Ç°²éÑ¯ID
     protected $queryID    = null;
-    // æ˜¯å¦å·²ç»è¿žæŽ¥æ•°æ®åº“
+    // ÊÇ·ñÒÑ¾­Á¬½ÓÊý¾Ý¿â
     protected $connected  = false;
-    // æ•°æ®åº“è¿žæŽ¥å‚æ•°é…ç½®
+    // Êý¾Ý¿âÁ¬½Ó²ÎÊýÅäÖÃ
     protected $config     = '';
-    // æ•°æ®åº“è¡¨è¾¾å¼
+    // Êý¾Ý¿â±í´ïÊ½
     protected $comparison = array('eq'=>'=','neq'=>'<>','gt'=>'>','egt'=>'>=','lt'=>'<','elt'=>'<=','notlike'=>'NOT LIKE','like'=>'LIKE','in'=>'IN','notin'=>'NOT IN');
-    // æŸ¥è¯¢è¡¨è¾¾å¼
+    // ²éÑ¯±í´ïÊ½
     protected $selectSql  = 'SELECT%DISTINCT% %FIELD% FROM %TABLE%%JOIN%%WHERE%%GROUP%%HAVING%%ORDER%%LIMIT% %UNION%%COMMENT%';
-    // å‚æ•°ç»‘å®š
+    // ²ÎÊý°ó¶¨
     protected $bind       = array();
 
     /**
-     * å–å¾—æ•°æ®åº“ç±»å®žä¾‹
+     * È¡µÃÊý¾Ý¿âÀàÊµÀý
      * @static
      * @access public
-     * @return mixed è¿”å›žæ•°æ®åº“é©±åŠ¨ç±»
+     * @return mixed ·µ»ØÊý¾Ý¿âÇý¶¯Àà
      */
     public static function getInstance($db_config='') {
 		static $_instance	=	array();
@@ -68,37 +68,37 @@ class Db {
     }
 
     /**
-     * åŠ è½½æ•°æ®åº“ æ”¯æŒé…ç½®æ–‡ä»¶æˆ–è€… DSN
+     * ¼ÓÔØÊý¾Ý¿â Ö§³ÖÅäÖÃÎÄ¼þ»òÕß DSN
      * @access public
-     * @param mixed $db_config æ•°æ®åº“é…ç½®ä¿¡æ¯
+     * @param mixed $db_config Êý¾Ý¿âÅäÖÃÐÅÏ¢
      * @return string
      */
     public function factory($db_config='') {
-        // è¯»å–æ•°æ®åº“é…ç½®
+        // ¶ÁÈ¡Êý¾Ý¿âÅäÖÃ
         $db_config = $this->parseConfig($db_config);
         if(empty($db_config['dbms']))
             E(L('_NO_DB_CONFIG_'));
-        // æ•°æ®åº“ç±»åž‹
+        // Êý¾Ý¿âÀàÐÍ
         if(strpos($db_config['dbms'],'\\')){
             $class  =   $db_config['dbms'];
         }else{
             $dbType =   ucwords(strtolower($db_config['dbms']));
             $class  =   'Think\\Db\\Driver\\'. $dbType;            
         }
-        // æ£€æŸ¥é©±åŠ¨ç±»
+        // ¼ì²éÇý¶¯Àà
         if(class_exists($class)) {
             $db = new $class($db_config);
         }else {
-            // ç±»æ²¡æœ‰å®šä¹‰
+            // ÀàÃ»ÓÐ¶¨Òå
             E(L('_NO_DB_DRIVER_').': ' . $class);
         }
         return $db;
     }
 
     /**
-     * æ ¹æ®DSNèŽ·å–æ•°æ®åº“ç±»åž‹ è¿”å›žå¤§å†™
+     * ¸ù¾ÝDSN»ñÈ¡Êý¾Ý¿âÀàÐÍ ·µ»Ø´óÐ´
      * @access protected
-     * @param string $dsn  dsnå­—ç¬¦ä¸²
+     * @param string $dsn  dsn×Ö·û´®
      * @return string
      */
     protected function _getDsnType($dsn) {
@@ -108,16 +108,16 @@ class Db {
     }
 
     /**
-     * åˆ†æžæ•°æ®åº“é…ç½®ä¿¡æ¯ï¼Œæ”¯æŒæ•°ç»„å’ŒDSN
+     * ·ÖÎöÊý¾Ý¿âÅäÖÃÐÅÏ¢£¬Ö§³ÖÊý×éºÍDSN
      * @access private
-     * @param mixed $db_config æ•°æ®åº“é…ç½®ä¿¡æ¯
+     * @param mixed $db_config Êý¾Ý¿âÅäÖÃÐÅÏ¢
      * @return string
      */
     private function parseConfig($db_config='') {
         if ( !empty($db_config) && is_string($db_config)) {
-            // å¦‚æžœDSNå­—ç¬¦ä¸²åˆ™è¿›è¡Œè§£æž
+            // Èç¹ûDSN×Ö·û´®Ôò½øÐÐ½âÎö
             $db_config = $this->parseDSN($db_config);
-        }elseif(is_array($db_config)) { // æ•°ç»„é…ç½®
+        }elseif(is_array($db_config)) { // Êý×éÅäÖÃ
              $db_config =   array_change_key_case($db_config);
              $db_config = array(
                   'dbms'      =>  $db_config['db_type'],
@@ -131,8 +131,8 @@ class Db {
                   'charset'   =>  isset($db_config['db_charset'])?$db_config['db_charset']:'utf8',
              );
         }elseif(empty($db_config)) {
-            // å¦‚æžœé…ç½®ä¸ºç©ºï¼Œè¯»å–é…ç½®æ–‡ä»¶è®¾ç½®
-            if( C('DB_DSN') && 'pdo' != strtolower(C('DB_TYPE')) ) { // å¦‚æžœè®¾ç½®äº†DB_DSN åˆ™ä¼˜å…ˆ
+            // Èç¹ûÅäÖÃÎª¿Õ£¬¶ÁÈ¡ÅäÖÃÎÄ¼þÉèÖÃ
+            if( C('DB_DSN') && 'pdo' != strtolower(C('DB_TYPE')) ) { // Èç¹ûÉèÖÃÁËDB_DSN ÔòÓÅÏÈ
                 $db_config =  $this->parseDSN(C('DB_DSN'));
             }else{
                 $db_config = array (
@@ -152,47 +152,47 @@ class Db {
     }
 
     /**
-     * åˆå§‹åŒ–æ•°æ®åº“è¿žæŽ¥
+     * ³õÊ¼»¯Êý¾Ý¿âÁ¬½Ó
      * @access protected
-     * @param boolean $master ä¸»æœåŠ¡å™¨
+     * @param boolean $master Ö÷·þÎñÆ÷
      * @return void
      */
     protected function initConnect($master=true) {
         if(1 == C('DB_DEPLOY_TYPE'))
-            // é‡‡ç”¨åˆ†å¸ƒå¼æ•°æ®åº“
+            // ²ÉÓÃ·Ö²¼Ê½Êý¾Ý¿â
             $this->_linkID = $this->multiConnect($master);
         else
-            // é»˜è®¤å•æ•°æ®åº“
+            // Ä¬ÈÏµ¥Êý¾Ý¿â
             if ( !$this->connected ) $this->_linkID = $this->connect();
     }
 
     /**
-     * è¿žæŽ¥åˆ†å¸ƒå¼æœåŠ¡å™¨
+     * Á¬½Ó·Ö²¼Ê½·þÎñÆ÷
      * @access protected
-     * @param boolean $master ä¸»æœåŠ¡å™¨
+     * @param boolean $master Ö÷·þÎñÆ÷
      * @return void
      */
     protected function multiConnect($master=false) {
         foreach ($this->config as $key=>$val){
             $_config[$key]      =   explode(',',$val);
         }        
-        // æ•°æ®åº“è¯»å†™æ˜¯å¦åˆ†ç¦»
+        // Êý¾Ý¿â¶ÁÐ´ÊÇ·ñ·ÖÀë
         if(C('DB_RW_SEPARATE')){
-            // ä¸»ä»Žå¼é‡‡ç”¨è¯»å†™åˆ†ç¦»
+            // Ö÷´ÓÊ½²ÉÓÃ¶ÁÐ´·ÖÀë
             if($master)
-                // ä¸»æœåŠ¡å™¨å†™å…¥
+                // Ö÷·þÎñÆ÷Ð´Èë
                 $r  =   floor(mt_rand(0,C('DB_MASTER_NUM')-1));
             else{
-                if(is_numeric(C('DB_SLAVE_NO'))) {// æŒ‡å®šæœåŠ¡å™¨è¯»
+                if(is_numeric(C('DB_SLAVE_NO'))) {// Ö¸¶¨·þÎñÆ÷¶Á
                     $r = C('DB_SLAVE_NO');
                 }else{
-                    // è¯»æ“ä½œè¿žæŽ¥ä»ŽæœåŠ¡å™¨
-                    $r = floor(mt_rand(C('DB_MASTER_NUM'),count($_config['hostname'])-1));   // æ¯æ¬¡éšæœºè¿žæŽ¥çš„æ•°æ®åº“
+                    // ¶Á²Ù×÷Á¬½Ó´Ó·þÎñÆ÷
+                    $r = floor(mt_rand(C('DB_MASTER_NUM'),count($_config['hostname'])-1));   // Ã¿´ÎËæ»úÁ¬½ÓµÄÊý¾Ý¿â
                 }
             }
         }else{
-            // è¯»å†™æ“ä½œä¸åŒºåˆ†æœåŠ¡å™¨
-            $r = floor(mt_rand(0,count($_config['hostname'])-1));   // æ¯æ¬¡éšæœºè¿žæŽ¥çš„æ•°æ®åº“
+            // ¶ÁÐ´²Ù×÷²»Çø·Ö·þÎñÆ÷
+            $r = floor(mt_rand(0,count($_config['hostname'])-1));   // Ã¿´ÎËæ»úÁ¬½ÓµÄÊý¾Ý¿â
         }
         $db_config = array(
             'username'  =>  isset($_config['username'][$r])?$_config['username'][$r]:$_config['username'][0],
@@ -208,8 +208,8 @@ class Db {
     }
 
     /**
-     * DSNè§£æž
-     * æ ¼å¼ï¼š mysql://username:passwd@localhost:3306/DbName#charset
+     * DSN½âÎö
+     * ¸ñÊ½£º mysql://username:passwd@localhost:3306/DbName#charset
      * @static
      * @access public
      * @param string $dsnStr
@@ -239,18 +239,18 @@ class Db {
             'database'  =>  $matches[6]
             );
         }
-        $dsn['dsn'] =  ''; // å…¼å®¹é…ç½®ä¿¡æ¯æ•°ç»„
+        $dsn['dsn'] =  ''; // ¼æÈÝÅäÖÃÐÅÏ¢Êý×é
         return $dsn;
      }
 
     /**
-     * æ•°æ®åº“è°ƒè¯• è®°å½•å½“å‰SQL
+     * Êý¾Ý¿âµ÷ÊÔ ¼ÇÂ¼µ±Ç°SQL
      * @access protected
      */
     protected function debug() {
         $this->modelSql[$this->model]   =  $this->queryStr;
         $this->model  =   '_think_';
-        // è®°å½•æ“ä½œç»“æŸæ—¶é—´
+        // ¼ÇÂ¼²Ù×÷½áÊøÊ±¼ä
         if (C('DB_SQL_LOG')) {
             G('queryEndTime');
             trace($this->queryStr.' [ RunTime:'.G('queryStartTime','queryEndTime',6).'s ]','','SQL');
@@ -258,7 +258,7 @@ class Db {
     }
 
     /**
-     * è®¾ç½®é”æœºåˆ¶
+     * ÉèÖÃËø»úÖÆ
      * @access protected
      * @return string
      */
@@ -271,7 +271,7 @@ class Db {
     }
 
     /**
-     * setåˆ†æž
+     * set·ÖÎö
      * @access protected
      * @param array $data
      * @return string
@@ -280,7 +280,7 @@ class Db {
         foreach ($data as $key=>$val){
             if(is_array($val) && 'exp' == $val[0]){
                 $set[]  =   $this->parseKey($key).'='.$val[1];
-            }elseif(is_scalar($val) || is_null($val)) { // è¿‡æ»¤éžæ ‡é‡æ•°æ®
+            }elseif(is_scalar($val) || is_null($val)) { // ¹ýÂË·Ç±êÁ¿Êý¾Ý
               if(C('DB_BIND_PARAM') && 0 !== strpos($val,':')){
                 $name   =   md5($key);
                 $set[]  =   $this->parseKey($key).'=:'.$name;
@@ -294,10 +294,10 @@ class Db {
     }
 
      /**
-     * å‚æ•°ç»‘å®š
+     * ²ÎÊý°ó¶¨
      * @access protected
-     * @param string $name ç»‘å®šå‚æ•°å
-     * @param mixed $value ç»‘å®šå€¼
+     * @param string $name °ó¶¨²ÎÊýÃû
+     * @param mixed $value °ó¶¨Öµ
      * @return void
      */
     protected function bindParam($name,$value){
@@ -305,7 +305,7 @@ class Db {
     }
 
      /**
-     * å‚æ•°ç»‘å®šåˆ†æž
+     * ²ÎÊý°ó¶¨·ÖÎö
      * @access protected
      * @param array $bind
      * @return array
@@ -317,7 +317,7 @@ class Db {
     }
 
     /**
-     * å­—æ®µååˆ†æž
+     * ×Ö¶ÎÃû·ÖÎö
      * @access protected
      * @param string $key
      * @return string
@@ -327,7 +327,7 @@ class Db {
     }
     
     /**
-     * valueåˆ†æž
+     * value·ÖÎö
      * @access protected
      * @param mixed $value
      * @return string
@@ -348,7 +348,7 @@ class Db {
     }
 
     /**
-     * fieldåˆ†æž
+     * field·ÖÎö
      * @access protected
      * @param mixed $fields
      * @return string
@@ -358,8 +358,8 @@ class Db {
             $fields    = explode(',',$fields);
         }
         if(is_array($fields)) {
-            // å®Œå–„æ•°ç»„æ–¹å¼ä¼ å­—æ®µåçš„æ”¯æŒ
-            // æ”¯æŒ 'field1'=>'field2' è¿™æ ·çš„å­—æ®µåˆ«åå®šä¹‰
+            // ÍêÉÆÊý×é·½Ê½´«×Ö¶ÎÃûµÄÖ§³Ö
+            // Ö§³Ö 'field1'=>'field2' ÕâÑùµÄ×Ö¶Î±ðÃû¶¨Òå
             $array   =  array();
             foreach ($fields as $key=>$field){
                 if(!is_numeric($key))
@@ -373,18 +373,18 @@ class Db {
         }else{
             $fieldsStr = '*';
         }
-        //TODO å¦‚æžœæ˜¯æŸ¥è¯¢å…¨éƒ¨å­—æ®µï¼Œå¹¶ä¸”æ˜¯joinçš„æ–¹å¼ï¼Œé‚£ä¹ˆå°±æŠŠè¦æŸ¥çš„è¡¨åŠ ä¸ªåˆ«åï¼Œä»¥å…å­—æ®µè¢«è¦†ç›–
+        //TODO Èç¹ûÊÇ²éÑ¯È«²¿×Ö¶Î£¬²¢ÇÒÊÇjoinµÄ·½Ê½£¬ÄÇÃ´¾Í°ÑÒª²éµÄ±í¼Ó¸ö±ðÃû£¬ÒÔÃâ×Ö¶Î±»¸²¸Ç
         return $fieldsStr;
     }
 
     /**
-     * tableåˆ†æž
+     * table·ÖÎö
      * @access protected
      * @param mixed $table
      * @return string
      */
     protected function parseTable($tables) {
-        if(is_array($tables)) {// æ”¯æŒåˆ«åå®šä¹‰
+        if(is_array($tables)) {// Ö§³Ö±ðÃû¶¨Òå
             $array   =  array();
             foreach ($tables as $table=>$alias){
                 if(!is_numeric($table))
@@ -402,7 +402,7 @@ class Db {
     }
 
     /**
-     * whereåˆ†æž
+     * where·ÖÎö
      * @access protected
      * @param mixed $where
      * @return string
@@ -410,16 +410,16 @@ class Db {
     protected function parseWhere($where) {
         $whereStr = '';
         if(is_string($where)) {
-            // ç›´æŽ¥ä½¿ç”¨å­—ç¬¦ä¸²æ¡ä»¶
+            // Ö±½ÓÊ¹ÓÃ×Ö·û´®Ìõ¼þ
             $whereStr = $where;
-        }else{ // ä½¿ç”¨æ•°ç»„è¡¨è¾¾å¼
+        }else{ // Ê¹ÓÃÊý×é±í´ïÊ½
             $operate  = isset($where['_logic'])?strtoupper($where['_logic']):'';
             if(in_array($operate,array('AND','OR','XOR'))){
-                // å®šä¹‰é€»è¾‘è¿ç®—è§„åˆ™ ä¾‹å¦‚ OR XOR AND NOT
+                // ¶¨ÒåÂß¼­ÔËËã¹æÔò ÀýÈç OR XOR AND NOT
                 $operate    =   ' '.$operate.' ';
                 unset($where['_logic']);
             }else{
-                // é»˜è®¤è¿›è¡Œ AND è¿ç®—
+                // Ä¬ÈÏ½øÐÐ AND ÔËËã
                 $operate    =   ' AND ';
             }
             foreach ($where as $key=>$val){
@@ -428,17 +428,17 @@ class Db {
                     $key  = '_complex';
                 }                    
                 if(0===strpos($key,'_')) {
-                    // è§£æžç‰¹æ®Šæ¡ä»¶è¡¨è¾¾å¼
+                    // ½âÎöÌØÊâÌõ¼þ±í´ïÊ½
                     $whereStr   .= $this->parseThinkWhere($key,$val);
                 }else{
-                    // æŸ¥è¯¢å­—æ®µçš„å®‰å…¨è¿‡æ»¤
+                    // ²éÑ¯×Ö¶ÎµÄ°²È«¹ýÂË
                     if(!preg_match('/^[A-Z_\|\&\-.a-z0-9\(\)\,]+$/',trim($key))){
                         E(L('_EXPRESS_ERROR_').':'.$key);
                     }
-                    // å¤šæ¡ä»¶æ”¯æŒ
+                    // ¶àÌõ¼þÖ§³Ö
                     $multi  = is_array($val) &&  isset($val['_multi']);
                     $key    = trim($key);
-                    if(strpos($key,'|')) { // æ”¯æŒ name|title|nickname æ–¹å¼å®šä¹‰æŸ¥è¯¢å­—æ®µ
+                    if(strpos($key,'|')) { // Ö§³Ö name|title|nickname ·½Ê½¶¨Òå²éÑ¯×Ö¶Î
                         $array =  explode('|',$key);
                         $str   =  array();
                         foreach ($array as $m=>$k){
@@ -465,14 +465,14 @@ class Db {
         return empty($whereStr)?'':' WHERE '.$whereStr;
     }
 
-    // whereå­å•å…ƒåˆ†æž
+    // where×Óµ¥Ôª·ÖÎö
     protected function parseWhereItem($key,$val) {
         $whereStr = '';
         if(is_array($val)) {
             if(is_string($val[0])) {
-                if(preg_match('/^(EQ|NEQ|GT|EGT|LT|ELT)$/i',$val[0])) { // æ¯”è¾ƒè¿ç®—
+                if(preg_match('/^(EQ|NEQ|GT|EGT|LT|ELT)$/i',$val[0])) { // ±È½ÏÔËËã
                     $whereStr .= $key.' '.$this->comparison[strtolower($val[0])].' '.$this->parseValue($val[1]);
-                }elseif(preg_match('/^(NOTLIKE|LIKE)$/i',$val[0])){// æ¨¡ç³ŠæŸ¥æ‰¾
+                }elseif(preg_match('/^(NOTLIKE|LIKE)$/i',$val[0])){// Ä£ºý²éÕÒ
                     if(is_array($val[1])) {
                         $likeLogic  =   isset($val[2])?strtoupper($val[2]):'OR';
                         if(in_array($likeLogic,array('AND','OR','XOR'))){
@@ -486,9 +486,9 @@ class Db {
                     }else{
                         $whereStr .= $key.' '.$this->comparison[strtolower($val[0])].' '.$this->parseValue($val[1]);
                     }
-                }elseif('exp'==strtolower($val[0])){ // ä½¿ç”¨è¡¨è¾¾å¼
+                }elseif('exp'==strtolower($val[0])){ // Ê¹ÓÃ±í´ïÊ½
                     $whereStr .= ' ('.$key.' '.$val[1].') ';
-                }elseif(preg_match('/IN/i',$val[0])){ // IN è¿ç®—
+                }elseif(preg_match('/IN/i',$val[0])){ // IN ÔËËã
                     if(isset($val[2]) && 'exp'==$val[2]) {
                         $whereStr .= $key.' '.strtoupper($val[0]).' '.$val[1];
                     }else{
@@ -498,7 +498,7 @@ class Db {
                         $zone      =   implode(',',$this->parseValue($val[1]));
                         $whereStr .= $key.' '.strtoupper($val[0]).' ('.$zone.')';
                     }
-                }elseif(preg_match('/BETWEEN/i',$val[0])){ // BETWEENè¿ç®—
+                }elseif(preg_match('/BETWEEN/i',$val[0])){ // BETWEENÔËËã
                     $data = is_string($val[1])? explode(',',$val[1]):$val[1];
                     $whereStr .=  ' ('.$key.' '.strtoupper($val[0]).' '.$this->parseValue($data[0]).' AND '.$this->parseValue($data[1]).' )';
                 }else{
@@ -523,7 +523,7 @@ class Db {
                 $whereStr = substr($whereStr,0,-4);
             }
         }else {
-            //å¯¹å­—ç¬¦ä¸²ç±»åž‹å­—æ®µé‡‡ç”¨æ¨¡ç³ŠåŒ¹é…
+            //¶Ô×Ö·û´®ÀàÐÍ×Ö¶Î²ÉÓÃÄ£ºýÆ¥Åä
             if(C('DB_LIKE_FIELDS') && preg_match('/('.C('DB_LIKE_FIELDS').')/i',$key)) {
                 $val  =  '%'.$val.'%';
                 $whereStr .= $key.' LIKE '.$this->parseValue($val);
@@ -535,7 +535,7 @@ class Db {
     }
 
     /**
-     * ç‰¹æ®Šæ¡ä»¶åˆ†æž
+     * ÌØÊâÌõ¼þ·ÖÎö
      * @access protected
      * @param string $key
      * @param mixed $val
@@ -545,15 +545,15 @@ class Db {
         $whereStr   = '';
         switch($key) {
             case '_string':
-                // å­—ç¬¦ä¸²æ¨¡å¼æŸ¥è¯¢æ¡ä»¶
+                // ×Ö·û´®Ä£Ê½²éÑ¯Ìõ¼þ
                 $whereStr = $val;
                 break;
             case '_complex':
-                // å¤åˆæŸ¥è¯¢æ¡ä»¶
+                // ¸´ºÏ²éÑ¯Ìõ¼þ
                 $whereStr   =   is_string($val)? $val : substr($this->parseWhere($val),6);
                 break;
             case '_query':
-                // å­—ç¬¦ä¸²æ¨¡å¼æŸ¥è¯¢æ¡ä»¶
+                // ×Ö·û´®Ä£Ê½²éÑ¯Ìõ¼þ
                 parse_str($val,$where);
                 if(isset($where['_logic'])) {
                     $op   =  ' '.strtoupper($where['_logic']).' ';
@@ -571,7 +571,7 @@ class Db {
     }
 
     /**
-     * limitåˆ†æž
+     * limit·ÖÎö
      * @access protected
      * @param mixed $lmit
      * @return string
@@ -581,7 +581,7 @@ class Db {
     }
 
     /**
-     * joinåˆ†æž
+     * join·ÖÎö
      * @access protected
      * @param array $join
      * @return string
@@ -595,7 +595,7 @@ class Db {
     }
 
     /**
-     * orderåˆ†æž
+     * order·ÖÎö
      * @access protected
      * @param mixed $order
      * @return string
@@ -616,7 +616,7 @@ class Db {
     }
 
     /**
-     * groupåˆ†æž
+     * group·ÖÎö
      * @access protected
      * @param mixed $group
      * @return string
@@ -626,7 +626,7 @@ class Db {
     }
 
     /**
-     * havingåˆ†æž
+     * having·ÖÎö
      * @access protected
      * @param string $having
      * @return string
@@ -636,7 +636,7 @@ class Db {
     }
 
     /**
-     * commentåˆ†æž
+     * comment·ÖÎö
      * @access protected
      * @param string $comment
      * @return string
@@ -646,7 +646,7 @@ class Db {
     }
 
     /**
-     * distinctåˆ†æž
+     * distinct·ÖÎö
      * @access protected
      * @param mixed $distinct
      * @return string
@@ -656,7 +656,7 @@ class Db {
     }
 
     /**
-     * unionåˆ†æž
+     * union·ÖÎö
      * @access protected
      * @param mixed $union
      * @return string
@@ -676,11 +676,11 @@ class Db {
     }
 
     /**
-     * æ’å…¥è®°å½•
+     * ²åÈë¼ÇÂ¼
      * @access public
-     * @param mixed $data æ•°æ®
-     * @param array $options å‚æ•°è¡¨è¾¾å¼
-     * @param boolean $replace æ˜¯å¦replace
+     * @param mixed $data Êý¾Ý
+     * @param array $options ²ÎÊý±í´ïÊ½
+     * @param boolean $replace ÊÇ·ñreplace
      * @return false | integer
      */
     public function insert($data,$options=array(),$replace=false) {
@@ -690,7 +690,7 @@ class Db {
             if(is_array($val) && 'exp' == $val[0]){
                 $fields[]   =  $this->parseKey($key);
                 $values[]   =  $val[1];
-            }elseif(is_scalar($val) || is_null($val)) { // è¿‡æ»¤éžæ ‡é‡æ•°æ®
+            }elseif(is_scalar($val) || is_null($val)) { // ¹ýÂË·Ç±êÁ¿Êý¾Ý
               $fields[]   =  $this->parseKey($key);
               if(C('DB_BIND_PARAM') && 0 !== strpos($val,':')){
                 $name       =   md5($key);
@@ -708,11 +708,11 @@ class Db {
     }
 
     /**
-     * é€šè¿‡Selectæ–¹å¼æ’å…¥è®°å½•
+     * Í¨¹ýSelect·½Ê½²åÈë¼ÇÂ¼
      * @access public
-     * @param string $fields è¦æ’å…¥çš„æ•°æ®è¡¨å­—æ®µå
-     * @param string $table è¦æ’å…¥çš„æ•°æ®è¡¨å
-     * @param array $option  æŸ¥è¯¢æ•°æ®å‚æ•°
+     * @param string $fields Òª²åÈëµÄÊý¾Ý±í×Ö¶ÎÃû
+     * @param string $table Òª²åÈëµÄÊý¾Ý±íÃû
+     * @param array $option  ²éÑ¯Êý¾Ý²ÎÊý
      * @return false | integer
      */
     public function selectInsert($fields,$table,$options=array()) {
@@ -725,10 +725,10 @@ class Db {
     }
 
     /**
-     * æ›´æ–°è®°å½•
+     * ¸üÐÂ¼ÇÂ¼
      * @access public
-     * @param mixed $data æ•°æ®
-     * @param array $options è¡¨è¾¾å¼
+     * @param mixed $data Êý¾Ý
+     * @param array $options ±í´ïÊ½
      * @return false | integer
      */
     public function update($data,$options) {
@@ -745,9 +745,9 @@ class Db {
     }
 
     /**
-     * åˆ é™¤è®°å½•
+     * É¾³ý¼ÇÂ¼
      * @access public
-     * @param array $options è¡¨è¾¾å¼
+     * @param array $options ±í´ïÊ½
      * @return false | integer
      */
     public function delete($options=array()) {
@@ -763,9 +763,9 @@ class Db {
     }
 
     /**
-     * æŸ¥æ‰¾è®°å½•
+     * ²éÕÒ¼ÇÂ¼
      * @access public
-     * @param array $options è¡¨è¾¾å¼
+     * @param array $options ±í´ïÊ½
      * @return mixed
      */
     public function select($options=array()) {
@@ -776,14 +776,14 @@ class Db {
     }
 
     /**
-     * ç”ŸæˆæŸ¥è¯¢SQL
+     * Éú³É²éÑ¯SQL
      * @access public
-     * @param array $options è¡¨è¾¾å¼
+     * @param array $options ±í´ïÊ½
      * @return string
      */
     public function buildSelectSql($options=array()) {
         if(isset($options['page'])) {
-            // æ ¹æ®é¡µæ•°è®¡ç®—limit
+            // ¸ù¾ÝÒ³Êý¼ÆËãlimit
             if(strpos($options['page'],',')) {
                 list($page,$listRows) =  explode(',',$options['page']);
             }else{
@@ -794,7 +794,7 @@ class Db {
             $offset  =  $listRows*((int)$page-1);
             $options['limit'] =  $offset.','.$listRows;
         }
-        if(C('DB_SQL_BUILD_CACHE')) { // SQLåˆ›å»ºç¼“å­˜
+        if(C('DB_SQL_BUILD_CACHE')) { // SQL´´½¨»º´æ
             $key    =  md5(serialize($options));
             $value  =  S($key);
             if(false !== $value) {
@@ -803,16 +803,16 @@ class Db {
         }
         $sql  =     $this->parseSql($this->selectSql,$options);
         $sql .=     $this->parseLock(isset($options['lock'])?$options['lock']:false);
-        if(isset($key)) { // å†™å…¥SQLåˆ›å»ºç¼“å­˜
+        if(isset($key)) { // Ð´ÈëSQL´´½¨»º´æ
             S($key,$sql,array('expire'=>0,'length'=>C('DB_SQL_BUILD_LENGTH'),'queue'=>C('DB_SQL_BUILD_QUEUE')));
         }
         return $sql;
     }
 
     /**
-     * æ›¿æ¢SQLè¯­å¥ä¸­è¡¨è¾¾å¼
+     * Ìæ»»SQLÓï¾äÖÐ±í´ïÊ½
      * @access public
-     * @param array $options è¡¨è¾¾å¼
+     * @param array $options ±í´ïÊ½
      * @return string
      */
     public function parseSql($sql,$options=array()){
@@ -835,8 +835,8 @@ class Db {
     }
 
     /**
-     * èŽ·å–æœ€è¿‘ä¸€æ¬¡æŸ¥è¯¢çš„sqlè¯­å¥ 
-     * @param string $model  æ¨¡åž‹å
+     * »ñÈ¡×î½üÒ»´Î²éÑ¯µÄsqlÓï¾ä 
+     * @param string $model  Ä£ÐÍÃû
      * @access public
      * @return string
      */
@@ -845,7 +845,7 @@ class Db {
     }
 
     /**
-     * èŽ·å–æœ€è¿‘æ’å…¥çš„ID
+     * »ñÈ¡×î½ü²åÈëµÄID
      * @access public
      * @return string
      */
@@ -854,7 +854,7 @@ class Db {
     }
 
     /**
-     * èŽ·å–æœ€è¿‘çš„é”™è¯¯ä¿¡æ¯
+     * »ñÈ¡×î½üµÄ´íÎóÐÅÏ¢
      * @access public
      * @return string
      */
@@ -863,9 +863,9 @@ class Db {
     }
 
     /**
-     * SQLæŒ‡ä»¤å®‰å…¨è¿‡æ»¤
+     * SQLÖ¸Áî°²È«¹ýÂË
      * @access public
-     * @param string $str  SQLå­—ç¬¦ä¸²
+     * @param string $str  SQL×Ö·û´®
      * @return string
      */
     public function escapeString($str) {
@@ -873,9 +873,9 @@ class Db {
     }
 
     /**
-     * è®¾ç½®å½“å‰æ“ä½œæ¨¡åž‹
+     * ÉèÖÃµ±Ç°²Ù×÷Ä£ÐÍ
      * @access public
-     * @param string $model  æ¨¡åž‹å
+     * @param string $model  Ä£ÐÍÃû
      * @return void
      */
     public function setModel($model){
@@ -883,18 +883,18 @@ class Db {
     }
 
    /**
-     * æžæž„æ–¹æ³•
+     * Îö¹¹·½·¨
      * @access public
      */
     public function __destruct() {
-        // é‡Šæ”¾æŸ¥è¯¢
+        // ÊÍ·Å²éÑ¯
         if ($this->queryID){
             $this->free();
         }
-        // å…³é—­è¿žæŽ¥
+        // ¹Ø±ÕÁ¬½Ó
         $this->close();
     }
 
-    // å…³é—­æ•°æ®åº“ ç”±é©±åŠ¨ç±»å®šä¹‰
+    // ¹Ø±ÕÊý¾Ý¿â ÓÉÇý¶¯Àà¶¨Òå
     public function close(){}
 }

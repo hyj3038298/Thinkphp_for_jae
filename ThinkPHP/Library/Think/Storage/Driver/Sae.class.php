@@ -10,11 +10,11 @@
 // +----------------------------------------------------------------------
 namespace Think\Storage\Driver;
 use Think\Storage;
-// SAEç¯å¢ƒæ–‡ä»¶å†™å…¥å­˜å‚¨ç±»
+// SAE»·¾³ÎÄ¼şĞ´Èë´æ´¢Àà
 class Sae extends Storage{
 
     /**
-     * æ¶æ„å‡½æ•°
+     * ¼Ü¹¹º¯Êı
      * @access public
      */
     private $mc;
@@ -24,33 +24,33 @@ class Sae extends Storage{
     public function __construct() {
         if(!function_exists('memcache_init')){
               header('Content-Type:text/html;charset=utf-8');
-              exit('è¯·åœ¨SAEå¹³å°ä¸Šè¿è¡Œä»£ç ã€‚');
+              exit('ÇëÔÚSAEÆ½Ì¨ÉÏÔËĞĞ´úÂë¡£');
         }
         $this->mc       =   @memcache_init();
         if(!$this->mc){
               header('Content-Type:text/html;charset=utf-8');
-              exit('æ‚¨æœªå¼€é€šMemcacheæœåŠ¡ï¼Œè¯·åœ¨SAEç®¡ç†å¹³å°åˆå§‹åŒ–MemcacheæœåŠ¡');
+              exit('ÄúÎ´¿ªÍ¨Memcache·şÎñ£¬ÇëÔÚSAE¹ÜÀíÆ½Ì¨³õÊ¼»¯Memcache·şÎñ');
         }
     }
 
     /**
-     * è·å¾—SaeKvå¯¹è±¡
+     * »ñµÃSaeKv¶ÔÏó
      */
     private function getKv(){
         static $kv;
         if(!$kv){
            $kv  =   new \SaeKV();
            if(!$kv->init())
-               E('æ‚¨æ²¡æœ‰åˆå§‹åŒ–KVDBï¼Œè¯·åœ¨SAEç®¡ç†å¹³å°åˆå§‹åŒ–KVDBæœåŠ¡');
+               E('ÄúÃ»ÓĞ³õÊ¼»¯KVDB£¬ÇëÔÚSAE¹ÜÀíÆ½Ì¨³õÊ¼»¯KVDB·şÎñ');
         }
         return $kv;
     }
 
 
     /**
-     * æ–‡ä»¶å†…å®¹è¯»å–
+     * ÎÄ¼şÄÚÈİ¶ÁÈ¡
      * @access public
-     * @param string $filename  æ–‡ä»¶å
+     * @param string $filename  ÎÄ¼şÃû
      * @return string
      */
     public function read($filename,$type=''){
@@ -67,10 +67,10 @@ class Sae extends Storage{
     }
 
     /**
-     * æ–‡ä»¶å†™å…¥
+     * ÎÄ¼şĞ´Èë
      * @access public
-     * @param string $filename  æ–‡ä»¶å
-     * @param string $content  æ–‡ä»¶å†…å®¹
+     * @param string $filename  ÎÄ¼şÃû
+     * @param string $content  ÎÄ¼şÄÚÈİ
      * @return boolean
      */
     public function put($filename,$content,$type=''){
@@ -96,10 +96,10 @@ class Sae extends Storage{
     }
 
     /**
-     * æ–‡ä»¶è¿½åŠ å†™å…¥
+     * ÎÄ¼ş×·¼ÓĞ´Èë
      * @access public
-     * @param string $filename  æ–‡ä»¶å
-     * @param string $content  è¿½åŠ çš„æ–‡ä»¶å†…å®¹
+     * @param string $filename  ÎÄ¼şÃû
+     * @param string $content  ×·¼ÓµÄÎÄ¼şÄÚÈİ
      * @return boolean
      */
     public function append($filename,$content,$type=''){
@@ -110,10 +110,10 @@ class Sae extends Storage{
     }
 
     /**
-     * åŠ è½½æ–‡ä»¶
+     * ¼ÓÔØÎÄ¼ş
      * @access public
-     * @param string $filename  æ–‡ä»¶å
-     * @param array $vars  ä¼ å…¥å˜é‡
+     * @param string $filename  ÎÄ¼şÃû
+     * @param array $vars  ´«Èë±äÁ¿
      * @return void
      */
     public function load($filename,$vars=null){
@@ -123,9 +123,9 @@ class Sae extends Storage{
     }
 
     /**
-     * æ–‡ä»¶æ˜¯å¦å­˜åœ¨
+     * ÎÄ¼şÊÇ·ñ´æÔÚ
      * @access public
-     * @param string $filename  æ–‡ä»¶å
+     * @param string $filename  ÎÄ¼şÃû
      * @return boolean
      */
     public function has($filename,$type=''){
@@ -137,9 +137,9 @@ class Sae extends Storage{
     }
 
     /**
-     * æ–‡ä»¶åˆ é™¤
+     * ÎÄ¼şÉ¾³ı
      * @access public
-     * @param string $filename  æ–‡ä»¶å
+     * @param string $filename  ÎÄ¼şÃû
      * @return boolean
      */
     public function unlink($filename,$type=''){
@@ -159,10 +159,10 @@ class Sae extends Storage{
     }
 
     /**
-     * è¯»å–æ–‡ä»¶ä¿¡æ¯
+     * ¶ÁÈ¡ÎÄ¼şĞÅÏ¢
      * @access public
-     * @param string $filename  æ–‡ä»¶å
-     * @param string $name  ä¿¡æ¯å mtimeæˆ–è€…content
+     * @param string $filename  ÎÄ¼şÃû
+     * @param string $name  ĞÅÏ¢Ãû mtime»òÕßcontent
      * @return boolean
      */
     public function get($filename,$name,$type=''){
