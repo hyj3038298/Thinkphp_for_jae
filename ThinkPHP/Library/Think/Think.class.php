@@ -36,7 +36,6 @@ class Think {
 
       // 初始化文件存储方式
       Storage::connect(STORAGE_TYPE);
-
       $runtimefile  = RUNTIME_PATH.APP_MODE.'~runtime.php';
       if(!APP_DEBUG && Storage::has($runtimefile)){
           Storage::load($runtimefile);
@@ -147,12 +146,17 @@ class Think {
      */
     public static function autoload($class) {
         // 检查是否存在映射
+        //echo "<p> class=".$class ." name=$name filename=$filename  false need to load</p>";
+        
         if(isset(self::$_map[$class])) {
             include self::$_map[$class];
         }elseif(false !== strpos($class,'\\')){
+
           $name           =   strstr($class, '\\', true);
+          
           if(in_array($name,array('Think','Org','Behavior','Com','Vendor')) || is_dir(LIB_PATH.$name)){ 
               // Library目录下面的命名空间自动定位
+
               $path       =   LIB_PATH;
           }else{
               // 检测自定义命名空间 否则就以模块为命名空间
@@ -160,6 +164,7 @@ class Think {
               $path       =   isset($namespace[$name])? dirname($namespace[$name]).'/' : APP_PATH;
           }
           $filename       =   $path . str_replace('\\', '/', $class) . EXT;
+          //echo "<p> class=".$class ." name=$name filename=$filename  false need to load</p>";
           if(is_file($filename)) {
               // Win环境下面严格区分大小写
               if (IS_WIN && false === strpos(str_replace('/', '\\', realpath($filename)), $class . EXT)){
@@ -249,7 +254,7 @@ class Think {
           case E_USER_ERROR:
             ob_end_clean();
             $errorStr = "$errstr ".$errfile." 第 $errline 行.";
-            if(C('LOG_RECORD')) Log::write("[$errno] ".$errorStr,Log::ERR);
+//            if(C('LOG_RECORD')) Log::write("[$errno] ".$errorStr,Log::ERR);
             self::halt($errorStr);
             break;
           default:
@@ -291,7 +296,7 @@ class Think {
                 $e['file']      = $trace[0]['file'];
                 $e['line']      = $trace[0]['line'];
                 ob_start();
-                debug_print_backtrace();
+                //debug_print_backtrace();
                 $e['trace']     = ob_get_clean();
             } else {
                 $e              = $error;
@@ -310,8 +315,9 @@ class Think {
             }
         }
         // 包含异常页面模板
-        $exceptionFile =  C('TMPL_EXCEPTION_FILE',null,THINK_PATH.'Tpl/think_exception.tpl');
-        include $exceptionFile;
+        echo "<p>".$e['message']. " " .$e['file']." on ".$e['line']."</p>";
+        //$exceptionFile =  C('TMPL_EXCEPTION_FILE',null,THINK_PATH.'Tpl/think_exception.tpl');
+        //include $exceptionFile;
         exit;
     }
 

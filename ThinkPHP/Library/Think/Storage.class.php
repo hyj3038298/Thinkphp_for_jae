@@ -31,7 +31,7 @@ class Storage {
         self::$handler = new $class($options);
     }
 
-    static public function __callstatic($method,$args){
+    static public function __callStatic($method,$args){
         //调用缓存驱动的方法
         if(method_exists(self::$handler, $method)){
            return call_user_func_array(array(self::$handler,$method), $args);
