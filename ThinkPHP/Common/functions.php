@@ -176,8 +176,11 @@ function trace($value='[think]',$label='',$level='DEBUG',$record=false) {
 /**
 整合JAE
 */
-function php_strip_whitespace($filename){
-    return file_get_contents($filename);
+if(!function_exists("php_strip_whitespace")){
+    function php_strip_whitespace($filename){
+        return file_get_contents($filename);
+    }
+
 }
 /**
  * 编译文件
