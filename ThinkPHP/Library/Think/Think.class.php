@@ -52,7 +52,6 @@ class Think {
                 if(!APP_DEBUG) $content   .= compile($file);
               }
           }
-
           // 加载应用模式配置文件
           foreach ($mode['config'] as $key=>$file){
               is_numeric($key)?C(load_config($file)):C($key,load_config($file));
