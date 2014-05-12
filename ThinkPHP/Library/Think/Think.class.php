@@ -86,7 +86,7 @@ class Think {
           if(!APP_DEBUG){
               $content  .=  "\nnamespace { Think\Think::addMap(".var_export(self::$_map,true).");";
               $content  .=  "\nL(".var_export(L(),true).");\nC(".var_export(C(),true).');Think\Hook::import('.var_export(Hook::get(),true).');}';
-              Storage::put($runtimefile,strip_whitespace('<?php '.$content));
+              Storage::put($runtimefile,('<?php '.$content));
           }else{
             // 调试模式加载系统默认的配置文件
             C(include THINK_PATH.'Conf/debug.php');

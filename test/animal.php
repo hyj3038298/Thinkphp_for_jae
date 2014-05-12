@@ -1,4 +1,5 @@
 <?php
+namespace Jason;
 class Animal {
 	static private  $handler;
 

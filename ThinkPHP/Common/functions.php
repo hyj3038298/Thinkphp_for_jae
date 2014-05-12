@@ -175,7 +175,7 @@ function trace($value='[think]',$label='',$level='DEBUG',$record=false) {
 
 /**
 ’˚∫œJAE
-**/
+*/
 function php_strip_whitespace($filename){
     return file_get_contents($filename);
 }
@@ -185,12 +185,9 @@ function php_strip_whitespace($filename){
  * @return string
  */
 function compile($filename) {
-    //$content = file_get_contents($filename);
-    //echo $content;    
     $content    =   php_strip_whitespace($filename);
     $content    =   trim(substr($content, 5));
     // ÃÊªª‘§±‡“Î÷∏¡Ó
-
     $content    =   preg_replace('/\/\/\[RUNTIME\](.*?)\/\/\[\/RUNTIME\]/s', '', $content);
     if(0===strpos($content,'namespace')){
         $content    =   preg_replace('/namespace\s(.*?);/','namespace \\1{',$content,1);
@@ -1107,7 +1104,7 @@ function xml_encode($data, $root='think', $item='item', $attr='', $id='id', $enc
     }
     $attr   = trim($attr);
     $attr   = empty($attr) ? '' : " {$attr}";
-    $xml    = "<?xml version=\"1.0\" encoding=\"{$encoding}\"?>";
+    $xml    = "<?xml version=\"1.0\" encoding=\"gb2312\"?>";
     $xml   .= "<{$root}{$attr}>";
     $xml   .= data_to_xml($data, $item, $id);
     $xml   .= "</{$root}>";

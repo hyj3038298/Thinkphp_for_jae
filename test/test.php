@@ -40,8 +40,8 @@ set_error_handler('appError');
 include "animal.php";
 include "people.php";
 
-
-animal::birth();
-animal::speak();
+use Jason;
+Jason\animal::birth();
+Jason\animal::speak();
 
 ?>
