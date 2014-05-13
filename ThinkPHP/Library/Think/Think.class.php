@@ -42,9 +42,11 @@ class Think {
       }else{
           if(Storage::has($runtimefile))
               Storage::unlink($runtimefile);
+          
           $content =  '';
           // 读取应用模式
           $mode   =   include is_file(CONF_PATH.'core.php')?CONF_PATH.'core.php':MODE_PATH.APP_MODE.'.php';
+
           // 加载核心文件
           foreach ($mode['core'] as $file){
               if(is_file($file)) {
@@ -52,6 +54,7 @@ class Think {
                 if(!APP_DEBUG) $content   .= compile($file);
               }
           }
+
           // 加载应用模式配置文件
           foreach ($mode['config'] as $key=>$file){
               is_numeric($key)?C(load_config($file)):C($key,load_config($file));
@@ -84,8 +87,13 @@ class Think {
           L(include THINK_PATH.'Lang/'.strtolower(C('DEFAULT_LANG')).'.php');
 
           if(!APP_DEBUG){
-              $content  .=  "\nnamespace { Think\Think::addMap(".var_export(self::$_map,true).");";
-              $content  .=  "\nL(".var_export(L(),true).");\nC(".var_export(C(),true).');Think\Hook::import('.var_export(Hook::get(),true).');}';
+              if(APP_MODE == "JAE"){
+                $content  .=  "\nnamespace { Think::addMap(".var_export(self::$_map,true).");";
+                $content  .=  "\nL(".var_export(L(),true).");\nC(".var_export(C(),true).');use Think;Think\Hook::import('.var_export(Hook::get(),true).');}';  
+              }else{
+                $content  .=  "\nnamespace { Think::addMap(".var_export(self::$_map,true).");";
+                $content  .=  "\nL(".var_export(L(),true).");\nC(".var_export(C(),true).');Think\Hook::import('.var_export(Hook::get(),true).');}';  
+              }
               Storage::put($runtimefile,('<?php '.$content));
           }else{
             // 调试模式加载系统默认的配置文件
@@ -253,7 +261,7 @@ class Think {
           case E_USER_ERROR:
             ob_end_clean();
             $errorStr = "$errstr ".$errfile." 第 $errline 行.";
-            if(C('LOG_RECORD')) Log::write("[$errno] ".$errorStr,Log::ERR);
+//            if(C('LOG_RECORD')) Log::write("[$errno] ".$errorStr,Log::ERR);
             self::halt($errorStr);
             break;
           default:
