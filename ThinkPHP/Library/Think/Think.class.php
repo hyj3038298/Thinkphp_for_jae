@@ -52,6 +52,8 @@ class Think {
               if(is_file($file)) {
                 include $file;
                 if(!APP_DEBUG) $content   .= compile($file);
+              }else{
+                //echo $file."not exists";
               }
           }
 

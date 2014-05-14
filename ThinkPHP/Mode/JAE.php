@@ -6,18 +6,18 @@
 // +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
-// | Author: luofei614 <weibo.com/luofei614>
+// | Author: sunan <red.wolf.s.husband@gmail.com>
 // +----------------------------------------------------------------------
       
 /**
- * ThinkPHP SAE应用模式定义文件
+ * ThinkPHP JAE用模式定义文件
  */
 return array(
     // 配置文件
     'config'    =>  array(
         THINK_PATH.'Conf/convention.php',   // 系统惯例配置
         CONF_PATH.'config'.CONF_EXT,      // 应用公共配置
-//        MODE_PATH.'Sae/convention.php',//[sae] sae的惯例配置
+        MODE_PATH.'JAE/convention.php',//[sae] sae的惯例配置
     ),
 
     // 别名定义
@@ -43,14 +43,14 @@ return array(
         //CORE_PATH . 'Log'.EXT,
         CORE_PATH . 'Route'.EXT,
         CORE_PATH . 'Controller'.EXT,
-        CORE_PATH . 'View'.EXT,
+        CORE_PATH . 'Vendor/JAE/JAEView'.EXT,
         BEHAVIOR_PATH . 'ParseTemplateBehavior'.EXT,
         BEHAVIOR_PATH . 'ContentReplaceBehavior'.EXT,
     ),
     // 行为扩展定义
     'tags'  =>  array(
         'app_begin'     =>  array(
-            'Behavior\ReadHtmlCacheBehavior', // 读取静态缓存
+            //'Behavior\ReadHtmlCacheBehavior', // 读取静态缓存
         ),
         'app_end'       =>  array(
             'Behavior\ShowPageTraceBehavior', // 页面Trace显示

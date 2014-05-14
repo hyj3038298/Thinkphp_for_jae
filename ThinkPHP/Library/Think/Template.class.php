@@ -95,7 +95,6 @@ class  Template {
         }
          // 根据模版文件名定位缓存文件
         $tmplCacheFile = $this->config['cache_path'].$prefix.md5($tmplTemplateFile).$this->config['cache_suffix'];
-
         // 判断是否启用布局
         if(C('LAYOUT_ON')) {
             if(false !== strpos($tmplContent,'{__NOLAYOUT__}')) { // 可以单独定义不使用布局

@@ -30,7 +30,7 @@ KISSY.Event.on(btn_debug,"click",function(e){
 				break;
 			}
 		}
-		//console.log(i);
+		console.log(i);
 		debug_info[i].style.display = "block";
 	});
 //});

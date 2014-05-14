@@ -1,14 +1,16 @@
 <?php
+
 namespace Think\Template\Driver;
 use Think\Template;
-class JAESmarty extends Smarty{
-	//private $smarty = new smarty();
-	public function fetch(){
-		echo "asdf";
-		parent::fetch();	
+class JAESmarty{
+	
+	private	$smarty = new \Smarty();
+	
+	public function fetch($templateFile,$var){
+		$this->smarty->fetch($templateFile);
+        foreach ($var as $k => $v) {
+            $this->smarty->assign($k, $v);
+        }
+        echo $this->smarty->fetch($templateFile);	
 	}
-	$smarty = new Smarty();
-    foreach ($variables as $k => $v) {
-        $smarty->assign($k, $v);
-    }
 }

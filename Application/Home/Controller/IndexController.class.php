@@ -8,6 +8,10 @@ class IndexController extends Controller {
     public function test(){
     	echo "in test";
     }
+    public function foo(){
+        $this->assign("foo", "canyou see this");
+        $this->display();
+    }
 
     public function js(){
     	echo "function test(){alert();}";

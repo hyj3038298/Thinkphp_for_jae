@@ -64,7 +64,7 @@
           ___.f(function (e) {
               var dis___ = this && this.___? void 0: this;
               var i, x0___, x1___, x2___, x3___, x4___, x5___, x6___, x7___,
-              x8___, x9___;
+              x8___, x9___, x10___;
               i = 0;
               {
                 x2___ = Object(IMPORTS___.debug_title_v___?
@@ -108,17 +108,20 @@
                   }
                 }
               }
-              x9___ = (x8___ = (IMPORTS___.debug_info_v___?
+              x8___ = IMPORTS___.console_v___? IMPORTS___.console:
+              ___.ri(IMPORTS___, 'console'), x8___.log_m___? x8___.log(i):
+              x8___.m___('log', [ i ]);
+              x10___ = (x9___ = (IMPORTS___.debug_info_v___?
                   IMPORTS___.debug_info: ___.ri(IMPORTS___, 'debug_info'))
-                .v___(i), x8___.style_v___? x8___.style: x8___.v___('style')),
-              x9___.display_w___ === x9___? (x9___.display = 'block'):
-              x9___.w___('display', 'block');
+                .v___(i), x9___.style_v___? x9___.style: x9___.v___('style')),
+              x10___.display_w___ === x10___? (x10___.display = 'block'):
+              x10___.w___('display', 'block');
             }), x9___.on_m___? x9___.on(x10___, 'click', x11___):
           x9___.m___('on', [ x10___, 'click', x11___ ]));
         return moduleResult___;
       },
       'cajolerName': 'com.google.caja',
       'cajolerVersion': '<unknown>',
-      'cajoledDate': 1399949594321
+      'cajoledDate': 1400072261887
 });
 }
