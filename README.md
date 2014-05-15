@@ -1,5 +1,8 @@
 ##整合状态
 JAE内置模版的使用：
+Smarty使用注意：
+{foreach from=$data item="i"}
+标签中from=$data不能写成from="" 否则就知道把整个数组打印了。
 
 
 ## 简介

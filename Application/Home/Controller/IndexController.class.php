@@ -9,8 +9,19 @@ class IndexController extends Controller {
     	echo "in test";
     }
     public function foo(){
+        $mod = new \Think\Model();
+        $r = $mod->query("show databases");
+        
+        $mod = D("user");
+        $mod->query("create table test(id int(11))");
+        print_r($mod->query("show tables"));
+        //print_r($mod);
+        print_r($mod->where("1")->count());
+        $d = array("sadf", 123);
+        $this->assign("data", $d);
         $this->assign("foo", "canyou see this");
         $this->display();
+
     }
 
     public function js(){

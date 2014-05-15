@@ -323,8 +323,10 @@ class Think {
                 $e['message']   = C('SHOW_ERROR_MSG')? $message : C('ERROR_MESSAGE');
             }
         }
+
         // 包含异常页面模板
         echo "<p>error ".$error['message']. " " .$error['file']." on ".$error['line']."</p>";
+        echo "<p>".$error['trace']"</p>";
         //$exceptionFile =  C('TMPL_EXCEPTION_FILE',null,THINK_PATH.'Tpl/think_exception.tpl');
         //include $exceptionFile;
         exit;
