@@ -20,6 +20,8 @@ class IndexController extends Controller {
         $d = array("sadf", 123);
         $this->assign("data", $d);
         $this->assign("foo", "canyou see this");
+        var_dump(S("jason", "sunan"));
+        var_dump(S("jason"));
         $this->display();
 
     }

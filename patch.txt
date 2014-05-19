@@ -1,0 +1,58 @@
+入口文件index.php
+添加
+define("APP_MODE", "JAE")
+
+ThinkPHP\Mode\
+目录下添加JAE.php 和 JAE\目录
+JAE模式配置文件。在程序启动的时候会自动载入。JAE来自入口文件的APP_MODE，可根据需要改成其他。
+在ThinkPHP\Mode\JAE\
+convention.php
+这里面主要放关于JAE的配置选项。
+我主要改了两个：一个是数据库连接使用PDO，官方已经包好Driver
+一个是JAE内置的Smarty Driver我写好放在\ThinkPHP\Library\Think\Template\Driver
+
+
+ThinkPHP\Libary\Think\Think.class.php ：
+92行左右：
+增加JAE模式的判断。否则会导致编译后的runtime无法正常使用。
+		if(APP_MODE == "JAE"){
+                $content  .=  "\nnamespace { Think::addMap(".var_export(self::$_map,true).");";
+                $content  .=  "\nL(".var_export(L(),true).");\nC(".var_export(C(),true).');use Think;Think\Hook::import('.var_export(Hook::get(),true).');}';  
+              }else{
+                $content  .=  "\nnamespace { Think::addMap(".var_export(self::$_map,true).");";
+                $content  .=  "\nL(".var_export(L(),true).");\nC(".var_export(C(),true).');Think\Hook::import('.var_export(Hook::get(),true).');}';  
+              }
+
+99行：去掉了strip_whitespace()
+这个函数在JAE里运行不正常。暂时还没有找到原因。我还没有去quercus里面跑
+
+Storage::put($runtimefile,('<?php '.$content));
+
+266行（会有偏差，因为改过）
+//            if(C('LOG_RECORD')) Log::write("[$errno] ".$errorStr,Log::ERR); 暂时把log注释了。
+一个原因是在跑到这里的时候，C函数还用不了。原因还没找到
+
+308行
+//debug_print_backtrace();
+不支持这个函数
+
+330行
+//$exceptionFile =  C('TMPL_EXCEPTION_FILE',null,THINK_PATH.'Tpl/think_exception.tpl');
+//include $exceptionFile;
+一样的原因。因为C（）函数还用不了
+
+
+
+ThinkPHP\Common\functions.php
+加了一个函数：
+/**
+整合JAE
+*/
+if(!function_exists("php_strip_whitespace")){
+    function php_strip_whitespace($filename){
+        return file_get_contents($filename);
+    }
+
+}
+因为JAE不支持php_strip_whitespace()
+

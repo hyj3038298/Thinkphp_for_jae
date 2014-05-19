@@ -22,4 +22,5 @@ return array(
     
     //更改模板替换变量，让普通能在所有平台下显示
     'TMPL_ENGINE_TYPE'      =>  'JAESmarty',
+    'DATA_CACHE_TYPE'       =>  'tair',
 );
