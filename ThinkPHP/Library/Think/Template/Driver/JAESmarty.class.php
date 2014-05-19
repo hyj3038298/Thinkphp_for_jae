@@ -7,8 +7,11 @@ class JAESmarty{
 	private	$smarty = new \Smarty();
 	
 	public function fetch($templateFile,$var){
-		$this->smarty->fetch($templateFile);
-        foreach ($var as $k => $v) {
+		if(!is_file($templateFile)){
+			echo $templateFile;
+			return;
+		}
+		foreach ($var as $k => $v) {
             $this->smarty->assign($k, $v);
         }
         echo $this->smarty->fetch($templateFile);	
