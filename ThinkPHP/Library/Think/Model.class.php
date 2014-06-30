@@ -298,7 +298,7 @@ class Model {
         $options    =   $this->_parseOptions($options);
         // 数据处理
         $data       =   $this->_facade($data);
-        if(false === $this->_before_insert($data,$options)) {
+		if(false === $this->_before_insert($data,$options)) {
             return false;
         }
         // 写入数据到数据库

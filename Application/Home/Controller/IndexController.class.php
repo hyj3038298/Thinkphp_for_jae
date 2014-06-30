@@ -8,6 +8,20 @@ class IndexController extends Controller {
     public function test(){
     	echo "in test";
     }
+	
+	 public function dbdemo(){
+        // 这是插入语句数组中的值也是空
+        $i = M('Auth')->add(array('username' => 'weide1'));
+        //echo M()->getLastsql();
+        // 这是产出语句，where打印出来是没值的
+        $j = M('Auth')->where(array('username' => 'weide'))->delete();
+        //echo M()->getLastsql();
+        //dump($i);
+        $data = M('Auth')->where(array("username"	=>	"weide1"))->find();
+		print_r(M()->getLastSql());
+        dump($data);
+    }
+
     public function foo(){
         $mod = new \Think\Model();
         $r = $mod->query("show databases");

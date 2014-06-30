@@ -286,7 +286,7 @@ class Db {
                 $set[]  =   $this->parseKey($key).'=:'.$name;
                 $this->bindParam($name,$val);
               }else{
-                $set[]  =   $this->parseKey($key).'='.$this->parseValue($val);
+                $set[]  =   $this->parseKey($key).'='.$this->tpParseValue($val);
               }
             }
         }
@@ -332,11 +332,11 @@ class Db {
      * @param mixed $value
      * @return string
      */
-    protected function parseValue($value) {
+    protected function tpParseValue($value) {
         if(is_string($value)) {
-            $value =  '\''.$this->escapeString($value).'\'';
+            $value =  '\''.$this->tpEscapeString($value).'\'';
         }elseif(isset($value[0]) && is_string($value[0]) && strtolower($value[0]) == 'exp'){
-            $value =  $this->escapeString($value[1]);
+            $value =  $this->tpEscapeString($value[1]);
         }elseif(is_array($value)) {
             $value =  array_map(array($this, 'parseValue'),$value);
         }elseif(is_bool($value)){
@@ -471,7 +471,7 @@ class Db {
         if(is_array($val)) {
             if(is_string($val[0])) {
                 if(preg_match('/^(EQ|NEQ|GT|EGT|LT|ELT)$/i',$val[0])) { // 比较运算
-                    $whereStr .= $key.' '.$this->comparison[strtolower($val[0])].' '.$this->parseValue($val[1]);
+                    $whereStr .= $key.' '.$this->comparison[strtolower($val[0])].' '.$this->tpParseValue($val[1]);
                 }elseif(preg_match('/^(NOTLIKE|LIKE)$/i',$val[0])){// 模糊查找
                     if(is_array($val[1])) {
                         $likeLogic  =   isset($val[2])?strtoupper($val[2]):'OR';
@@ -479,12 +479,12 @@ class Db {
                             $likeStr    =   $this->comparison[strtolower($val[0])];
                             $like       =   array();
                             foreach ($val[1] as $item){
-                                $like[] = $key.' '.$likeStr.' '.$this->parseValue($item);
+                                $like[] = $key.' '.$likeStr.' '.$this->tpParseValue($item);
                             }
                             $whereStr .= '('.implode(' '.$likeLogic.' ',$like).')';                          
                         }
                     }else{
-                        $whereStr .= $key.' '.$this->comparison[strtolower($val[0])].' '.$this->parseValue($val[1]);
+                        $whereStr .= $key.' '.$this->comparison[strtolower($val[0])].' '.$this->tpParseValue($val[1]);
                     }
                 }elseif('exp'==strtolower($val[0])){ // 使用表达式
                     $whereStr .= ' ('.$key.' '.$val[1].') ';
@@ -495,12 +495,12 @@ class Db {
                         if(is_string($val[1])) {
                              $val[1] =  explode(',',$val[1]);
                         }
-                        $zone      =   implode(',',$this->parseValue($val[1]));
+                        $zone      =   implode(',',$this->tpParseValue($val[1]));
                         $whereStr .= $key.' '.strtoupper($val[0]).' ('.$zone.')';
                     }
                 }elseif(preg_match('/BETWEEN/i',$val[0])){ // BETWEEN运算
                     $data = is_string($val[1])? explode(',',$val[1]):$val[1];
-                    $whereStr .=  ' ('.$key.' '.strtoupper($val[0]).' '.$this->parseValue($data[0]).' AND '.$this->parseValue($data[1]).' )';
+                    $whereStr .=  ' ('.$key.' '.strtoupper($val[0]).' '.$this->tpParseValue($data[0]).' AND '.$this->tpParseValue($data[1]).' )';
                 }else{
                     E(L('_EXPRESS_ERROR_').':'.$val[0]);
                 }
@@ -526,9 +526,9 @@ class Db {
             //对字符串类型字段采用模糊匹配
             if(C('DB_LIKE_FIELDS') && preg_match('/('.C('DB_LIKE_FIELDS').')/i',$key)) {
                 $val  =  '%'.$val.'%';
-                $whereStr .= $key.' LIKE '.$this->parseValue($val);
+                $whereStr .= $key.' LIKE '.$this->tpParseValue($val);
             }else {
-                $whereStr .= $key.' = '.$this->parseValue($val);
+                $whereStr .= $key.' = '.$this->tpParseValue($val);
             }
         }
         return $whereStr;
@@ -563,7 +563,7 @@ class Db {
                 }
                 $array   =  array();
                 foreach ($where as $field=>$data)
-                    $array[] = $this->parseKey($field).' = '.$this->parseValue($data);
+                    $array[] = $this->parseKey($field).' = '.$this->tpParseValue($data);
                 $whereStr   = implode($op,$array);
                 break;
         }
@@ -684,10 +684,10 @@ class Db {
      * @return false | integer
      */
     public function insert($data,$options=array(),$replace=false) {
-        $values  =  $fields    = array();
+		$values  =  $fields    = array();
         $this->model  =   $options['model'];
         foreach ($data as $key=>$val){
-            if(is_array($val) && 'exp' == $val[0]){
+			if(is_array($val) && 'exp' == $val[0]){
                 $fields[]   =  $this->parseKey($key);
                 $values[]   =  $val[1];
             }elseif(is_scalar($val) || is_null($val)) { // 过滤非标量数据
@@ -697,7 +697,7 @@ class Db {
                 $values[]   =   ':'.$name;
                 $this->bindParam($name,$val);
               }else{
-                $values[]   =  $this->parseValue($val);
+                $values[]   =  $this->tpParseValue($val);
               }                
             }
         }
@@ -868,7 +868,7 @@ class Db {
      * @param string $str  SQL字符串
      * @return string
      */
-    public function escapeString($str) {
+    public function tpEscapeString($str) {
         return addslashes($str);
     }
 
